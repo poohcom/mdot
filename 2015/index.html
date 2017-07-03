@@ -1,0 +1,2447 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>Mdot2015</title>
+    <link rel="stylesheet" href="app.css?v=0601" type="text/css" />
+    <script src="lib/glsl.js" type="text/javascript"></script>
+    <script src="lib/easeljs-0.8.0.min.js" type="text/javascript"></script>
+    <script src="lib/preloadjs-0.6.0.min.js" type="text/javascript"></script>
+    <script src="lib/soundjs-0.6.0.min.js" type="text/javascript"></script>
+    <script src="lib/tweenjs-0.6.0.min.js" type="text/javascript"></script>
+    <script src="js/Button.js" type="text/javascript"></script>
+    <script src="js/DarkButton.js" type="text/javascript"></script>
+    <script src="js/Arc.js" type="text/javascript"></script>
+    <script src="js/SideButton.js" type="text/javascript"></script>
+    <script src="js/ToggleButton.js" type="text/javascript"></script>
+    <script src="js/Config.js" type="text/javascript"></script>
+    <script src="js/Circle.js" type="text/javascript"></script>
+    <script src="js/CircleMask.js" type="text/javascript"></script>
+    <script src="js/CircleLine.js" type="text/javascript"></script>
+    <script src="js/TitleCircle.js" type="text/javascript"></script>
+    <script src="js/CircleButton.js" type="text/javascript"></script>
+    <script src="js/PortCircleButton.js" type="text/javascript"></script>
+    <script src="js/Label.js" type="text/javascript"></script>
+    <script src="js/IScene.js" type="text/javascript"></script>
+    <script src="js/SineShape.js" type="text/javascript"></script>
+    <script src="js/Scene.js" type="text/javascript"></script>
+    <script src="js/ScenePort.js" type="text/javascript"></script>
+    <script src="js/ScenePortWork.js" type="text/javascript"></script>
+    <script src="js/SceneSideMenu.js" type="text/javascript"></script>
+    <script src="js/SceneSitemap.js" type="text/javascript"></script>
+    <script src="js/SceneMainMenu.js" type="text/javascript"></script>
+    <script src="js/SceneMainMainPage.js" type="text/javascript"></script>
+    <script src="js/SceneMainInfomation.js" type="text/javascript"></script>
+    <script src="js/SceneMain.js" type="text/javascript"></script>
+    <script src="js/SceneAbout.js" type="text/javascript"></script>
+    <script src="js/SceneAboutAbout.js" type="text/javascript"></script>
+    <script src="js/SceneAboutProfessors.js" type="text/javascript"></script>
+    <script src="js/SceneAboutStudents.js" type="text/javascript"></script>
+    <script src="js/SceneAbout16thMdot.js" type="text/javascript"></script>
+    <script src="js/SceneAbout16thCommittee.js" type="text/javascript"></script>
+    <script src="js/SceneAbout16thDesign1.js" type="text/javascript"></script>
+    <script src="js/SceneAbout16thDesign2.js" type="text/javascript"></script>
+    <script src="js/SceneAbout16thDesign3.js" type="text/javascript"></script>
+    <script src="js/ScenePortInteractive.js" type="text/javascript"></script>
+    <script src="js/ScenePortInteractiveWork.js" type="text/javascript"></script>
+    <script src="js/ScenePortAnimation.js" type="text/javascript"></script>
+    <script src="js/ScenePortAnimationWork.js" type="text/javascript"></script>
+    <script src="js/ScenePortContents.js" type="text/javascript"></script>
+    <script src="js/ScenePortContentsWork.js" type="text/javascript"></script>
+    <script src="js/ScenePortPoster.js" type="text/javascript"></script>
+    <script src="js/ScenePortPosterWork.js" type="text/javascript"></script>
+    <script src="js/ScenePortVideography.js" type="text/javascript"></script>
+    <script src="js/ScenePortVideographyWork.js" type="text/javascript"></script>
+    <script src="js/MenuBar.js" type="text/javascript"></script>
+    <script src="js/SceneManager.js" type="text/javascript"></script>
+
+    <script id="fragment" type="x-shader/x-fragment">
+        #ifdef GL_ES
+        precision mediump float;
+        #endif
+
+        struct imageObject {
+        vec2 size;
+        vec2 pos;
+        };
+
+        uniform sampler2D img1;
+        uniform sampler2D img2;
+        uniform imageObject image;
+        uniform float time;
+        uniform float ratio;
+        uniform vec2 resolution;
+
+        float random (float seed) {
+        return fract(sin(seed) * 23423.23);
+        }
+
+        float random (vec2 seed) {
+        return random(seed.x + seed.y * 300.);
+        }
+
+        float noise(vec2 p) {
+        float lowerleft = random(floor(p));
+        float lowerright = random(vec2(ceil(p.x), floor(p.y)));
+        float upperleft = random(vec2(floor(p.x), ceil(p.y)));
+        float upperright = random(ceil(p));
+
+        vec2 f = fract(p);
+
+        float lower = mix(lowerleft, lowerright, smoothstep(0.,1.,f.x));
+        float upper = mix(upperleft, upperright, smoothstep(0.,1.,f.x));
+
+        float b = mix(lower, upper, smoothstep(0.,1.,f.y));
+        return b;
+        }
+
+        float fbm(vec2 p) {
+        float b = noise(p * 1.);
+        b += noise(p * 2.) / 2.;
+        b += noise(p * 4.) / 4.;
+        b += noise(p * 8.) / 8.;
+        b /= 1. + 1./2. + 1./4. + 1./8.;
+        return b;
+        }
+
+        vec4 drawSprite (vec2 p, imageObject imageObj) {
+
+        vec2 absP = p*resolution.xy;
+        //bool inSprite = all(lessThan(imageObj.pos, absP)) && all(lessThan(absP, imageObj.pos+imageObj.size));
+
+        p -= imageObj.pos/resolution.xy;
+        p /= imageObj.size/resolution.xy;
+
+        return texture2D(img1, p) *(1.0-ratio) +texture2D(img2, p) * ratio;
+        }
+
+        void main (void) {
+        float t = time / 50000.;
+        vec2 p = ( gl_FragCoord.xy / resolution.xy );
+        vec2 absP = p*resolution.xy;
+
+        float x = fbm(p + t);
+        float y = fbm(p + 100. - t);
+
+        float ax = fbm(p + vec2(x, y) * 4. + t);
+        float ay = fbm(p + vec2(x, y) * 4. + 500. - t);
+
+        float b = fbm(p + vec2(ax, ay) * 4. + t);
+
+        vec4 c = drawSprite((p + b) / 2. , image);
+        gl_FragColor = vec4(c.rgb, 1.);
+        }
+    </script>
+    <script id="fragmentMobile" type="x-shader/x-fragment">
+        #ifdef GL_ES
+        precision mediump float;
+        #endif
+
+        struct imageObject {
+            vec2 size;
+            vec2 pos;
+        };
+
+        uniform sampler2D img1;
+        uniform sampler2D img2;
+        uniform imageObject image;
+        uniform float time;
+        uniform float ratio;
+        uniform vec2 resolution;
+      
+        void main (void) {
+        vec2 p = ( gl_FragCoord.xy / resolution.xy );
+        gl_FragColor = texture2D(img1, p) *(1.0-ratio) +texture2D(img2, p) * ratio;
+        }
+    </script>
+    <script src="app.js"></script>
+    <script type="text/javascript">
+
+        
+        function handle(delta) {
+            
+            if (delta < 0) {
+                //s += "down";
+
+                SceneManager.instance().downScene();
+            }else
+            {
+                SceneManager.instance().upScene();
+            }
+            
+        }
+        /* Event handler for mouse wheel event. */
+        function wheel(event) {
+            var delta = 0;
+            if (!event) event = window.event;
+            if (event.wheelDelta) {
+                delta = event.wheelDelta / 120;
+                if (window.opera) delta = -delta;
+            } else if (event.detail) delta = -event.detail / 3;
+            if (delta) handle(delta);
+        }
+
+        /* Initialization code. */
+        if (window.addEventListener)
+            window.addEventListener('DOMMouseScroll', wheel, false);
+        window.onmousewheel = document.onmousewheel = wheel;
+
+
+        window.onload = function () {
+
+            viewport.width = window.innerWidth;
+            viewport.height = window.innerHeight;
+            bgcanvas.width = window.innerWidth;
+            bgcanvas.height = window.innerHeight;
+
+            uicanvas.width = window.innerWidth;
+            uicanvas.height = window.innerHeight;
+
+            function applyScene()
+            {
+                SceneManager.instance().initBG();
+            }
+
+            function applyshader() {
+
+                var viewportElement = document.getElementById("viewport");
+                viewportElement.width = window.innerWidth;
+                viewportElement.height = window.innerHeight;
+
+                var r; r = function (t, e) { this.x = t, this.y = e };
+                var glsl = Glsl({
+                    canvas: viewportElement,
+                    fragment: document.getElementById("fragment").textContent,
+                    variables: {
+                        image: {
+                            size: new r(Config.BG_SIZE, Config.BG_SIZE), pos: new r((viewportElement.width - Config.BG_SIZE) / 2, (viewportElement.height - Config.BG_SIZE) / 2)
+                        }
+                    , img1: SceneManager.instance().getBGImage1()
+                    , img2: SceneManager.instance().getBGImage1(),
+                        ratio: 0,
+                        time: 0
+                    },
+                    init: function () {
+                    },
+
+                    update: function (time) {
+                        this.set("time", time);
+                        this.set("ratio", SceneManager.instance().getRatio());
+
+                        this.set("img1", SceneManager.instance().getBGImage1());
+                        this.set("img2", SceneManager.instance().getBGImage2());
+
+                    }
+                }).start();
+
+                window.addEventListener("resize", function () {
+                    glsl.setSize(window.innerWidth, window.innerHeight);
+
+                    bgcanvas.width = window.innerWidth;
+                    bgcanvas.height = window.innerHeight;
+
+                    uicanvas.width = window.innerWidth;
+                    uicanvas.height = window.innerHeight;
+
+                    SceneManager.instance().setSize(window.innerWidth, window.innerHeight);
+                });
+
+                //uicanvas.width = window.innerWidth;
+                //uicanvas.height = window.innerHeight;
+
+                
+                SceneManager.instance().setSize(window.innerWidth, window.innerHeight);
+            };
+
+            function applyCanvas() {
+                window.addEventListener("resize", function () {
+                    viewport.width = window.innerWidth;
+                    viewport.height = window.innerHeight;
+                    bgcanvas.width = window.innerWidth;
+                    bgcanvas.height = window.innerHeight;
+                    uicanvas.width = window.innerWidth;
+                    uicanvas.height = window.innerHeight;
+
+                    SceneManager.instance().setSize(window.innerWidth, window.innerHeight);
+
+
+                    if (
+                        document.fullscreenElement ||
+                        document.webkitFullscreenElement ||
+                        document.mozFullScreenElement ||
+                        document.msFullscreenElement
+                    ) {     
+                        SceneManager.instance().fullscreenOn();
+                    } else {
+                        SceneManager.instance().fullscreenOff();
+                    }
+
+                });
+                
+                SceneManager.instance().fadeInStart();
+                SceneManager.instance().setSize(window.innerWidth, window.innerHeight);
+
+            };
+
+            SceneManager.instance().createBG();
+            if (Config.instance().isChrome()==true)
+            {
+                SceneManager.instance().initCanvas();
+                SceneManager.instance().setSize(window.innerWidth, window.innerHeight);
+
+                SceneManager.instance().preload(applyshader, applyScene);
+            } else
+            {
+                
+                SceneManager.instance().initCanvas();
+                SceneManager.instance().setSize(window.innerWidth, window.innerHeight);
+
+                SceneManager.instance().preload(applyCanvas, applyScene);
+            }
+        };
+
+
+    </script>
+</head>
+<body>
+
+    <div id="videocontainer" class="canvasHolder">
+        <canvas id="viewport"></canvas>
+        <canvas id="bgcanvas"></canvas>
+        <canvas id="uicanvas"></canvas>
+    </div>
+
+
+    <div id="about1" class="text30b">
+        ABOUT<br />
+        MEDIA DESIGN
+    </div>
+    <div id="about2" class="text24">
+        <b>동덕여자대학교 디자인대학 미디어디자인학과</b>는<br />
+        디지털 매체의 발달과 함께 빠르게 변화하는 디자인 트랜드에 맞춰<br />
+        <b>창조적으로 발전할 수 있는 디자이너</b>를 길러내는 것을 목표로 한다.
+    </div>
+    <div id="about3" class="text15" style="width:435px;">
+        구체적으로는 인터랙티브, 애니메이션, 영상, 모바일 미디어 등
+        미디어디자인의 각 영역을 이해하고, 그에 관련된 그래픽 툴들의
+        사용 능력을 바탕으로 그에 따른 디자인 응용력을 키운다.
+        <br />
+        미디어디자인학과에서는 저학년에서 기초적인 시각 조형능력을
+        키움과 동시에 그것을 디지털적으로 접목하기 위한 기술들을
+        배운다. 실습과 더불어 디자이너로서 알아야 할 디자인 이론적
+        배경과 디자이너에게 필요한 분석력과 문제 해결 능력에 대한
+        교육도 함께 이루어진다. 또한 고학년에서는 이렇게 다져진
+        기초를 기반으로 실제 작품을 기획 제작하는 능력을 키운다.
+        이미지, 문서, 동영상, 애니메이션, 사운드, 인터랙션을 통합하는
+        인터랙티브 디자인, 다양한 애니메이션 작품을 기획하고 제작하는
+        애니메이션, 라이브액션 활용의 기획, 제작과 후반 작업까지를
+        실습하는 영상 디자인, 디자인 트렌드를 이해하고 정보의 구조화와
+        사용자의 경험에 대해 학습하는 컨텐츠 디자인, 디자이너로서의 자신을
+        프리젠테이션하기 위한 전문가적인 방법을 연구하는 포트폴리오
+        디자인 등의 수업이 제공된다.
+    </div>
+    <div id="about4" class="text15" style="width:435px;">
+        미디어디자인학과는 기초 조형에서부터 첨단 그래픽 프로그램들의
+        기술력, 기획과 제작, 문제 해결과 프레젠테이션 능력까지 배울
+        수 있기 때문에 학생들이 후에 진로를 결정하는 방향에 있어
+        어떠한 선택을 하더라도 그 활용도가 매우 높다는 특성을 가진다.
+        많은 학생들은 방송국, 웹 에이전시, 포털 회사, 게임 회사, 광고
+        기확사, 영상제작사, 기업 홍보실, 애니메이션 회사, 편집 디자인
+        회사, 디자인 솔루션 회사, 모바일 컨텐츠 제작사 등 다양한 분야들 중
+        자신의 적성에 맞는 회사를 선택하여 취업하게 된다.
+    </div>
+    <div id="professor1" class="text30b">
+        PROFESSORS
+    </div>
+    <div id="professor2" class="text18b">
+        이윤희
+    </div>
+    <div id="professor3" class="text15">
+        ANIMATION<br />
+        younlee@dongduk.ac.kr
+    </div>
+    <div id="professor4" class="text18b">
+        임성택
+    </div>
+    <div id="professor5" class="text15">
+        VIDEOGRAPHY<br />
+        phorm@naver.com
+    </div>
+    <div id="professor6" class="text18b">
+        정혜승
+    </div>
+    <div id="professor7" class="text15">
+        INTERACTIVE DESIGN<br />
+        hess@dongduk.ac.kr
+    </div>
+    <div id="professor8" class="text18b">
+        유성호
+    </div>
+    <div id="professor9" class="text15">
+        CONTENTS DESIGN<br />
+        smileysh@naver.com
+    </div>
+    <div id="professor10" class="text18b">
+        황희주
+    </div>
+    <div id="professor11" class="text15">
+        POSTER<br />
+        heyzoohwang@naver.com
+    </div>
+    <div id="student1" class="text30b">
+        STUDENTS
+    </div>
+
+    <div id="sixteenthmdot1" class="text30b">
+        16TH M.DOT
+    </div>
+
+    <div id="sixteenthcommitte1" class="text30b">
+        16TH Committee
+    </div>
+
+    <div id="designprocess1" class="text30b">
+        DESIGN<br />
+        PROCESS
+    </div>
+
+    <div id="sixteenthmdottitle1" class="text15">
+        CONCEPT
+    </div>
+    <div id="sixteenthmdottitle2" class="text15">
+        DESIGN PROCESS
+    </div>
+    <div id="sixteenthmdottitle3" class="text15">
+        16TH COMMITTEE
+    </div>
+    <div id="sixteenthmdot2" class="text18b">
+        오남경
+    </div>
+    <div id="sixteenthmdot3" class="text15">
+        iii2000@naver.com
+    </div>
+
+    <div id="sixteenthmdot4" class="text18b">
+        김연희
+    </div>
+    <div id="sixteenthmdot5" class="text15">
+        yeori13@naver.com
+    </div>
+    <div id="sixteenthmdot6" class="text18b">
+        노효정
+    </div>
+    <div id="sixteenthmdot7" class="text15">
+        gywjd5356@naver.com
+    </div>
+    <div id="sixteenthmdot8" class="text18b">
+        이예림
+    </div>
+    <div id="sixteenthmdot9" class="text15">
+        mari6089@hanmail.net
+    </div>
+
+    <div id="sixteenthmdot10" class="text18b">
+        조다예
+    </div>
+    <div id="sixteenthmdot11" class="text15">
+        xojxo@naver.com
+    </div>
+
+    <div id="sixteenthmdot12" class="text18b">
+        하진아
+    </div>
+    <div id="sixteenthmdot13" class="text15">
+        skywlsdk@naver.com
+    </div>
+
+    <div id="sixteenthmdot14" class="text18b">
+        정혜승 교수님
+    </div>
+    <div id="sixteenthmdot15" class="text15">
+        hess@dongduk.ac.kr
+    </div>
+    <div id="sixteenthmdot16" class="text15b">
+        SCRIPT<br />
+        SOUND<br />
+        예비졸준위<br />
+        폰트제공<br />
+    </div>
+    <div id="sixteenthmdot17" class="text15">
+        장원준<br />
+        정재민<br />
+        강민정 정다정 홍정원<br />
+        YOONDESIGN
+    </div>
+
+    <div id="sixteenthmdot17_1" class="text15">
+        _윤고딕700WEBFONT
+    </div>
+
+
+    <div id="sixteenthmdot18" class="text15">
+        지도교수
+    </div>
+
+    <div id="sixteenthmdot19" class="text15">
+        졸업준비위원장
+    </div>
+
+
+    <div id="interactive_design1" class="text50b">
+        INTERACTIVE DESIGN
+    </div>
+    <div id="animation1" class="text50b">
+        ANIMATION
+    </div>
+    <div id="videography1" class="text50b">
+        VIDEOGRAPHY
+    </div>
+    <div id="contents_design1" class="text50b">
+        CONTENTS DESIGN
+    </div>
+    <div id="poster1" class="text50b">
+        POSTER
+    </div>
+
+
+    <div id="interactive_design_title" class="text30b">
+        INTERACTIVE DESIGN
+    </div>
+    <div id="animation_title" class="text30b">
+        ANIMATION
+    </div>
+    <div id="videography_title" class="text30b">
+        VIDEOGRAPHY
+    </div>
+    <div id="contents_design_title" class="text30b">
+        CONTENTS DESIGN
+    </div>
+    <div id="poster_title" class="text30b">
+        POSTER
+    </div>
+
+
+    <div id="designer" class="btext20b">
+        DESIGNER
+    </div>
+
+    <div id="category" class="btext20b">
+        CATEGORY
+    </div>
+
+
+    <div id="inter1_1" class="btext30b">
+        M.DOT
+    </div>
+    <div id="inter1_2" class="btext15b">
+        김연희 노효정 오남경<br />
+        이예림 조다예 하진아
+    </div>
+    <div id="inter1_3" class="btext15b">
+        Portfoilo Website
+    </div>
+    <div id="inter1_4" class="btext15">
+        m.dot은 동덕여자대학교 미디어디자인학과의 제16회 졸업<br />
+        전시 작품을 담은 인터랙티브 포트폴리오 사이트로서,<br />
+        2015년도 졸업 전시에 관한 모든 이야기를 담아내는 것과<br />
+        더불어 미디어디자인학과에 대한 홍보 목적으로 제작되었다.<br />
+        2015년 동덕여자대학교 미디어디자인학과 제16회 졸업<br />
+        전시회 웹사이트의 키워드는 Spectrum으로, 컨셉을 연상<br />
+
+    </div>
+    <div id="inter1_5" class="btext15">
+        시키는 다채로운 Color와 Wave를 사용하여 시시각각으로<br />
+        변화하며 부드럽게 움직이는 파동을 나타내었다. 다양한 <br />
+        색을 가진 학생들이 모여 끊임없이 변화하고 성장하는 <br />
+        미디어디자인학과 학생들의 모습을 담고자 하였다.<br />
+
+    </div>
+
+
+    <div id="inter2_1" class="btext30b">
+        Animal Farm
+    </div>
+    <div id="inter2_2" class="btext15b">
+        남예은 오연택<br />
+        이주희 홍보미<br />
+    </div>
+    <div id="inter2_3" class="btext15b">
+        E-Book
+    </div>
+    <div id="inter2_4" class="btext15">
+        조지 오웰의 권력의 타락을 풍자한 소설  &lt;동물 농장&gt; 을<br />
+        재구성하여 만든 인터랙티브 E-Book이다. 줄거리와 더불어<br />
+        시대적 배경의 정보를 제공하여 이야기의 이해를 돕는다.<br />
+        스토리 진행 사이에 다양한 애니메이션을 보여줌으로써<br />
+        흥미와 재미를 더한다.<br />
+
+    </div>
+    <div id="inter2_5" class="btext15">
+    </div>
+
+
+
+    <div id="inter3_1" class="btext30b">
+        The Secret forest - 비밀의 숲
+    </div>
+    <div id="inter3_2" class="btext15b">
+        김수려 박경희 오명선
+    </div>
+    <div id="inter3_3" class="btext15b">
+        Interactive e-book
+    </div>
+    <div id="inter3_4" class="btext15">
+        발터 뫼르스의 &lt;엔젤과 크레테&gt; 책의 내용을 각색하여 만든<br />
+        인터렉티브 e-book으로 제작하였다. 마녀에게 납치된<br />
+        오빠를 동생이 구하기 위해 숲에서 겪는 과정을 나타내었다.<br />
+        스테이지들은 비선형적인 구조로 이루어져 있으며,<br />
+        각 숲 속마다의 특징을 살려 마치 현실에는 없는 숲 속에<br />
+        들어와 있는 듯한 느낌을 주었다. 사진과 그림이 함께<br />
+
+    </div>
+    <div id="inter3_5" class="btext15">
+        이루어진 작업으로 비주얼을 중시하였으며 사용자 중심의<br />
+        인터렉션을 통해 흥미롭게 감상할 수 있다.<br />
+    </div>
+
+    <div id="inter4_1" class="btext30b">
+        궁금해요, 곤충의 숲
+    </div>
+    <div id="inter4_2" class="btext15b">
+        김민지 도미래<br />
+        정보경 정지선<br />
+    </div>
+    <div id="inter4_3" class="btext15b">
+        Information Website
+    </div>
+    <div id="inter4_4" class="btext15">
+        5~6살의 어린 아이들을 대상으로 하여 곤충에 대한 흥미를<br />
+        유발하고 정보를 제공하기 위한 웹사이트이다. <br />
+        기본 배경에서 애니메이션을 보여주고 곤충을 클릭하면,<br />
+        정보 창을 띄워 각 곤충과 관련된 인터랙션을 즐기고 정보를<br />
+        제공 받을 수 있도록 하였다. 곤충은 우리나라의 깨끗한 <br />
+        환경에서 서식하는 벌, 하루살이, 매미, 나비, 개미, 무당벌레,<br />
+    </div>
+    <div id="inter4_5" class="btext15">
+        개미귀신, 소금쟁이, 쇠똥구리, 반딧불이, 사슴벌레, 물자라를<br />
+        선정하였다. 각 곤충은 서식하는 환경에 따라 하늘, 지상,<br />
+        지하 3가지 층으로 나누었다.<br />
+
+    </div>
+
+    <div id="inter5_1" class="btext30b">
+        깨비깨비 한국도깨비
+    </div>
+    <div id="inter5_2" class="btext15b">
+        김주연 김지영<br />
+        임주희 정민주<br />
+    </div>
+    <div id="inter5_3" class="btext15b">
+        Information Website
+    </div>
+    <div id="inter5_4" class="btext15">
+        도깨비를 상상했을 때 보통 험상궂은 얼굴에 호피무늬 하의,<br />
+        철퇴를 휘두르는 모습, 머리위로 솟은 두 개의 뿔을 떠올린다.<br />
+        하지만 사실 이것은 도깨비의 모습이 아니라 일본의 못된<br />
+        요괴인 오니의 모습이다. 일본 요괴 오니가 한국 도깨비로<br />
+        둔갑하게 된 원인을 알려주고, 진정한 한국 도깨비의 모습과<br />
+        재미있는 인터렉션을 통해 도깨비에 대한 정보를 알려준다.<br />
+    </div>
+    <div id="inter5_5" class="btext15">
+    </div>
+
+    <div id="inter6_1" class="btext30b">
+        악마를 보았다
+    </div>
+    <div id="inter6_2" class="btext15b">
+        권은혜 윤지혜 조은아
+    </div>
+    <div id="inter6_3" class="btext15b">
+        Information Website
+    </div>
+    <div id="inter6_4" class="btext15">
+        사실 정보를 기반으로 한 정보 인터렉티브 웹사이트이다.<br />
+        희대의 살인마들의 방을 판타지적 요소를 가미하여 재구성<br />
+        하였다. 그들에 대한 정보를 회화적 기법을 통해 사용자에게<br />
+        전달한다. 인터렉 요소와 사운드의 적극적인 활용을 통해<br />
+        사용자로 하여금 공포를 느낄 수 있게 한다.<br />
+    </div>
+    <div id="inter6_5" class="btext15">
+    </div>
+
+    <div id="animation1_1" class="btext30b">
+        DIY Company - 나만의 행성 만들기
+    </div>
+    <div id="animation1_2" class="btext15b">
+        고현경 박경희<br />
+        오명선 허초미
+    </div>
+    <div id="animation1_3" class="btext15b">
+        Motion Graphic
+    </div>
+    <div id="animation1_4" class="btext15">
+        천지창조론 내용을 기반으로, 나만의 행성을 만들 수 있는<br />
+        홈쇼핑 광고를 모션그래픽으로 제작하였다. 제품의 구성을<br />
+        소개한 후, 사용법을 순서대로 설명하고 모세의 7대 재앙을<br />
+        모티브로 하여 몇가지 팁을 보여준다. 이러한 과정을 거쳐서<br />
+        우리가 살고 있는 현대의 모습이 만들어졌음을 해학적으로<br />
+        표현하였다. <br />
+    </div>
+    <div id="animation1_5" class="btext15">
+    </div>
+
+    <div id="animation2_1" class="btext30b">
+        Fantasy Parfait
+    </div>
+    <div id="animation2_2" class="btext15b">
+        정미애
+    </div>
+    <div id="animation2_3" class="btext15b">
+        Digital Animation
+    </div>
+    <div id="animation2_4" class="btext15">
+        Fantasy Parfait는 평범한 여학생 ‘꾸미’가 신비로운<br />
+        숲 속의 한 카페의 파르페를 먹으면서 망상 속으로 빠지게<br />
+        되는 애니메이션이다. 파르페를 먹고 있는 순간 만큼은<br />
+        망상 속의 세계를 마음껏 즐길 수 있는 것을 깨닫게 되지만,<br />
+        다시 현실로 돌아 올 수 밖에 없는 꾸미의 모습을<br />
+        디지털 애니메이션으로 표현하였다.
+    </div>
+    <div id="animation2_5" class="btext15">
+
+    </div>
+
+    <div id="animation3_1" class="btext30b">
+        Girl Talk
+    </div>
+    <div id="animation3_2" class="btext15b">
+        김수현 이소영
+    </div>
+    <div id="animation3_3" class="btext15b">
+        2D Animation
+    </div>
+    <div id="animation3_4" class="btext15">
+        여자들이 수다를 떠는 형태를 단어들이 입에서 귀로,<br />
+        귀에서 입으로 이어지는 모습으로 표현해 뫼비우스의 띠처럼<br />
+        보이도록 했다. 이를 통해 멈추지 않는 여자들의 수다를<br />
+        시각적으로 나타냈다. 또한 여러 시대의 여성들을 연속되게<br />
+        보여주어, 시대를 막론하고 수다를 떠는 여자들의 특성을<br />
+        재미있게 표현하고자 하였다.
+    </div>
+    <div id="animation3_5" class="btext15">
+    </div>
+
+    <div id="animation4_1" class="btext30b">
+        ZOMBIE MOVIE
+    </div>
+    <div id="animation4_2" class="btext15b">
+        정지선
+    </div>
+    <div id="animation4_3" class="btext15b">
+        Animation
+    </div>
+    <div id="animation4_4" class="btext15">
+        커플이 3D 좀비 영화를 본다. 창밖에 수상한 움직임이<br />
+        있지만 그들은 눈치채지 못한다. 잠시 후, 좀비들은 집에<br />
+        쳐들어 오는데, 커플은 3D 안경 때문에 영화로 받아들인다.<br />
+        결국, 커플은 좀비에게 공격을 받는다. 하지만 알고 보니<br />
+        이 모든 것은 3D 안경 광고였다.
+    </div>
+    <div id="animation4_5" class="btext15">
+    </div>
+
+    <div id="animation5_1" class="btext30b">
+        괴물
+    </div>
+    <div id="animation5_2" class="btext15b">
+        홍보미
+    </div>
+    <div id="animation5_3" class="btext15b">
+        Animation
+    </div>
+    <div id="animation5_4" class="btext15">
+        숲 속 친구들과 공놀이를 하고 있던 원숭이는 토끼가 던진<br />
+        공을 놓치고, 찾기 위해 어두운 숲으로 들어간다. 원숭이는<br />
+        그곳에서 만난 괴물(사람)에게 공격을 당하고, 점점 괴로워<br />
+        한다. 원숭이를 걱정하던 토끼와 다람쥐는 원숭이의 집으로<br />
+        찾아가지만, 괴물로 변해버린 원숭이는 친구들을 공격한다. <br />
+        원숭이 자신이 괴물로 보았던 사람으로 변해가는 과정을<br />
+
+
+    </div>
+    <div id="animation5_5" class="btext15">
+        표현하였다. 사람이 다른 생물에게는 괴물이 될 수도 있다는<br />
+        것을 이야기한다.<br />
+
+    </div>
+
+    <div id="animation6_1" class="btext30b">
+        눈코입귀
+    </div>
+    <div id="animation6_2" class="btext15b">
+        이주희
+    </div>
+    <div id="animation6_3" class="btext15b">
+        2D Cell Animation
+    </div>
+    <div id="animation6_4" class="btext15">
+        우리는 살아가면서 가끔 생각한다.<br />
+        ‘못 들었더라면, 차라리 못 봤더라면..’ 그렇게 생각지도 못한<br />
+        외부 상황에 노출되어 감정과 생각에 상처를 받는다. 삶에 <br />
+        치여 점점 지쳐만 가는 한 사람의 모습을 보여주고자 한다. <br />
+        주인공 희주의 힘들고 지친 마음을 거친 드로잉과 자유로운<br />
+        선으로 표현하였다. <br />
+
+
+    </div>
+    <div id="animation6_5" class="btext15">
+    </div>
+
+    <div id="animation7_1" class="btext30b">
+        등골 브레이커
+    </div>
+    <div id="animation7_2" class="btext15b">
+        양수련 윤새봄 임소리
+    </div>
+    <div id="animation7_3" class="btext15b">
+        Stop Motion Animation
+    </div>
+    <div id="animation7_4" class="btext15">
+        '자녀들이 부모님의 등골을 빨아먹는다'라는 것을<br />
+        모티브로 한 엄마와 아들 이야기의 애니메이션이다.<br />
+        스토리는 아기-어린이-청소년-대학생-사회인 순으로,<br />
+        세월의 흐름에 따라 전개되며 순환되는 현실을 통해<br />
+        자녀들의 잘못된 세태에 대한 경각심을 일으킨다.
+
+    </div>
+    <div id="animation7_5" class="btext15">
+    </div>
+
+    <div id="animation8_1" class="btext30b">
+        묘구전설
+    </div>
+    <div id="animation8_2" class="btext15b">
+        박정윤 이다정<br />
+        이서현 정주희
+    </div>
+    <div id="animation8_3" class="btext15b">
+        Animation
+    </div>
+    <div id="animation8_4" class="btext15">
+        토끼와 거북이가 서로를 골탕 먹이기 위해 끊임없이 몸을<br />
+        변형시키며 싸운다. 결국 원래의 모습은 사라지고, 전설의<br />
+        동물을 연상시키는 괴물로 변해 하늘로 승천한다.  시간이<br />
+        지나 토끼와 거북이의 승천하는 모습은 동굴 벽화로 남아<br />
+        원주민들의 숭배를받는다. <br />
+
+    </div>
+    <div id="animation8_5" class="btext15">
+    </div>
+
+    <div id="animation9_1" class="btext30b">
+        백일홍
+    </div>
+    <div id="animation9_2" class="btext15b">
+        정채원 최새봄나
+    </div>
+    <div id="animation9_3" class="btext15b">
+        2D Cell Animation
+    </div>
+    <div id="animation9_4" class="btext15">
+        백일홍 전설을 모티브로 하여 참혹한 일제 시대 속에 피어난<br />
+        남녀의 비극적인 사랑을 표현하려 하였다. 오리지널 전설의<br />
+        내용은 내레이션으로 진행되고, 화면에 비치는 이미지는<br />
+        일제강점기 시대로 재해석하여 기존 전설의 내용을 단지<br />
+        애니메이션화 시킨 것이 아닌 조선의 어두웠던 시대를<br />
+        전설의 이야기에 대입하여 비유적으로 나타내려고 하였다.
+
+
+    </div>
+    <div id="animation9_5" class="btext15">
+        한국적이고 무거운 작품의 분위기를 효과적으로 표현하기<br />
+        위하여 단순하지만 강렬해 보이는 그래픽으로 표현하였다.
+    </div>
+
+    <div id="animation10_1" class="btext30b">
+        빅도그
+    </div>
+    <div id="animation10_2" class="btext15b">
+        김혜주 윤소담<br />
+        이민아 이정민
+    </div>
+    <div id="animation10_3" class="btext15b">
+        2D Animation
+    </div>
+    <div id="animation10_4" class="btext15">
+        노인과 강아지는 평범한 일상을 보내고 있는 어느 날,<br />
+        그들의 사는 지역에 UFO가 등장하게 된다. 그 영향으로 인해<br />
+        마을의 동물들이 변형되고, 노인의 강아지 역시 변형이 일어<br />
+        나게 되었다. 노인은 흉측하게 변형된 반려동물에게 공포를<br />
+        느끼고 도망치려고 한다. 변형된 강아지는 주인과 여전히<br />
+        교감하고 싶어 한다. 할아버지가 변형된 강아지에게 느끼는 <br />
+
+    </div>
+    <div id="animation10_5" class="btext15">
+        미묘한 감정의 변화, 갈등 그리고 해프닝을 다루었다. 반려<br />
+        동물이 변형된 상태에서 노인은 과연 변함없는 애정으로<br />
+        강아지를 대할 수 있을까? <br />
+
+    </div>
+
+    <div id="animation11_1" class="btext30b">
+        실
+    </div>
+    <div id="animation11_2" class="btext15b">
+        나현아
+    </div>
+    <div id="animation11_3" class="btext15b">
+        Digital Cell Animation
+    </div>
+    <div id="animation11_4" class="btext15">
+        사랑하는 사람과 헤어지게 된 여자가 이별의 아픔을<br />
+        이겨내는 과정을 그려냈다. 무채색의 사용으로 차갑고 우울한<br />
+        분위기를 표현하였으며, 상징적인 요소에 사랑을 의미하는<br />
+        빨간색을 넣어 의미를 부여하였다. 그리고 주인공의 표정을<br />
+        최대한 절제하여 작품 속 인물의 감정이 보는 이들에게<br />
+        과하게 느껴지지 않도록 연출하였다.
+    </div>
+    <div id="animation11_5" class="btext15">
+    </div>
+
+    <div id="animation12_1" class="btext30b">
+        창문넘어 도망친 100세 노인
+    </div>
+    <div id="animation12_2" class="btext15b">
+        김수려 노효정<br />
+        조다예 조은아
+    </div>
+    <div id="animation12_3" class="btext15b">
+        Opening Title Sequence
+    </div>
+    <div id="animation12_4" class="btext15">
+        동명 소설 원작의 영화 타이틀 시퀀스를 제작하였다. 소설의<br />
+        주인공인 100세 노인은 여러 차례의 폭발을 일으키며 다양한<br />
+        나라를 떠돌아다닌다. 노인이 겪어온 수많은 사건들과 그가<br />
+        여행했던 각 지역의 특징을 담은 이미지를 중심으로 작업을<br />
+        진행하였다. 마치 동화책을 보는 듯한 일러스트로 영화가 <br />
+        엉뚱한 느낌을 살리고자 하였다. 각 씬마다 폭탄이 터지는데,<br />
+
+
+    </div>
+    <div id="animation12_5" class="btext15">
+        이것은 노인이 가는 곳마다 폭탄을 터뜨리면서 사건이 진행<br />
+        된다는 것을 상징하는 것이다.<br />
+    </div>
+
+    <div id="contents1_1" class="btext30b">
+        Bluelink Infortainment <br />
+        & Smart Watch<br />
+
+    </div>
+    <div id="contents1_2" class="btext15b">
+        김보경 순별이 신민아 이소영
+    </div>
+    <div id="contents1_3" class="btext15b">
+        Infortainment & Smart Watch
+    </div>
+    <div id="contents1_4" class="btext15">
+        현대자동차가 제공하는 블루링크 시스템의 인포테인먼트를<br />
+        리디자인하고, 이와 연동되는 스마트 워치를 제작하였다.<br />
+        인포테인먼트와 스마트 워치의 연동은 자동차와 사용자를<br />
+        하나로 연결 시켜준다. 이를 통해 원격제어 기능 및 음성안내,<br />
+        맞춤 인공지능 시스템 등 사용자의 편의를 높이는 서비스를<br />
+        제공하여 블루링크 시스템의 효율성 및 사용자를 위한<br />
+        사용성을 높일 수 있도록 하였다.<br />
+
+    </div>
+    <div id="contents1_5" class="btext15">
+
+    </div>
+
+    <div id="contents2_1" class="btext30b">
+        Booze
+    </div>
+    <div id="contents2_2" class="btext15b">
+        배하린 송연아
+    </div>
+    <div id="contents2_3" class="btext15b">
+        술관련 sns 애플리케이션
+    </div>
+    <div id="contents2_4" class="btext15">
+        다 같이 즐기며 커뮤니케이션할 수 있는 '술'에 관한<br />
+        애플리케이션이다. 여러 앱을 다운로드 할 필요 없이<br />
+        가고 싶은 술집 검색, 친구들과의 약속시간 정하기를<br />
+        하나의 앱에서 가능하게 하는 것이 목적이다.<br />
+        또한 술자리에서 함께 즐길 수 있는 게임 기능이 있다.<br />
+
+    </div>
+    <div id="contents2_5" class="btext15">
+    </div>
+
+    <div id="contents3_1" class="btext30b">
+        E-SMART
+    </div>
+    <div id="contents3_2" class="btext15b">
+        오남경 윤지혜<br />
+        임소리 허초미
+    </div>
+    <div id="contents3_3" class="btext15b">
+        Smart Cart
+    </div>
+    <div id="contents3_4" class="btext15">
+        E-SMART란 Emart Smart Cart의 약자로, 이마트 고객의<br />
+        편의를 위해 큐레이션 시스템을 통하여 사용자의 성향을<br />
+        파악하고 다양한 정보를 제공하는 이마트 쇼핑 내비게이션<br />
+        앱이다. 소비자의 구매 성향을 파악하여 맞춤 상품을 추천<br />
+        해주고, 증강현실 시스템을 이용하여 상품의 위치 안내와<br />
+        세일 정보를 제공해준다.<br />
+    </div>
+    <div id="contents3_5" class="btext15">
+    </div>
+
+    <div id="contents4_1" class="btext30b">
+        Kids Keeper
+    </div>
+    <div id="contents4_2" class="btext15b">
+        나현아 남예은 신효진<br />
+        오연택 정미애
+    </div>
+    <div id="contents4_3" class="btext15b">
+        Smart Watch
+    </div>
+    <div id="contents4_4" class="btext15">
+        보호자와의 의사소통과 어린이의 안전을 위한 웨어러블<br />
+        디바이스이다. 평균 8~10세의 사용자 연령을 고려해 간단한<br />
+        조작과 메뉴로 이루어져 있다. 우주를 컨셉으로 한 디자인과<br />
+        모션 및 다양한 컨셉의 테마를 통하여 흥미를 유발하였다.<br />
+        ‘안전’을 특화 기능으로 내세워 보호자의 어플과 연동하여<br />
+        사용자의 위험상황 알림 및 위치 공유가 가능하다.<br />
+
+    </div>
+    <div id="contents4_5" class="btext15">
+    </div>
+
+    <div id="contents5_1" class="btext30b">
+        Midi Kiosk
+    </div>
+    <div id="contents5_2" class="btext15b">
+        권은혜 박성현 이정민<br />
+        조다예 하진아
+    </div>
+    <div id="contents5_3" class="btext15b">
+        학과 키오스크
+    </div>
+    <div id="contents5_4" class="btext15">
+        미디어디자인학과 홍보 및 학생들의 편의를 돕기 위한<br />
+        학과 키오스크이다. 디자인 컨셉은 Movement & Folding<br />
+        Paper이다. 모션 그래픽을 적극적으로 이용하여 사용자가<br />
+        흥미를 느낄 수 있도록 유도했다. 학과생을 위한 기본기능<br />
+        이외에도 선배 인터뷰 영상 수록과 얼굴인식을 이용한 포토<br />
+        인터랙션, 선후배 매칭 시스템 등 다양한 컨텐츠를 제공한다.<br />
+
+    </div>
+    <div id="contents5_5" class="btext15">
+    </div>
+
+    <div id="contents6_1" class="btext30b">
+        Multi Talk
+    </div>
+    <div id="contents6_2" class="btext15b">
+        김선형
+    </div>
+    <div id="contents6_3" class="btext15b">
+        멀티음성채팅어플
+    </div>
+    <div id="contents6_4" class="btext15">
+        Multi Talk은 음성 채팅을 기반으로 한 멀티태스킹 음성<br />
+        채팅 애플리케이션이다. 그룹 음성 통신이 가능하며,<br />
+        화면 공유와 정보 공유를 할 수 있다. 계정 로그인을 통해<br />
+        APP상의 친구를 사귈 수 있고, 1:1 방식이 아닌 다수의<br />
+        사용자와 채팅 할 수 있는 것이 특징이다. 또한, 컴퓨터와<br />
+        Bluetooth 연결을 통해 컴퓨터 음향을 스마트폰으로 <br />
+        들을 수 있고 마이크 음성 및 사운드 조절이 가능하다.
+
+    </div>
+    <div id="contents6_5" class="btext15">
+
+    </div>
+
+    <div id="contents7_1" class="btext30b">
+        My Fitness Partner
+    </div>
+    <div id="contents7_2" class="btext15b">
+        고현경 김연희 김혜주<br />
+        윤소담 조은아
+    </div>
+    <div id="contents7_3" class="btext15b">
+        Application
+    </div>
+    <div id="contents7_4" class="btext15">
+        누구나 혼자서도 재미있게 운동할 수 있는 스마트 코치 운동<br />
+        어플리케이션이다. 여러 가지 운동을 집중적으로 코치해 줌<br />
+        으로써 사용자의 흥미를 유도하였다. 다양한 운동정보와<br />
+        효과적인 PT프로그램을 제공하여 쉽게 사용할 수 있으며,<br />
+        정확한 부위별 운동을 할 수 있게 도와준다.  추가적으로<br />
+        커뮤니티, 함께해요, 응원메시지 기능 등을 통해 친구들과<br />
+        사용자 서로에게 운동 동기부여를 해줄 수 있다.<br />
+
+
+    </div>
+    <div id="contents7_5" class="btext15">
+
+    </div>
+
+    <div id="contents8_1" class="btext30b">
+        서울시티투어버스<br /> 정류장 키오스크
+    </div>
+    <div id="contents8_2" class="btext15b">
+        김아란 이소라<br />
+        정채원 최새봄나
+    </div>
+    <div id="contents8_3" class="btext15b">
+        키오스크용 어플리케이션
+    </div>
+    <div id="contents8_4" class="btext15">
+        서울 시티투어버스 정류장에 설치되는 키오스크로써<br />
+        버스를 통해 관광하는 이용객들에게 유용한 관광정보를<br />
+        제공한다. 해당 정류장 주변의 관광지 안내부터 맛 집 소개,<br />
+        체험행사 등 여행에 가장 필요한 요소들을 담았다.<br />
+        직관적인 그래픽과 시티투어버스의 아이덴티티인 레드<br />
+        컬러를 사용하여 사용자가 알아보기 쉽도록 표현하였다.<br />
+
+    </div>
+    <div id="contents8_5" class="btext15">
+    </div>
+
+    <div id="contents9_1" class="btext30b">
+        한글 박물관
+    </div>
+    <div id="contents9_2" class="btext15b">
+        도미래 이민아 양수련<br />
+        정하나 한소린
+    </div>
+    <div id="contents9_3" class="btext15b">
+        박물관 키오스크
+    </div>
+    <div id="contents9_4" class="btext15">
+        아이들이 한글에 재미를 느끼고 알아가기 위해 설치된 터치<br />
+        스크린이다. 아이들을 대상으로 제작된 터치스크린이기<br />
+        때문에 다양한 색을 사용하여 디자인하였다. 한글에 대한<br />
+        정보를 알려주며, 한글 관련 게임과 직접 자신의 얼굴을<br />
+        찍어보는 카메라 기능 등이 있어, 아이들뿐만 아니라 모든<br />
+        사용자가 흥미를 가지고 이용할 수 있게 하였다.<br />
+    </div>
+    <div id="contents9_5" class="btext15">
+    </div>
+
+    <div id="poster1_1" class="btext30b">
+        Honey Land Children's Festival
+    </div>
+    <div id="poster1_2" class="btext15b">
+        고현경
+    </div>
+    <div id="poster1_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster1_4" class="btext15">
+        파주 Honey Land 어린이 페스티벌 포스터이다.<br />
+        Honey Land라는 느낌을 주기 위해 꿀과 꿀벌을<br />
+        전체적으로 사용하였고 놀이기구와 서커스 등을<br />
+        이용하여 어린이 페스티벌을 표현하였다.
+    </div>
+    <div id="poster1_5" class="btext15">
+    </div>
+
+    <div id="poster2_1" class="btext30b">
+        Bad Joyscoutt<br />
+        콘서트 포스터
+    </div>
+    <div id="poster2_2" class="btext15b">
+        권은혜
+    </div>
+    <div id="poster2_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster2_4" class="btext15">
+        젊고, 골 때리는 음악을 좋아하는 팀 Bad Joyscoutt의<br />
+        콘서트 포스터. 두 멤버를 중앙 메인 그래픽으로<br />
+        등장시켜 그들의 공연임을 한눈에 알 수 있게 하였다.
+    </div>
+    <div id="poster2_5" class="btext15">
+    </div>
+
+    <div id="poster3_1" class="btext30b">
+        Festive China
+    </div>
+    <div id="poster3_2" class="btext15b">
+        김민지
+    </div>
+    <div id="poster3_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster3_4" class="btext15">
+        한국인을 대상으로 만든 중국 관광 홍보 포스터이다.<br />
+        중국의 등(燈), 경극 무희, 꽃, 불꽃놀이 등을 배치하여<br />
+        중국의 화려하고 흥겨운 축제 이미지를 표현했다.
+    </div>
+    <div id="poster3_5" class="btext15">
+    </div>
+
+    <div id="poster4_1" class="btext30b">
+        한국 공예 트렌드 페어 포스터
+    </div>
+    <div id="poster4_2" class="btext15b">
+        김보경
+    </div>
+    <div id="poster4_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster4_4" class="btext15">
+        한국에서 열리는 &lt;한국 공예 트렌드 페어&gt; 포스터이다.<br />
+        한국의 다양한 문양과 색상, 공예품을 함께 구성하여<br />
+        한국의 이미지를 표현하였다.
+    </div>
+    <div id="poster4_5" class="btext15">
+    </div>
+
+    <div id="poster5_1" class="btext30b">
+        어린이 전통놀이 한마당
+    </div>
+    <div id="poster5_2" class="btext15b">
+        김선형
+    </div>
+    <div id="poster5_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster5_4" class="btext15">
+        한국적인 이미지로 전통놀이를 표현하고자하였다.<br />
+        팽이치기, 널뛰기, 연날리기, 기와집, 승무, 등 한국적인<br />
+        요소를 사용하여, 전통놀이를 홍보하는 포스터이다.
+    </div>
+    <div id="poster5_5" class="btext15">
+    </div>
+
+    <div id="poster6_1" class="btext30b">
+        신비로운 제주 씨월드
+    </div>
+    <div id="poster6_2" class="btext15b">
+        김수려
+    </div>
+    <div id="poster6_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster6_4" class="btext15">
+        제주도 우도에 위치한 잠수함 관광포스터이다. <br />
+        푸른색과 보랏빛을 사용하여 제주도 바다의 환상적인 느낌을<br />
+        표현했다. 노란 잠수함을 중심으로 아름다운 심해 속 산호와<br />
+        물고기들을 구성했다.
+    </div>
+    <div id="poster6_5" class="btext15">
+    </div>
+
+    <div id="poster7_1" class="btext30b">
+        츄라우미 수족관
+    </div>
+    <div id="poster7_2" class="btext15b">
+        김수현
+    </div>
+    <div id="poster7_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster7_4" class="btext15">
+        일본 오키나와에 있는 츄라우미수족관을 홍보하는<br />
+        포스터이다. 일본 전통 문양과 어류의 형태를<br />
+        이용하여 일본 류큐제도에 있는 섬 오키나와의<br />
+        아쿠아리움을 표현하였다.
+    </div>
+    <div id="poster7_5" class="btext15">
+    </div>
+
+    <div id="poster8_1" class="btext30b">
+        당진 월드 아트 서커스
+    </div>
+    <div id="poster8_2" class="btext15b">
+        김아란
+    </div>
+    <div id="poster8_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster8_4" class="btext15">
+        당진 월드 아트 서커스의 홍보 포스터이다.<br />
+        서커스의 여러 가지 요소들을 이용하여 서커스가<br />
+        펼쳐지는 무대의 모습을 표현하고자 하였다.
+    </div>
+    <div id="poster8_5" class="btext15">
+    </div>
+
+    <div id="poster9_1" class="btext30b">
+        The House of The Scorpion
+    </div>
+    <div id="poster9_2" class="btext15b">
+        김연희
+    </div>
+    <div id="poster9_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster9_4" class="btext15">
+        이 작품은 ‘전갈의 아이’라는 소설을 바탕으로 제작된<br />
+        애니메이션 홍보 포스터이다. ‘전갈의 아이’는 복제인간에<br />
+        관한 어두운 내용의 청소년 소설이다. 주인공 마트와 그를<br />
+        복제한 알라크란을 전갈과 함께 대칭적인 구조로 배치해서<br />
+        작품의 내용을 반영하였다.
+    </div>
+    <div id="poster9_5" class="btext15">
+    </div>
+
+    <div id="poster10_1" class="btext30b">
+        2015十王圖 (시왕도)<br /> 개인전 포스터
+    </div>
+    <div id="poster10_2" class="btext15b">
+        김주연
+    </div>
+    <div id="poster10_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster10_4" class="btext15">
+        열 개의 지옥을 나타내는 十王圖(시왕도)를<br />
+        주제로 한 개인전 홍보 포스터이다. 지옥의 모습을<br />
+        일러스트화하여 나타내었다.<br />
+    </div>
+    <div id="poster10_5" class="btext15">
+    </div>
+
+    <div id="poster11_1" class="btext30b">
+        애니메이션 영화<br /> '미요리의 숲' 포스터
+    </div>
+    <div id="poster11_2" class="btext15b">
+        김지영
+    </div>
+    <div id="poster11_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster11_4" class="btext15">
+        애니메이션 영화 '미요리의 숲' 포스터를 재구성하였다.<br />
+        숲에서 다양한 요정들과 숲의 정령들을 볼 수 있는<br />
+        능력이 생겨 그들과 함께 이야기를 꾸며가는 내용으로<br />
+        신비한 동식물과 함께 어딘가 공포스러우면서도<br />
+        판타지적인 분위기를 표현했다.<br />
+    </div>
+    <div id="poster11_5" class="btext15">
+    </div>
+
+    <div id="poster12_1" class="btext30b">
+        Fleetwood Mac<br />
+        콘서트 포스터 &lt;Dreams&gt;
+    </div>
+    <div id="poster12_2" class="btext15b">
+        김혜주
+    </div>
+    <div id="poster12_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster12_4" class="btext15">
+        영국의 밴드 플릿우드 맥의 &lt;드림즈&gt; 콘서트 포스터이다.<br />
+        레드계열의 하늘과 그린계열로 자연을 이루었고, 산의 면을<br />
+        분할시켰으며 사슴과 유니콘 등 다양한 동물들을 넣어<br />
+        비현실적인 분위기를 연출하고자 하였다.<br />
+    </div>
+    <div id="poster12_5" class="btext15">
+    </div>
+
+    <div id="poster13_1" class="btext30b">
+        Death Grips<br />내한공연 포스터
+    </div>
+    <div id="poster13_2" class="btext15b">
+        나현아
+    </div>
+    <div id="poster13_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster13_4" class="btext15">
+        캘리포니아 출신의 익스페리먼틀 힙합 그룹 데스 그립스의<br />
+        내한공연 포스터. 기괴하고 날카롭지만 그들의 자유로운<br />
+        열정이 느껴지는 음악을 톡톡 튀는 색상과 사람의 신체를<br />
+        이용하여 독특하게 표현하였다.<br />
+    </div>
+    <div id="poster13_5" class="btext15">
+    </div>
+
+    <div id="poster14_1" class="btext30b">
+        나미야 잡화점의 기적
+    </div>
+    <div id="poster14_2" class="btext15b">
+        노효정
+    </div>
+    <div id="poster14_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster14_4" class="btext15">
+        일본 소설인 '나미야 잡화점의 기적'을 바탕으로 제작된<br />
+        애니메이션 영화 포스터이다. 늦은 저녁, 나미야 잡화점의<br />
+        주인인 할아버지가 누군가가 보낸 고민 상담 편지에 답신<br />
+        써주는 모습을 표현했으며, 잡화점을 부각시키기 위해서<br />
+        배경과 대비되는 컬러로 내부를 꾸며 디자인했다.
+
+    </div>
+    <div id="poster14_5" class="btext15">
+    </div>
+
+    <div id="poster15_1" class="btext30b">
+        Paper Festival
+    </div>
+    <div id="poster15_2" class="btext15b">
+        도미래
+    </div>
+    <div id="poster15_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster15_4" class="btext15">
+        다양한 종이를 알고, 종이를 이용해 여러 가지 작품을<br />
+        만들어보는 가상의 종이 축제 포스터이다.<br />
+        종이로 다양한 것을 만들 수 있다는 것을 알리기 위해<br />
+        다양한 성격으로 만들어진 사물을 배치하였고,<br />
+        종이의 질감을 입혔다. 축제의 성격에 맞게 종이를<br />
+        이용한 느낌을 살려 디자인하였다.
+
+    </div>
+    <div id="poster15_5" class="btext15">
+    </div>
+
+    <div id="poster16_1" class="btext30b">
+        네 가족을 믿지말라<br />
+        THE SPELLMAN FILES
+    </div>
+    <div id="poster16_2" class="btext15b">
+        박경희
+    </div>
+    <div id="poster16_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster16_4" class="btext15">
+        소설이 원작인 &lt;네 가족을 믿지 말라&gt;를 2D 애니메이션의<br />
+        영화 포스터로 제작했다. 아빠의 취미는 가정 내 도청, 엄마<br />
+        취미는 딸 남자친구 신원 조사 그리고 여동생의 취미는 가족<br />
+        미행… 범상치 않은 스펠만 가족의 이야기를 담았다.<br />
+        스토리에 따라 신문 뒤에 숨어서 누군가를 관찰하는 모습과<br />
+        전봇대 뒤에 숨어 누군가를 미행하는 모습, 그 밖에도 서로<br />
+        의심하고 감시하는듯한 장면들을 디테일하게 넣었다. 서브<br />
+        캐릭터와 배경은 전체적으로 톤 다운을 시켜 부정적이면서<br />
+        어두운 느낌을 주었다.
+    </div>
+    <div id="poster16_5" class="btext15">
+    </div>
+
+    <div id="poster17_1" class="btext30b">
+        은하철도의 밤
+    </div>
+    <div id="poster17_2" class="btext15b">
+        박성현
+    </div>
+    <div id="poster17_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster17_4" class="btext15">
+        일본 아동소설 은하철도의 밤을 원작으로 한 애니메이션<br />
+        영화 개봉 포스터이다. 주인공 소년과 그의 친구가 기차를<br />
+        타고 은하수를 여행하는 내용으로 은하를 여행하며<br />
+        바라보는 풍경을 포스터에 담았다.
+
+    </div>
+    <div id="poster17_5" class="btext15">
+    </div>
+
+    <div id="poster18_1" class="btext30b">
+        Colorful Turkey
+    </div>
+    <div id="poster18_2" class="btext15b">
+        박정윤
+    </div>
+    <div id="poster18_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster18_4" class="btext15">
+        동서양 문명의 교차로라 불리는 터키 여행 홍보 포스터이다.<br />
+        각양각색의 터키 전통 등장식을 메인으로 전반에 배치하고<br />
+        등 안에 대표 관광지, 문양 등을 넣어 볼거리를 가미했다.
+    </div>
+    <div id="poster18_5" class="btext15">
+    </div>
+
+    <div id="poster19_1" class="btext30b">
+        소년시대
+    </div>
+    <div id="poster19_2" class="btext15b">
+        배하린
+    </div>
+    <div id="poster19_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster19_4" class="btext15">
+        소설가 로버트 매캐먼의 작품 '소년시대'의 애니메이션 영화<br />
+        포스터이다. 미스터리 한 살인 사건으로 인하여 어린 소년이<br />
+        성장하며 겪는 마법 같은 일들에 대한 책이다. 작품 속에서<br />
+        등장하는 앵무새와 강에 사는 괴물, 소년, 모자 등 다양한<br />
+        소재를 그래픽으로 표현하였다.
+    </div>
+    <div id="poster19_5" class="btext15">
+    </div>
+
+    <div id="poster20_1" class="btext30b">
+        Innisfree from JEJU
+    </div>
+    <div id="poster20_2" class="btext15b">
+        송연아
+    </div>
+    <div id="poster20_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster20_4" class="btext15">
+        자연주의와 청정함을 모토로 삼고 있는 이니스프리의<br />
+        제주 하우스 홍보 포스터이다. 제주 하우스 제품에 활용된<br />
+        제주 동백, 유채꽃, 올리브 등을 사용하여 자연과<br />
+        어우러지는 소녀를 표현하였다.
+
+    </div>
+    <div id="poster20_5" class="btext15">
+    </div>
+
+
+    <div id="poster21_1" class="btext30b">
+        서울관광 홍보포스터
+    </div>
+    <div id="poster21_2" class="btext15b">
+        순별이
+    </div>
+    <div id="poster21_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster21_4" class="btext15">
+        대한민국의 도시, 서울을 알리는 관광 홍보 포스터이다.<br />
+        서울의 대표적인 이미지들을 일러스트로 구성하여<br />
+        다양하게 표현하고자 하였다.
+
+    </div>
+    <div id="poster21_5" class="btext15">
+    </div>
+
+    <div id="poster22_1" class="btext30b">
+        서울리빙디자인페어 홍보 포스터
+    </div>
+    <div id="poster22_2" class="btext15b">
+        신민아
+    </div>
+    <div id="poster22_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster22_4" class="btext15">
+        코엑스에서 열리는 서울리빙디자인페어 홍보 포스터이다.<br />
+        부스별로 진행되는 행사 특성을 나타내고자 직육면체를<br />
+        활용해 디자인하였고 실제 전시되는 디자인 캐릭터 상품을<br />
+        활용하여 작품에 재미와 역동성을 주었다.
+
+    </div>
+    <div id="poster22_5" class="btext15">
+    </div>
+
+    <div id="poster23_1" class="btext30b">
+        The City of Dreaming Books
+    </div>
+    <div id="poster23_2" class="btext15b">
+        신효진
+    </div>
+    <div id="poster23_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster23_4" class="btext15">
+        도서 ‘꿈꾸는 책들의 도시(The City of Dreaming Books)<br />
+        의 영문판 발매 홍보 포스터이다. 책들의 도시 부흐하임에서<br />
+        주인공에게 펼쳐지는 모험을 그린 이야기로, 책속의 공간과<br />
+        책을 향해 뻗어있는 공룡의 손을 통해 책들의 도시와<br />
+        주인공을 상징적으로 표현하였다.
+
+    </div>
+    <div id="poster23_5" class="btext15">
+    </div>
+
+    <div id="poster24_1" class="btext30b">
+        2015 Ultimate Sneaker Expo
+    </div>
+    <div id="poster24_2" class="btext15b">
+        양수련
+    </div>
+    <div id="poster24_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster24_4" class="btext15">
+        미국 뉴욕 롱아일랜드 지역에서 흑인 신발 컬렉터들이 주최<br />
+        하는 스니커 엑스포 행사 포스터이다. 스니커 엑스포는 신발<br />
+        컬렉터들의 큰 축제라는 점과 타 엑스포와 다르게 펑키하고<br />
+        개성 넘치는 엑스포라는 점에 착안하여, 행사장 내에 보이는<br />
+        여러 종류의 신발을 팝한 컬러와 물감을 뿌린 듯한 효과를<br />
+        이용해 표현하였다.
+
+    </div>
+    <div id="poster24_5" class="btext15">
+    </div>
+
+    <div id="poster25_1" class="btext30b">
+        LUCITE TOKKI 콘서트
+    </div>
+    <div id="poster25_2" class="btext15b">
+        오남경
+    </div>
+    <div id="poster25_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster25_4" class="btext15">
+        LUCITE TOKKI는 한국의 여성듀오 인디밴드이다.<br />
+        여성스러우면서도 톡톡 튀는 음색으로 사랑받는<br />
+        LUCITE TOKKI의 콘서트 홍보 포스터를 제작하였다.
+
+    </div>
+    <div id="poster25_5" class="btext15">
+    </div>
+
+    <div id="poster26_1" class="btext30b">
+        WES ANDERSON <br />
+        COLLECTION BOOK
+    </div>
+    <div id="poster26_2" class="btext15b">
+        오명선
+    </div>
+    <div id="poster26_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster26_4" class="btext15">
+        Wes Anderson의 영화 속 이야기와 일러스트가 담긴<br />
+        컬렉션 북 출시 홍보 포스터이다. 영화 속에 등장하는<br />
+        건물들과 캐릭터들을 일러스트로 표현하여 한 마을처럼<br />
+        구성하였으며, 캐릭터들에 중점을 두어 표현하였다.
+
+
+    </div>
+    <div id="poster26_5" class="btext15">
+    </div>
+
+    <div id="poster27_1" class="btext30b">
+        부산 국제 매직 페스티벌
+    </div>
+    <div id="poster27_2" class="btext15b">
+        오연택
+    </div>
+    <div id="poster27_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster27_4" class="btext15">
+        마술 도구들과 퍼포먼스들을 나타내는 아이템들을 이용하여<br />
+        매직 페스티벌을 표현하였다. 실사 사진과 일러스트를 콜라주<br />
+        형식으로 배치하여 재미를 주었으며, 다양한 오브제들이<br />
+        공간감이 느껴지도록 표현한 것이 특징이다. 밝고 다채로운<br />
+        컬러를 사용하여 즐거운 이미지를 표현하였다.
+
+
+    </div>
+    <div id="poster27_5" class="btext15">
+    </div>
+
+    <div id="poster28_1" class="btext30b">
+        2015 Daegu Chimac Festival
+    </div>
+    <div id="poster28_2" class="btext15b">
+        윤새봄
+    </div>
+    <div id="poster28_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster28_4" class="btext15">
+        대구 두류공원에서 열리는 먹고, 마시고, 즐기는 축제의<br />
+        젊은이들의 열정과 끼를 컬러풀하게 표현했으며 공연과<br />
+        물놀이 체험, 맥주 빨리 마시기, 닭싸움 대회가 진행되는 것을<br />
+        닭 다리, 날개, 목 모양 등, 조각 위에 캐릭터와 컨텐츠들을<br />
+        통해 재미있게 표현했다.
+    </div>
+    <div id="poster28_5" class="btext15">
+    </div>
+
+    <div id="poster29_1" class="btext30b">
+        Silent Disco Party
+    </div>
+    <div id="poster29_2" class="btext15b">
+        윤소담
+    </div>
+    <div id="poster29_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster29_4" class="btext15">
+        홍대에서 열리는 싸일런트 디스코 파티 홍보 포스터이다.<br />
+        디스코와 어울리는 팝한 컬러를 사용하였고, 춤을 추는<br />
+        사람들과 미러볼을 사용하여 시각화하였다.
+    </div>
+    <div id="poster29_5" class="btext15">
+    </div>
+
+    <div id="poster30_1" class="btext30b">
+        The Blue Deer
+    </div>
+    <div id="poster30_2" class="btext15b">
+        윤지혜
+    </div>
+    <div id="poster30_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster30_4" class="btext15">
+        'The Blue Deer'는 저자 David Rains Dahl의 단편소설<br />
+        모음집이며, 2015년 영화화된다는 가정하에 만들어진 영화<br />
+        포스터이다. 꿈속에서 영감을 받은 60여 가지의 이야기로<br />
+        이루어져 있으며, 사슴의 뿔에 달린 빛나는 장식물들이<br />
+        꿈 이야기를 상징한다.
+    </div>
+    <div id="poster30_5" class="btext15">
+    </div>
+
+
+    <div id="poster31_1" class="btext30b">
+        14th International<br />
+        Ornamental Fish Exhibition
+    </div>
+    <div id="poster31_2" class="btext15b">
+        이다정
+    </div>
+    <div id="poster31_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster31_4" class="btext15">
+        싱가폴에서 열리는 제 14회 International Ornamental<br />
+        Fish Exhibition을 홍보하는 포스터이다.<br />
+        여러 종류의 관상어를 일러스트레이션으로 표현하였다.
+
+    </div>
+    <div id="poster31_5" class="btext15">
+    </div>
+
+    <div id="poster32_1" class="btext30b">
+        Two Door Cinema Club<br />
+        서울 콘서트
+    </div>
+    <div id="poster32_2" class="btext15b">
+        이민아
+    </div>
+    <div id="poster32_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster32_4" class="btext15">
+        Two Door Cinema Club의 3번째 서울 콘서트 포스터다.<br />
+        Two Door Cinema Club의 콘서트를 두 개의 문과 기타와<br />
+        같은 요소를 사용하여 표현하였다.
+
+    </div>
+    <div id="poster32_5" class="btext15">
+    </div>
+
+    <div id="poster33_1" class="btext30b">
+        Dragon Art Fair
+    </div>
+    <div id="poster33_2" class="btext15b">
+        이서현
+    </div>
+    <div id="poster33_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster33_4" class="btext15">
+        용을 주제로 전 세계 아티스트들이 참여하는 가상의 작품<br />
+        전시회 포스터이다. 용에 대한 이미지를 간결한 색상과<br />
+        명암으로 고풍스럽고 강렬한 느낌이 들도록 표현하였다.
+
+    </div>
+    <div id="poster33_5" class="btext15">
+    </div>
+
+    <div id="poster34_1" class="btext30b">
+        2015 고우 아웃 캠프 페스티벌
+    </div>
+    <div id="poster34_2" class="btext15b">
+        이소라
+    </div>
+    <div id="poster34_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster34_4" class="btext15">
+        매년 여름에 열리는 가족캠핑 '고우 아웃 캠프 페스티벌'의<br />
+        2015년도 포스터이다. 캠핑용품들에 비비드 한 컬러를<br />
+        활용하여 활기차고 가족적인 축제의 느낌을 주려고 하였다.
+
+    </div>
+    <div id="poster34_5" class="btext15">
+
+    </div>
+
+    <div id="poster35_1" class="btext30b">
+        스킨푸드 정글후르츠<br />
+        화장품 광고 포스터
+    </div>
+    <div id="poster35_2" class="btext15b">
+        이소영
+    </div>
+    <div id="poster35_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster35_4" class="btext15">
+        스킨푸드에서 출시한 ‘정글 후르츠’ 화장품 홍보 포스터다.<br />
+        화장품 컨셉이 ‘정글에서 찾아낸 생기 가득 컬러 에너지’ 인<br />
+        만큼 강렬하고 생생한 컬러들을 사용하였다. 여러 가지 꽃과<br />
+        과일들을 캔에 담은 형태를 통해서 생생한 컬러를 제품에<br />
+        고스란히 담아냈다는 의미를 표현하였다.
+    </div>
+    <div id="poster35_5" class="btext15">
+    </div>
+
+    <div id="poster36_1" class="btext30b">
+        파주 어린이 책 잔치 홍보 포스터
+    </div>
+    <div id="poster36_2" class="btext15b">
+        이예림
+    </div>
+    <div id="poster36_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster36_4" class="btext15">
+        파주 출판 단지에서 매년 5월에 열리는 ‘어린이 책 잔치’의<br />
+        홍보 포스터이다. ‘책’ 이라는 공간 위에서 아이들이 다양한<br />
+        것을 체험하고 책을 온몸으로 느낄 수 있다는 것을 여러 가지<br />
+        개체들을 통해 생동감 있게 표현하고자 하였다.
+    </div>
+    <div id="poster36_5" class="btext15">
+    </div>
+
+    <div id="poster37_1" class="btext30b">
+        그린플러그드 서울
+    </div>
+    <div id="poster37_2" class="btext15b">
+        이정민
+    </div>
+    <div id="poster37_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster37_4" class="btext15">
+        에코 어쿠스틱 페스티벌 '그린플러그드 2015' 홍보 포스터.<br />
+        페스티벌의 친환경적인 면을 강조하기 위해서 그린 컬러가<br />
+        주로 사용되었으며, 푸른 자연 속에서 함께 즐겁게 어울리는<br />
+        사람들 모습을 표현했다.
+
+
+    </div>
+    <div id="poster37_5" class="btext15">
+    </div>
+
+    <div id="poster38_1" class="btext30b">
+        나를 보다
+    </div>
+    <div id="poster38_2" class="btext15b">
+        이주희
+    </div>
+    <div id="poster38_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster38_4" class="btext15">
+        그래픽 디자이너 ZOONYEONG이 현재 자신의 세계가<br />
+        형성되기까지 일련의 과정을 보여주는 전시회 포스터이다.<br />
+        그녀의 감정과 생각에 대한 이야기를 시각화 하였다.
+
+    </div>
+    <div id="poster38_5" class="btext15">
+    </div>
+
+    <div id="poster39_1" class="btext30b">
+        Orhan Pamuk 1st SERGI
+    </div>
+    <div id="poster39_2" class="btext15b">
+        임소리
+    </div>
+    <div id="poster39_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster39_4" class="btext15">
+        터키 작가 오르한 파묵의 6가지 작품을 한 사람의 얼굴에<br />
+        다각도로 배치하여 소설 속 상징적인 오브제들을 넣어<br />
+        표현한 작가 작품 전시회 포스터이다.
+
+    </div>
+    <div id="poster39_5" class="btext15">
+    </div>
+
+    <div id="poster40_1" class="btext30b">
+        대한민국 국제 관악제
+    </div>
+    <div id="poster40_2" class="btext15b">
+        임주희
+    </div>
+    <div id="poster40_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster40_4" class="btext15">
+        매년 서울에서 열리는 음악 축제인 대한민국 국제 관악제의<br />
+        홍보 포스터다. 트럼펫, 트럼본 등 다양한 종류의 관악기와<br />
+        타악기를 연주하는 사람들과 마칭밴드 등의 모습들을 큰<br />
+        트럼펫 사이에 재미있게 구성하여 표현했다.
+    </div>
+    <div id="poster40_5" class="btext15">
+    </div>
+
+
+    <div id="poster41_1" class="btext30b">
+        스트로베리나이트
+    </div>
+    <div id="poster41_2" class="btext15b">
+        정미애
+    </div>
+    <div id="poster41_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster41_4" class="btext15">
+        소설 스트로베리 나이트의 연극 포스터이다. 소녀의 무표정<br />
+        속에 여러 사람들로부터 상처받은 소녀의 모습을 새장 속에<br />
+        웅크린 모습으로 표현하였고, 살인 쇼에 열광하는 수많은<br />
+        팬들과 살인 대상의 절규하는 모습을 해골의 대조적인 표정<br />
+        으로 표현하였다.
+
+    </div>
+    <div id="poster41_5" class="btext15">
+    </div>
+
+    <div id="poster42_1" class="btext30b">
+        쁘띠프랑스 홍보 포스터
+    </div>
+    <div id="poster42_2" class="btext15b">
+        정민주
+    </div>
+    <div id="poster42_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster42_4" class="btext15">
+        프랑스 마을인 쁘띠프랑스 홍보 포스터이다.<br />
+        쁘띠프랑스는 경기도 가평에 위치한 프랑스 문화마을로<br />
+        어린 왕자를 주제로 한 테마공원, 프랑스 주택 전시관, 상점<br />
+        등으로 구성되어 있다. 쁘띠프랑스가 어린왕자 작품과 많은<br />
+        관련이 있기 때문에 행성과 바오밥나무를 그리게 되었다.
+
+    </div>
+    <div id="poster42_5" class="btext15">
+    </div>
+
+    <div id="poster43_1" class="btext30b">
+        Balloon Festival
+    </div>
+    <div id="poster43_2" class="btext15b">
+        정보경
+    </div>
+    <div id="poster43_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster43_4" class="btext15">
+        터키 카파도키아 도시의 벌룬 투어를 페스티벌로<br />
+        재구성을 한 포스터이다. 페스티벌과 전통적인 터키의<br />
+        느낌을 살리기 위해 터키의 문과 문양을 사용해<br />
+        벌룬 페스티벌을 표현했다.
+
+    </div>
+    <div id="poster43_5" class="btext15">
+    </div>
+
+    <div id="poster44_1" class="btext30b">
+        Wicked(위키드)
+    </div>
+    <div id="poster44_2" class="btext15b">
+        정주희
+    </div>
+    <div id="poster44_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster44_4" class="btext15">
+        오즈의 마법사에 등장하는 마녀들의 이야기를 중점적으로<br />
+        다룬 뮤지컬 위키드의 포스터. 그중에서도 주인공으로 등장<br />
+        하는 녹색마녀(엘파바)와 하얀마녀(글린다)를 색상, 분위기<br />
+        등의 대조를 통하여 상반되는 이미지를 표현하였다.
+
+    </div>
+    <div id="poster44_5" class="btext15">
+    </div>
+
+    <div id="poster45_1" class="btext30b">
+        POMPLAMOOSE
+    </div>
+    <div id="poster45_2" class="btext15b">
+        정지선
+    </div>
+    <div id="poster45_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster45_4" class="btext15">
+        'Pomplamoose'는 프랑스어로 자몽이라는 뜻을 가진<br />
+        커플 듀오이다. 2008년부터 유튜브에 올린 유명 가수들의<br />
+        독창적인 커버곡으로 유명해져 현재 그들은 커버곡뿐만<br />
+        아니라 자작곡과 영상으로 활발하게 활동하고 있다.<br />
+        이름 그대로 자몽의 상큼한 느낌으로 콘서트를 표현하였다.
+
+    </div>
+    <div id="poster45_5" class="btext15">
+    </div>
+
+    <div id="poster46_1" class="btext30b">
+        야시
+    </div>
+    <div id="poster46_2" class="btext15b">
+        정채원
+    </div>
+    <div id="poster46_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster46_4" class="btext15">
+        쓰네가와 고타로의 소설 작품인 ‘야시’의 애니메이션 영화<br />
+        포스터이다. 또다른 세상에 존재하는 수수께끼의 시장으로<br />
+        통하는 숲 속의 길을 표현하여 작품 속 세계관의 신비로운<br />
+        느낌을 포스터에 담았다.
+
+
+    </div>
+    <div id="poster46_5" class="btext15">
+    </div>
+
+    <div id="poster47_1" class="btext30b">
+        일본여행 페스티벌 홍보 포스터
+    </div>
+    <div id="poster47_2" class="btext15b">
+        정하나
+    </div>
+    <div id="poster47_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster47_4" class="btext15">
+        일본을 여행하면서 만나볼 수 있는 재미있는 지역의<br />
+        모습들을 아기자기한 일러스트의 요소로 표현해 만든<br />
+        가상의 일본 여행 페스티벌 홍보 포스터이다.
+
+    </div>
+    <div id="poster47_5" class="btext15">
+    </div>
+
+    <div id="poster48_1" class="btext30b">
+        잠수종과 나비
+    </div>
+    <div id="poster48_2" class="btext15b">
+        조다예
+    </div>
+    <div id="poster48_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster48_4" class="btext15">
+        영화 &lt;잠수종과 나비&gt; 포스터이다. 잠수종에 갇힌 채로<br />
+        추락하는 것은 식물인간이 된 주인공을 상징한다.<br />
+        나비는 주인공의 영혼을 상징한다. 추락하는 주인공을<br />
+        떨어지는 빙하 조각으로 표현하였다. 채도가 낮은 색감과<br />
+        핸드드로잉, 캘리그래피 등 다양한 기법으로 표현하였다.
+
+
+    </div>
+    <div id="poster48_5" class="btext15">
+    </div>
+
+    <div id="poster49_1" class="btext30b">
+        안녕바다 콘서트 포스터
+    </div>
+    <div id="poster49_2" class="btext15b">
+        조은아
+    </div>
+    <div id="poster49_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster49_4" class="btext15">
+        안녕바다는 세 명으로 구성된 인디락밴드이다.<br />
+        안녕바다의 타이틀곡은 Boy's universal 미니 앨범에<br />
+        수록된 '별 빛이 내린다' 이다. 안녕바다의 공연 포스터는<br />
+        그들의 대표곡인 별 빛이 내린다의 가사에 맞춰<br />
+        한 소년의 머리 위로 별이 쏟아지는 모습을 보여준다.
+
+    </div>
+    <div id="poster49_5" class="btext15">
+    </div>
+
+    <div id="poster50_1" class="btext30b">
+        마녀의 물약
+    </div>
+    <div id="poster50_2" class="btext15b">
+        최새봄나
+    </div>
+    <div id="poster50_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster50_4" class="btext15">
+        가수 한재희의 콘서트 포스터이다. 콘서트의 타이틀 곡인<br />
+        ‘마녀의 물약’은 인어공주의 이야기를 마녀의 시점에서<br />
+        쓴 것인데, 이러한 주제에 맞추어 물속의 마녀와 인어공주<br />
+        이야기의 요소들을 사용하여 구성하였다.
+
+    </div>
+    <div id="poster50_5" class="btext15">
+    </div>
+
+    <div id="poster51_1" class="btext30b">
+        몬트리올 국제 재즈 페스티벌
+    </div>
+    <div id="poster51_2" class="btext15b">
+        하진아
+    </div>
+    <div id="poster51_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster51_4" class="btext15">
+        매년 몬트리올에서 열리는 국제 재즈 페스티벌을 홍보하기<br />
+        위한 포스터이다. 재즈에 사용되는 다양한 악기와 연주자를<br />
+        통해 재즈 축제의 모습을 표현했고 음표와 음악적인 요소를<br />
+        더해 음악적인 느낌을 나타낸다.
+    </div>
+    <div id="poster51_5" class="btext15">
+    </div>
+
+    <div id="poster52_1" class="btext30b">
+        활기찬 아기동물축제
+    </div>
+    <div id="poster52_2" class="btext15b">
+        한소린
+    </div>
+    <div id="poster52_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster52_4" class="btext15">
+        동물원에서 주최하는 “활기찬 아기 동물 축제" 를 홍보하는<br />
+        포스터이다. 여러 아기 동물들의 다양한 표정을 각각 재밌게<br />
+        표현하여, 많은 어린이가 아기 동물들에게 호기심을 가질 수<br />
+        있도록 홍보용 포스터를 제작했다.
+
+    </div>
+    <div id="poster52_5" class="btext15">
+    </div>
+
+    <div id="poster53_1" class="btext30b">
+        Le Magasin des Suicides
+    </div>
+    <div id="poster53_2" class="btext15b">
+        허초미
+    </div>
+    <div id="poster53_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster53_4" class="btext15">
+        장 튈레의 자살가게를 원작으로 한 애니메이션 영화의<br />
+        홍보 포스터이다. 영화의 주 배경인 자살가게 내부를<br />
+        배경으로 포스터를 제작하였다. 자살을 도와주는 도구들을<br />
+        그래픽 요소로 사용하여 배치함으로써 영화의 특징인<br />
+        어둡고 음울한 분위기를 나타내었다.
+
+    </div>
+    <div id="poster53_5" class="btext15">
+
+    </div>
+
+    <div id="poster54_1" class="btext30b">
+        사랑하기 좋은 날
+    </div>
+    <div id="poster54_2" class="btext15b">
+        홍보미
+    </div>
+    <div id="poster54_3" class="btext15b">
+        포스터
+    </div>
+    <div id="poster54_4" class="btext15">
+        박총 작가가 우리에게 말하는 감성 세미나 포스터이다. 항상<br />
+        아내에게 사랑 표현을 하는 박총 작가의 모습을 서로 껴안은<br />
+        모습으로 표현하였다. 또한 밝은 파스텔 계열의 컬러를 사용<br />
+        하여 연인이 서로를 사랑하는 이미지를 시각화하였다. <br />
+    </div>
+    <div id="poster54_5" class="btext15">
+    </div>
+
+
+
+    <div id="video1_1" class="btext30b">
+        Gopher Wood 기타 CF
+    </div>
+    <div id="video1_2" class="btext15b">
+        도미래 신효진 이예림<br /> 임주희 정지선 하진아
+    </div>
+
+    <div id="video1_3" class="btext15b">
+        Commercial Film
+    </div>
+    <div id="video1_4" class="btext15">
+        젊은 세대를 타겟으로 한 기타 브랜드 '고퍼우드' 의 광고<br />
+        영상이다. 고퍼우드 기타를 사용하면, 여러 가지 다양한<br />
+        장르의 기타연주를 누구나 할 수 있다는 것을 표현하고자<br />
+        하였다. 주인공이 고퍼우드 광고 영상에 들어가 배철수,<br />
+        장기하, 전인권, 버스커버스커 등 다양한 가수로 변신해<br />
+        자유롭게 연주하는 모습을 담았다.
+    </div>
+    <div id="video1_5" class="btext15">
+    </div>
+
+    <div id="video2_1" class="btext30b">
+        Night Light
+    </div>
+    <div id="video2_2" class="btext15b">
+        김민지 박정윤<br />
+        이서현 정주희
+    </div>
+    <div id="video2_3" class="btext15b">
+        Music Video
+    </div>
+    <div id="video2_4" class="btext15">
+        한국의 밤을 수놓는 다양한 불빛을 주제로 만든 뮤직비디오<br />
+        이다. 사람들이 쉽게 지나칠 수 있는 사소한 불빛부터 바쁜<br />
+        일상에 치여서 즐기지 못한 도심의 화려한 축제 불빛까지<br />
+        넓은 범위의 빛들을 활용하였다. 배경음악은 TheFatRat의<br />
+        'Never Be Alone'를 사용하였으며, 음악의 리듬에 맞춰<br />
+        장면을 배치하거나 여러 불빛을 오버랩하는 등 편집을 통해<br />
+        재미를 주고자 하였다.
+
+    </div>
+    <div id="video2_5" class="btext15">
+    </div>
+
+    <div id="video3_1" class="btext30b">
+        Not for Nothing
+    </div>
+    <div id="video3_2" class="btext15b">
+        권은혜 김수려 박경희 윤지혜
+    </div>
+    <div id="video3_3" class="btext15b">
+        visual pornography
+    </div>
+    <div id="video3_4" class="btext15">
+        여성과 남성이 생각하는 섹스를 다양한 색을 사용해 은유적으로 표현하였다.<br/>
+        세로 화면의 비율을 사용해 섹슈얼한 느낌을 극대화하였다.
+    </div>
+    <div id="video3_5" class="btext15">
+    </div>
+
+    <div id="video4_1" class="btext30b">
+        OCN 뱀파이어검사3
+    </div>
+    <div id="video4_2" class="btext15b">
+        권은혜 김수려<br />
+        박경희 윤지혜
+    </div>
+    <div id="video4_3" class="btext15b">
+        Opening Title Sequence
+    </div>
+    <div id="video4_4" class="btext15">
+        뱀파이어가 된 주인공 검사가 자신의 특별한 능력을 이용<br />
+        하여 수사하는 과정을 보여준다. 주인공이 죽은 자의 피를<br />
+        맛보면, 그 당시의 상황이 눈앞에 펼쳐진다. 피와 인물의<br />
+        신체 변화, 사이코메트리에 중점으로 장면을 연출하였다.<br />
+        촬영 기법으로는 역광을 이용한 인물의 실루엣 연출,<br />
+        마이크로 접사렌즈를 이용한 화면 클로즈 업등이 있다.<br />
+    </div>
+    <div id="video4_5" class="btext15">
+        피와 수혈 팩, 레드아이 등을 이용해 뱀파이어의 특성을<br />
+        표현하였다. 이러한 적극적인 활용을 통해 사용자로<br />
+        하여금 공포를 느낄 수 있게 한다.
+    </div>
+
+    <div id="video5_1" class="btext30b">
+        Perfume
+    </div>
+    <div id="video5_2" class="btext15b">
+        김주연 김지영<br />
+        오명선 허초미<br />
+    </div>
+    <div id="video5_3" class="btext15b">
+        Opening Title Sequence
+    </div>
+    <div id="video5_4" class="btext15">
+        영화 &lt;향수 어느 살인자의 이야기&gt; 오프닝 타이틀 시퀀스<br />
+        이다. 향수를 만드는 과정에서 순수했던 남자가 향에 대한<br />
+        욕망으로 점점 타락해가는 모습을 남자 주인공의 시점으로<br />
+        제작하였다. 브라운 계열 색상과 어두운 분위기를 바탕으로<br />
+        향에 대한 갈망을 극적으로 표현하였다.
+    </div>
+    <div id="video5_5" class="btext15">
+    </div>
+            <div id="video6_1" class="btext30b">
+                Seoul City Tour Bus
+            </div>
+            <div id="video6_2" class="btext15b">
+                김수현 남예은 이다정
+            </div>
+            <div id="video6_3" class="btext15b">
+                Advertisement
+            </div>
+            <div id="video6_4" class="btext15">
+                연간 1200만 명의 관광객이 방문하는 대한민국 서울.<br />
+                지방에서 올라온 관광객과 외국인을 대상으로 서울의 유명<br />
+                관광명소를 편하게 이동할 수 있는 서울 시티투어버스 교통<br />
+                서비스를 소개한다. 서울 시티투어버스가 운행되는 서울의<br />
+                유명 관광명소를 낮부터 밤까지 다양한 모습으로 보여준다.
+
+            </div>
+            <div id="video6_5" class="btext15">
+            </div>
+
+
+            <div id="video7_1" class="btext30b">
+                Stoker
+            </div>
+            <div id="video7_2" class="btext15b">
+                김보경 순별이<br />
+                신민아 이소영<br />
+            </div>
+            <div id="video7_3" class="btext15b">
+                Opening Title Sequence
+            </div>
+            <div id="video7_4" class="btext15">
+                박찬욱 감독의 영화 'Stoker' 의 오프닝 타이틀 시퀀스를<br />
+                한국 배우 버전으로 재구성하였다. 전반적인 내용은 여자<br />
+                주인공 인디아가 자신의 삼촌 찰리에 의해서 본능에 눈을<br />
+                뜨고 살인까지 저지르게 되는 일련의 과정으로 구성된다.<br />
+                순수하던 인디아가 자신의 본능, 즉 살인 욕망에 눈을 뜨는<br />
+                것을 상징적인 색상과 오브제를 통해 표현하여 관객의<br />
+                호기심을 극대화할 수 있도록 하였다.
+
+            </div>
+            <div id="video7_5" class="btext15">
+            </div>
+
+            <div id="video8_1" class="btext30b">
+                Xiaomi Yi Camera 광고영상
+            </div>
+            <div id="video8_2" class="btext15b">
+                김선형 나현아
+            </div>
+            <div id="video8_3" class="btext15b">
+                Commercial Film
+            </div>
+            <div id="video8_4" class="btext15">
+                새롭게 출시된 샤오미 액션 카메라로 일반인도 쉽게 즐길<br />
+                수 있는 레저스포츠를 활영하여, 사람들에게 샤오미 액션<br />
+                카메라를 스릴 있고 에너지 넘치는 즐거운 이미지로 인식<br />
+                시키려고 하였다.
+
+            </div>
+            <div id="video8_5" class="btext15">
+            </div>
+
+
+    <div id="video9_1" class="btext30b">
+        미궁 속의 티타임
+    </div>
+    <div id="video9_2" class="btext15b">
+        김아란 박성현<br />
+        이소라 임소리
+    </div>
+    <div id="video9_3" class="btext15b">
+        연극 트레일러
+    </div>
+    <div id="video9_4" class="btext15" style="width:366px;">
+        뮤지컬 '아가사'에 나오는 아가사 크리스티의 추리소설 '미궁 속의 티타임'을 연극으로 옮긴다는 가정하에 가상으로 트레일러를 제작하였다.
+        미궁 속의 티타임은 아가사의 자전적인 이야기이자 추리소설이다. 소설 속엔 티타임이 끝난 후 실종된 아가사와 티타임을 함께 즐겼던 네 명의 용의자가 등장한다.
+
+    </div>
+    <div id="video9_5" class="btext15" style="width:366px;">
+        이들은 실존 인물로써 아가사와 가까운 관계지만 동시에 그녀를 불안하게 만드는 요소들이다. 티타임을 준비하며 아가사가 느끼는 정신적 압박감과 불안감을 현실과 상상을 오가며 표현하고자 하였다.
+    </div>
+
+            <div id="video10_1" class="btext30b">
+                스캔들
+            </div>
+            <div id="video10_2" class="btext15b">
+                김혜주 이민아 정하나
+            </div>
+            <div id="video10_3" class="btext15b">
+                Opening Title Sequence
+            </div>
+            <div id="video10_4" class="btext15">
+
+                영화 &lt;스캔들 - 조선남녀상열지사(2003)&gt;
+                오프닝 타이틀<br />
+                시퀀스이다. 영화 속의 주 배경이 되는 가을부터 겨울까지<br />
+                계절이 흘러감에 따라 영상의 큰 흐름을 숙부인으로<br />
+                잡았으며, 소품을 함께 이용해 나머지 두 주인공의 성격과<br />
+                상황을 은유적으로 구성하였다. 촬영은 주로 자연광을<br />
+            </div>
+            <div id="video10_5" class="btext15">
+                이용하였으며, 레일을 이용하여 인물의 움직임이나 배경의<br />
+                아름다움을 매끄럽게 보이도록 표현하였다.
+
+            </div>
+
+            <div id="video11_1" class="btext30b">
+                우아한 거짓말
+            </div>
+            <div id="video11_2" class="btext15b">
+                배하린 송연아<br />
+                양수련 윤새봄
+            </div>
+            <div id="video11_3" class="btext15b">
+                Title Sequence
+            </div>
+            <div id="video11_4" class="btext15">
+                말없이 세상을 떠난 14살 소녀 '천지'와 남겨진 가족이 슬픈<br />
+                현실을 견뎌나가는 과정을 담담하게 보여주는 영화 '우아한<br />
+                거짓말'의 오프닝 타이틀 시퀀스이다. 극 중에서 표현되지<br />
+                않은 소녀의 쓸쓸함을 보여주기 위해 잔잔한 분위기의<br />
+                BGM과 영화에서 중요한 키워드인 빨간 털실과 책을 상징<br />
+                적인 오브제로 사용하여 복선을 은유적으로 표현하여<br />
+                영상을 제작하였다.
+
+            </div>
+            <div id="video11_5" class="btext15">
+            </div>
+
+            <div id="video12_1" class="btext30b">
+                은교
+            </div>
+            <div id="video12_2" class="btext15b">
+                고현경 김연희 오남경<br />
+                윤소담 정보경
+            </div>
+            <div id="video12_3" class="btext15b">
+                Opening Title Sequence
+            </div>
+            <div id="video12_4" class="btext15">
+                조용하고 낡은 서재. 세월의 흔적으로 채워져 있는 시인<br />
+                이적요의 방은 세상과 단절되어 묵묵히 늙어가고 있었다.<br />
+                먼지 쌓인 공간에 이적요와 함께 하는 것은 오래된 책과<br />
+                원고지, 몽당연필과 시든 꽃, 그리고 어둠이었다. 그 공간에<br />
+                한줄기 빛처럼 은교가 들어오고, 낡은 공간에 다시 생기를<br />
+                불어 넣어준다.<br />
+
+            </div>
+            <div id="video12_5" class="btext15">
+                어두운 공간이 빛으로 채워지고 생명력을 되찾아가듯, 늙은<br />
+                시인 이적요의 가슴에도 잠들어 있던 젊음과 싱그러움이<br />
+                되살아난다.
+
+            </div>
+
+            <div id="video13_1" class="btext30b">
+                제이레빗-Happy Things MV
+            </div>
+            <div id="video13_2" class="btext15b">
+                정민주 한소린
+            </div>
+            <div id="video13_3" class="btext15b">
+                Music Video
+            </div>
+            <div id="video13_4" class="btext15">
+                고등학생의 첫 사랑을 다룬 이야기로 제이레빗의 Happy<br />
+                Things 의 뮤직비디오를 구성해보았다. 음악의 경쾌한<br />
+                리듬에 맞춰 봄의 분위기를 담아보았고 남학생을 좋아하는<br />
+                여학생의 여러 가지 모습들을 에피소드별로 나누어 영상을<br />
+                제작하였다.
+
+            </div>
+            <div id="video13_5" class="btext15">
+            </div>
+
+
+</body>
+</html>

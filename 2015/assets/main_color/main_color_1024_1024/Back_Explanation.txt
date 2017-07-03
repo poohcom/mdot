@@ -1,0 +1,5 @@
+Main_color 2 - 4 - 1 : main color 에서 스크롤을 내리면서 자연스럽게 색깔이 바뀝니다.(2-4-1 순서로)
+
+about_background - main_color3 : About Media Design 페이지의 배경입니다.(about - 3 순서로)
+
+Main_color_5 : Poster 페이지(과목별 페이지)의 배경입니다.
