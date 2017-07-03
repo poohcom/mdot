@@ -1,0 +1,1 @@
+dir /B /D /S >> a.txt

@@ -1,0 +1,219 @@
+﻿@charset "utf-8";
+@font-face{
+    font-family:'yoon';
+    font-style:normal;
+    font-weight:normal;
+    src:url('assets/font/eot/YoonGothic740.eot');
+    src:local('윤74'),url('assets/font/woff/YoonGothic740.woff') format('woff'),url('assets/font/ttf/YoonGothic740.ttf')format('truetype');
+}
+
+@font-face{
+    font-family:'yoon';
+    font-style:normal;
+    font-weight:bold;
+    src:url('assets/font/eot/YoonGothic780.eot');
+    src:local('윤78'),url('assets/font/woff/YoonGothic780.woff')format('woff'), url('assets/font/ttf/YoonGothic780.ttf')format('truetype');
+}
+
+
+body {
+     font-family: 'yoon', serif;
+     background-color: #000000;
+     margin: 0px;
+     font-size: 24px;
+     overflow: hidden;
+     width: 100%;
+     height: 100%;
+     color: #ffffff
+}
+
+span {
+    font-style: italic;
+}
+
+#viewport{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /*z-index: 1;*/
+}
+
+#render3d{
+position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /*z-index: 2;*/
+}
+
+#uicanvas{
+position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /*z-index: 2;*/
+}
+
+#videocontainer{
+position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /*z-index: 3;*/
+}
+
+.text81b
+{
+    font-family: 'yoon', serif;
+    font-size: 81px;
+    font-weight:bold;
+    z-index: 4;
+    position: absolute;
+    color:#FFFFFF;
+    padding: 0px;
+    visibility: hidden;
+}
+
+
+.text50b
+{
+    font-family: 'yoon', serif;
+    font-size: 50px;
+    font-weight:bold;
+    /*letter-spacing:2.5pt;*/
+    z-index: 4;
+    position: absolute;
+    color:#FFF;
+    padding: 0px;
+    visibility: hidden;
+}
+
+.text18b
+{
+    font-family: 'yoon', serif;
+    font-size: 18px;
+    font-weight:bold;
+    z-index: 4;
+    position: absolute;
+    color:#FFF;
+    padding: 0px;
+    visibility: hidden;
+}
+
+
+.text24
+{
+    font-family: 'yoon', serif;
+    font-size: 24px;
+    line-height:30pt;
+    z-index: 4;
+    position: absolute;
+    color:#FFF;
+    padding: 0px;
+    visibility: hidden;
+}
+
+.text15
+{
+    font-family: 'yoon', serif;
+    font-size: 15px;
+    line-height:20pt;
+    z-index: 4;
+    position: absolute;
+    color:#FFF;
+    padding: 0px;
+    visibility: hidden;
+}
+
+.text15b
+{
+    font-family: 'yoon', serif;
+    font-size: 15px;
+    font-weight:bold;
+    line-height:20pt;
+    z-index: 4;
+    position: absolute;
+    color:#FFF;
+    padding: 0px;
+    visibility: hidden;
+}
+
+.text12
+{
+    font-family: 'yoon', serif;
+    font-size: 12px;
+    /*letter-spacing:6.4pt;*/
+    text-align:justify;
+    line-height:16pt;
+    z-index: 4;
+    position: absolute;
+    color:#FFF;
+    padding: 0px;
+    visibility: hidden;
+}
+
+.text30b
+{
+    font-family: 'yoon', serif;
+    font-size: 30px;
+    font-weight:bold;
+    z-index: 4;
+    position: absolute;
+    color:#FFF;
+    padding: 0px;
+    visibility: hidden;
+}
+
+.btext30b
+{
+    font-family: 'yoon', serif;
+    font-size: 30px;
+    font-weight:bold;
+    z-index: 4;
+    position: absolute;
+    color:#333333;
+    padding: 0px;
+    visibility: hidden;
+}
+
+.btext20b
+{
+    font-family: 'yoon', serif;
+    font-size: 20px;
+    font-weight:bold;
+    z-index: 4;
+    position: absolute;
+    color:#333333;
+    padding: 0px;
+    visibility: hidden;
+}
+
+.btext15b
+{
+    font-family: 'yoon', serif;
+    font-size: 15px;
+    font-weight:bold;
+    line-height:20pt;
+    z-index: 4;
+    position: absolute;
+    color:#333333;
+    padding: 0px;
+    visibility: hidden;
+}
+
+.btext15
+{
+    font-family: 'yoon', serif;
+    font-size: 15px;
+    line-height:25pt;
+    z-index: 4;
+    position: absolute;
+    color:#333333;
+    padding: 0px;
+    visibility: hidden;
+}

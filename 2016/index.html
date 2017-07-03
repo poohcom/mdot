@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>Mdot2016</title>
+
+    <style>
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="app.css?v=0601" type="text/css" /> 
+    <script src="lib/three.min.js" type="text/javascript"></script>
+    <script src="lib/easeljs-0.8.0.min.js" type="text/javascript"></script>
+    <script src="lib/preloadjs-0.6.0.min.js" type="text/javascript"></script>
+    <script src="lib/soundjs-0.6.0.min.js" type="text/javascript"></script>
+    <script src="lib/tweenjs-0.6.0.min.js" type="text/javascript"></script>
+    <script src="js/Particle.js" type="text/javascript"></script>
+    <script src="js/ParticleManager.js" type="text/javascript"></script>
+    <script src="js/DataDot1.js" type="text/javascript"></script>
+    <script src="js/DataTreeOut.js" type="text/javascript"></script>
+    <script src="js/DataAboutMediaDesignStudents.js" type="text/javascript"></script>
+    <script src="js/DataAnimation.js" type="text/javascript"></script>
+    <script src="js/DataContents.js" type="text/javascript"></script>
+    <script src="js/DataInter.js" type="text/javascript"></script>
+    <script src="js/DataPoster.js" type="text/javascript"></script>
+    <script src="js/DataVideo.js" type="text/javascript"></script>
+    <script src="js/Rect.js" type="text/javascript"></script>
+    <script src="js/Button.js" type="text/javascript"></script>
+    <script src="js/PortButton.js" type="text/javascript"></script>
+    <script src="js/MenuButton.js" type="text/javascript"></script>
+    <script src="js/DarkButton.js" type="text/javascript"></script>
+    <script src="js/SideButton.js" type="text/javascript"></script>
+    <script src="js/ToggleButton.js" type="text/javascript"></script>
+    <script src="js/Config.js" type="text/javascript"></script>
+    <script src="js/Circle.js" type="text/javascript"></script>
+    <script src="js/CircleButton.js" type="text/javascript"></script>
+    <script src="js/Label.js" type="text/javascript"></script>
+    <script src="js/LabelStudent.js" type="text/javascript"></script>
+    <script src="js/IScene.js" type="text/javascript"></script>
+    <script src="js/SineShape.js" type="text/javascript"></script>
+    <script src="js/TriangleShape.js" type="text/javascript"></script>
+    <script src="js/Scene.js" type="text/javascript"></script>
+    <script src="js/SceneLoading.js" type="text/javascript"></script>
+    <script src="js/SceneStar.js" type="text/javascript"></script>
+    <script src="js/SceneIntro.js" type="text/javascript"></script>
+    <script src="js/ScenePort.js" type="text/javascript"></script>
+    <script src="js/ScenePortWork.js" type="text/javascript"></script>
+    <script src="js/ScenePortVideo.js" type="text/javascript"></script>
+    <script src="js/ScenePortVideoWork.js" type="text/javascript"></script>
+    <script src="js/ScenePortInter.js" type="text/javascript"></script>
+    <script src="js/ScenePortInterWork.js" type="text/javascript"></script>
+    <script src="js/ScenePortAnimation.js" type="text/javascript"></script>
+    <script src="js/ScenePortAnimationWork.js" type="text/javascript"></script>
+    <script src="js/ScenePortContents.js" type="text/javascript"></script>
+    <script src="js/ScenePortContentsWork.js" type="text/javascript"></script>
+    <script src="js/ScenePortPoster.js" type="text/javascript"></script>
+    <script src="js/ScenePortPosterWork.js" type="text/javascript"></script>
+    <script src="js/SceneAboutMediaDesign.js" type="text/javascript"></script>
+    <script src="js/SceneAboutProfessors.js" type="text/javascript"></script>
+    <script src="js/SceneAboutStudents.js" type="text/javascript"></script>
+    <script src="js/SceneAbout17ThCommittee.js" type="text/javascript"></script>
+    <script src="js/SceneAboutConcept.js" type="text/javascript"></script>
+    <script src="js/SceneAboutDesignProcess.js" type="text/javascript"></script>
+
+    <script src="js/SceneSitemap.js" type="text/javascript"></script>
+    <script src="js/SceneMainMainPage.js" type="text/javascript"></script>
+    <script src="js/SceneMainInfomation.js" type="text/javascript"></script>
+    <script src="js/MenuBar.js" type="text/javascript"></script>
+    
+    <script src="js/SceneManager.js" type="text/javascript"></script>
+    <script src="js/Scene3DManager.js" type="text/javascript"></script>
+</head>
+<body>
+    
+    <div id="videocontainer" class="canvasHolder">
+        <div id="render3d" />
+        <canvas id="uicanvas" />
+     </div>
+        
+
+    <script type="text/javascript">
+        /*
+        function handle(delta) {
+            if (delta < 0) {
+                SceneManager.instance().downScene();
+            }else
+            {
+                SceneManager.instance().upScene();
+            }
+        }
+
+        function wheel(event) {
+            var delta = 0;
+            if (!event) event = window.event;
+            if (event.wheelDelta) {
+                delta = event.wheelDelta / 120;
+                if (window.opera) delta = -delta;
+            } else if (event.detail) delta = -event.detail / 3;
+            if (delta) handle(delta);
+        }
+
+
+        if (window.addEventListener)
+            window.addEventListener('DOMMouseScroll', wheel, false);
+        window.onmousewheel = document.onmousewheel = wheel;
+        */
+        window.addEventListener("resize", function () {
+            onresize();
+        });
+
+        Scene3DManager.instance().init();
+        SceneManager.instance().createBG();
+        onresize();
+
+        function onresize() {
+            videocontainer.width = window.innerWidth;
+            videocontainer.height = window.innerHeight;
+
+            render3d.width = window.innerWidth;
+            render3d.height = window.innerHeight;
+
+            uicanvas.width = window.innerWidth;
+            uicanvas.height = window.innerHeight;
+
+            SceneManager.instance().setSize(window.innerWidth, window.innerHeight);
+            Scene3DManager.instance().setSize(window.innerWidth, window.innerHeight);
+            if (
+                document.fullscreenElement ||
+                document.webkitFullscreenElement ||
+                document.mozFullScreenElement ||
+                document.msFullscreenElement
+            ) {
+                SceneManager.instance().fullscreenOn();
+            } else {
+                SceneManager.instance().fullscreenOff();
+            }
+        }
+    </script>
+</body>
+</html>
