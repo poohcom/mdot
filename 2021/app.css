@@ -1,0 +1,19 @@
+﻿body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+span {
+    font-style: italic;
+}
+
+body {
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+
+.title {
+  width: 582px;
+  height: 118px;
+  margin: 0 669px 40px;
+  background-color: #fff;
+}
+
