@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="그룹_539" data-name="그룹 539" transform="translate(-392 -401)">
+    <g id="사각형_180" data-name="사각형 180" transform="translate(392 401)" fill="#1c1c1c" stroke="#e0e0e0" stroke-width="1">
+      <rect width="20" height="20" rx="4" stroke="none"/>
+      <rect x="0.5" y="0.5" width="19" height="19" rx="3.5" fill="none"/>
+    </g>
+    <path id="Icon_feather-check" data-name="Icon feather-check" d="M16.545,9,9.3,16.25,6,12.955" transform="translate(390.5 398.5)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
