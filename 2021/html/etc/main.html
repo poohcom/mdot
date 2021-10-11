@@ -19,13 +19,22 @@
     <script type="text/javascript" src="../../asset/script/swiper.js?20210928"></script>
     <!-- 참조 라이브러리 -->
     <script type="text/javascript" src="../../asset/script/common.js?20210928"></script>
+    <script>
+    $(document).ready(function () {	
+    	$(".dialog").fadeIn('200');    	
+    });
+    </script>
 </head>
 <body>
 
 <div class="wrapper main"><!-- start : wrapper -->
     <header><!-- start : header -->
         <div class="page-title">인공지능과 예술 특별전</div>
-        <div class="header-title">전시 개요</div>
+        
+		<div class="header-title">
+			<a href="javascript:void(0)" id="button8" >전시 개요</a>
+		</div>
+
         <a href="javascript:void(0)" onclick="common.popOpen('#all-menu')"><img src="../../asset/image/ico/ico-totalmenu.png" /></a>
 
         <!--왼쪽메뉴-->
@@ -33,13 +42,13 @@
 
             <div class="cont">
                 <ul class="lnb-link-menu">
-                    <li><a href="javascript:void(0)" id="button1" >인공지능 그리다</a></li>
-                    <li><a href="javascript:void(0)" id="button2" >인공지능 노래하다</a></li>
-                    <li><a href="javascript:void(0)" id="button3" >인공지능 춤추다</a></li>
-                    <li><a href="javascript:void(0)" id="button4" >인공지능 오늘을 기록하다</a></li>
-                    <li><a href="javascript:void(0)" id="button5" >인공지능 사람</a></li>
-                    <li><a href="javascript:void(0)" id="button6" >인공지능 작품들</a></li>
-                    <li><a href="javascript:void(0)" id="button7" >공모전 갤러리</a></li>
+                    <li><a href="/html/paint/paint.html" id="" >인공지능 그리다</a></li>
+                    <li><a href="/html/play/play.html" id="" >인공지능 노래하다</a></li>
+                    <li><a href="/html/dance/dance.html" id="" >인공지능 춤추다</a></li>
+                    <li><a href="/html/today/today.html" id="" >인공지능 오늘을 기록하다</a></li>
+                    <li><a href="/html/human/human.html" id="" >인공지능 사람</a></li>
+                    <li><a href="/html/beyond/beyond.html" id="" >인공지능 작품들</a></li>
+                    <li><a href="/html/gallery/gallery.html" id="" >공모전 갤러리</a></li>
                 </ul>
                 <div class="menu-btn-wrap">
                     <button type="button" class="btn-close" onclick="common.popClose('#all-menu')"><img src="../../asset/image/ico/ico-close.png" /></button>
@@ -180,13 +189,13 @@
 </div>
 
 
-<div class="dialog">
+<div id="pop-help" class="dialog ing on">
     <div class="pop-wrap">
         <div class="tit">전시 관람 방법</div>
         <div class="desc">화면을 좌우로 돌려서
             <br />관람을 원하는
             <br />전시관으로 이동해 주세요</div>
-        <button type="button">확인</button>
+        <button type="button" id="button1" onclick="common.popClose('#pop-help');">확인</button>
     </div>
 </div>
 
