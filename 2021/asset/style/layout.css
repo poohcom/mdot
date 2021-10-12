@@ -1,8 +1,7 @@
 @charset "utf-8";
-body{background:#000 !important;}
+body{background:#000 !important;-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none}
 body.step-type{background:#000 url(../image/bg/bg-step.jpg) no-repeat center top;background-size:cover;}
 .wrapper{}
-
 /*header*/
 header{background:#000;transition:all .5s;z-index:20;display:flex;justify-content:flex-start;align-items:center;width:100%;height:60px;position:fixed;left:50%;transform:translateX(-50%);top:0;}
 body.step-type header{background:transparent;}
