@@ -1,9 +1,10 @@
 @charset "utf-8";
 body{background:#000 !important;-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none}
-body.step-type{background:#000 url(../image/bg/bg-step.jpg) no-repeat center top;background-size:cover;}
+body.step-type{background:#000 url(../image/bg/bg-step.jpg) no-repeat center top !important;background-size:cover;}
 .wrapper{}
 /*header*/
-header{background:#000;transition:all .5s;z-index:20;display:flex;justify-content:flex-start;align-items:center;width:100%;height:60px;position:fixed;left:50%;transform:translateX(-50%);top:0;}
+header{background:#000;transition:all .5s;z-index:9999;display:flex;justify-content:flex-start;align-items:center;width:100%;height:60px;position:fixed;left:50%;transform:translateX(-50%);top:0;}
+.main header{background:transparent;}
 body.step-type header{background:transparent;}
 header .page-title{display:flex;width:100%;flex:1;font-size:20px;color:#fff;font-weight:500;margin-left:20px;}
 header .header-title{display:flex;font-size:20px;color:#fff;font-weight:500;margin-right:60px;border:0;padding:0;background:transparent;}
@@ -52,10 +53,10 @@ footer .msg{margin-left:60px;margin-right:20px;font-size:14px;color:#8a8a8a;font
 @media (max-width:768px) {
     header .page-title{font-size:14px;}
     header .header-title{font-size:14px;margin-right:40px;}
-    footer{bottom:10px;}
+    footer{bottom:10px;height:60px;}
     footer .msg{font-size:10px;margin-left:20px;}
-    .lnb-link-menu li a{font-size:16px;}
-    .lnb-link-menu li{margin-top:15px;}
+    .lnb-link-menu li a{font-size:22px;}
+    .lnb-link-menu li{margin-top:33px;}
     .lnb-link-menu li:first-child{margin-top:0;}
     .all-menu-wrap .btn-close img{width:25px;height:25px;}
     header a img{width:30px;height:30px;}
