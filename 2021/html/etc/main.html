@@ -24,6 +24,38 @@
     <script type="text/javascript" src="../../asset/script/swiper.js?20210928"></script>
     <!-- 참조 라이브러리 -->
     <script type="text/javascript" src="../../asset/script/common.js?20210928"></script>
+    	<script>
+	$(document).ready(function(){
+		var items = getCookie('popup'); 
+		if(items == 'close'){
+			$('.dialog').removeClass('on');		
+		}else{
+			setCookie('popup', 'close', '1');
+		}
+		
+	});
+	function setCookie(cookie_name, value, days) {
+		  var exdate = new Date();
+		  exdate.setDate(exdate.getDate() + days);
+		  // 설정 일수만큼 현재시간에 만료값으로 지정
+
+		  var cookie_value = escape(value) + ((days == null) ? '' : '; expires=' + exdate.toUTCString());
+		  document.cookie = cookie_name + '=' + cookie_value;
+		}
+	function getCookie(cookie_name) {
+		  var x, y;
+		  var val = document.cookie.split(';');
+
+		  for (var i = 0; i < val.length; i++) {
+		    x = val[i].substr(0, val[i].indexOf('='));
+		    y = val[i].substr(val[i].indexOf('=') + 1);
+		    x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
+		    if (x == cookie_name) {
+		      return unescape(y); // unescape로 디코딩 후 값 리턴
+		    }
+		  }
+		}
+	</script>
 	<style>
 	body{
 	touch-action:none;
@@ -34,7 +66,8 @@
 
 <div class="wrapper main"><!-- start : wrapper -->
     <header><!-- start : header -->
-        <div class="page-title">인공지능과 예술 특별전</div>
+        <div class="page-title" onclick="document.location='/html/etc/enter.html'">인공지능과 예술 특별전</div>
+         <button type="button" class="header-title" id="" onclick="document.location='https://aixart.co.kr/contest'" >공모전</button>
         <button type="button" class="header-title" id="button8" onclick="$('.main-slide-wrap').hide()" >전시 개요</button>
         <a href="javascript:void(0)" onclick="common.popOpen('#all-menu')"><img src="../../asset/image/ico/ico-totalmenu.png" /></a>
 
@@ -50,7 +83,8 @@
                     <li><a href="/html/human/human.html"><span>체험</span> 가상 인간, 다온</a></li>
                     <li><a href="/html/beyond/beyond.html" >인공지능 x 예술가</a></li>
                     <li><a href="/html/gallery/gallery.html">공모전 작품 전시</a></li>
-                    <li><a href="javascript:void(0)">@aixart_daon</a></li>
+                    <li><a href="javascript:alert('공모전 작품 전시는 11/16 에 오픈됩니다.\n COMING SOON');">공모전 작품 전시</a></li>
+                    <li><a href="HTTPS://INSTAGRAM.COM/@AIXART_DAON">@aixart_daon</a></li>
                 </ul>
                 <div class="menu-btn-wrap">
                     <button type="button" class="btn-close" onclick="common.popClose('#all-menu')"><img src="../../asset/image/ico/ico-close.png" /></button>
@@ -158,7 +192,7 @@
                             <div class="cate">AI Contest<br />Gallery</div>
                             <div class="stit">인공지능 공모전 전시</div>
                             <div class="sdesc">인공지능과 예술 공모전의 <br />작품들을 확인할 수 있습니다.</div>
-                            <a href="/html/gallery/gallery.html">
+                             <a href="javascript:alert('공모전 작품 전시는 11/16 에 오픈됩니다.\n COMING SOON');">
                                 <div class="txt">갤러리 바로가기</div>
                                 <div class="ico"><img src="../../asset/image/ico/ico-more.png" /></div>
                             </a>
