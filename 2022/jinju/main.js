@@ -404,6 +404,7 @@ const app = new external_PIXI_namespaceObject.Application({ backgroundColor: 0xF
     antialias: true
     //resolution: window.devicePixelRatio || 1,
 });
+app.stage.scale.set(375.0 / 640.0);
 document.body.appendChild(app.view);
 //DataManager.instance().loader.add("images/spritesheet.json").add("MaplestoryBold","images/MaplestoryBold.ttf").load(setup);
 DataManager.instance().loader
