@@ -401,10 +401,10 @@ external_PIXI_namespaceObject.Loader.registerPlugin(external_PIXI_namespaceObjec
 const app = new external_PIXI_namespaceObject.Application({ backgroundColor: 0xF9FAE8,
     width: Config.SCREEN_WIDTH,
     height: Config.SCREEN_HEIGHT,
-    antialias: true
-    //resolution: window.devicePixelRatio || 1,
+    antialias: true,
+    //resolution: 1.0/window.devicePixelRatio || 1,
 });
-app.stage.scale.set(375.0 / 640.0);
+app.stage.scale.set(420.0 / 640.0);
 document.body.appendChild(app.view);
 //DataManager.instance().loader.add("images/spritesheet.json").add("MaplestoryBold","images/MaplestoryBold.ttf").load(setup);
 DataManager.instance().loader
