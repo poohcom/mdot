@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>three.js webgl - mirror with nodes</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+      <link type="text/css" rel="stylesheet" href="main.css">
+      <style>
+         body {
+				touch-action: none;
+			}
+      </style>
+   </head>
+   <body>
+      <script type="module" src="bundle.js" >
+      </script>
+      
+      <div id="container"></div>
+      <video id="video1_h" loop muted crossOrigin="anonymous" playsinline style="display:none">
+         <source src="data/mp4/8k.mp4" >
+		</video>
+      <video id="video1" loop muted crossOrigin="anonymous" playsinline style="display:none">
+         <source src="data/mp4/4k.webm" >
+         <source src="data/mp4/4k.mp4" >
+		</video>
+
+      <video id="video_sample_h" loop muted crossOrigin="anonymous" playsinline style="display:none">
+         <source src="data/mp4/sample.mp4" >
+		</video>
+      <video id="video_sample" loop muted crossOrigin="anonymous" playsinline style="display:none">
+		 <source src="data/mp4/sample.webm" >
+         <source src="data/mp4/sample.mp4" >
+	  </video>
+
+
+      <div id="overlay">
+			<button id="startGameButton" >Play Game</button>
+			<button id="start360Button" >Play 360</button>
+	  </div>
+      
+      
+   </body>
+</html>
