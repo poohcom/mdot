@@ -61,57 +61,11 @@
         </script>
     </head>
     <body>
-        <!-- SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough 
-             JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
-             when JavaScript is disabled.
-        -->
-        <div id="flashContent">
-            <p>
-                To view this page ensure that Adobe Flash Player version 
-                25.0.0 or greater is installed. 
-            </p>
-            <script type="text/javascript"> 
-                var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://"); 
-                document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
-                                + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
-            </script> 
-        </div>
-        
-        <noscript>
-            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="mdot">
-                <param name="movie" value="mdot.swf" />
-                <param name="quality" value="high" />
-                <param name="bgcolor" value="#ffffff" />
-                <param name="allowScriptAccess" value="sameDomain" />
-                <param name="allowFullScreen" value="true" />
-				<param name="wmode" value="direct" />
-                <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" data="mdot.swf" width="100%" height="100%">
-                    <param name="quality" value="high" />
-                    <param name="bgcolor" value="#ffffff" />
-                    <param name="allowScriptAccess" value="sameDomain" />
-                    <param name="allowFullScreen" value="true" />
-					<param name="wmode" value="direct" />
-                <!--<![endif]-->
-                <!--[if gte IE 6]>-->
-                    <p> 
-                        Either scripts and active content are not permitted to run or Adobe Flash Player version
-                        25.0.0 or greater is not installed.
-                    </p>
-                <!--<![endif]-->
-                    <a href="http://www.adobe.com/go/getflashplayer">
-                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
-                    </a>
-                <!--[if !IE]>-->
-                </object>
-                <!--<![endif]-->
-            </object>
-        </noscript>     
-	    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
-<script type="text/javascript">
-if(!wcs_add) var wcs_add = {};
-wcs_add["wa"] = "1f418e9726640a";
-wcs_do();
-</script>
+     <object>
+        <embed src="mdot.swf" width="1920" height="1080" />
+    </object>
+        <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+	
+      
    </body>
 </html>
