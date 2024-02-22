@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>IONIQ 6 Digital Studio</title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+      <meta charset="utf-8" />
+      <meta name="title" content="IONIQ 6 Digital Studio" />
+      <meta name="description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!" />
+      <meta name="keywords" content="IONIQ 6 Digital Studio" />
+
+      <meta property="og:type" content="website" />
+      <meta property="og:url"	content="https://ioniq6.hyundai.com/worldpremiere/" />
+      <meta property="og:title" content="IONIQ 6 Digital Studio" />
+      <meta property="og:description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!" />
+      <meta property="og:image" content="https://ioniq6.hyundai.com/worldpremiere/asset/img/share_img.jpg" />
+
+      <meta name="twitter:card" content="photo">
+      <meta name="twitter:url" content="https://ioniq6.hyundai.com/worldpremiere/">
+      <meta name="twitter:title" content="IONIQ 6 Digital Studio">
+      <meta name="twitter:description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!">
+      <meta name="twitter:image" content="https://ioniq6.hyundai.com/worldpremiere/asset/img/share_img.jpg">
+      <script src="./assets/js/browser-check.js?v=5"></script>
+    <link rel="stylesheet" href="/worldpremiere/asset/css/font/fonts.css">
+    <link rel="stylesheet" href="./assets/css/room.css">
+    <link rel="stylesheet" href="./assets/css/swiper.css">
+    <script src="/worldpremiere/asset/js/jquery-3.6.0.min.js"></script>
+    <script src="./assets/js/swiper.js"></script>
+    <script src="/worldpremiere/asset/js/include.js"></script>
+    <style type="text/css">
+        .video_wrap {
+            height: 100vh;
+            width: 100vw;
+        }
+        .resize-wrap{
+        }
+        .resize-wrap.tr-or{
+            transform-origin: 0 0;
+        }
+        .resize-wrap.tr-or-b{
+            transform-origin: bottom;
+        }
+        .resize-wrap.tr-or-t{
+            transform-origin: top;
+        }
+        .resize-wrap.tr-or-b-r{
+            transform-origin: bottom right;
+        }
+        .resize-wrap.tr-or-b-l{
+            transform-origin: bottom left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="float_util">
+            <button type="button" class="btn_sound_ctr mute"><span class="blind">사운드 ON/OFF</span></button>
+            <audio loop id="bgmSource">
+                <source src="./assets/audio/1-8_bgm.mp3" type="audio/mpeg" type="audio/mpeg">
+            </audio>
+        </div>
+        <div class="video_wrap">
+            <div>
+                <canvas id="c1" width="100%" height="100%"></canvas>
+            </div>
+        </div>
+		<div class="room-wrap__contents">
+                <button class="room-wrap__hmd" id="roomHmd" onclick="location.href = '/worldpremiere/kr/hmd.html'"><img src="./assets/img/room/ico_hmd.png" alt="" gtag-cate="메뉴이동" gtag-label="스트레스프리_HMD"></button>
+                <!-- <button class="room-wrap__find" id="roomLearn" gtag-cate="메뉴이동" gtag-label="스트레스프리_차량정보">
+                    <p class="t1 bold">Find out More</p>
+                    <p class="t2">실제 판매 차량과 다를 수 있습니다.</p>
+                </button> -->
+                
+                <button class="room-wrap__screen room-wrap__ico" gtag-cate="메뉴이동" gtag-label="스트레스프리_필름팝업" id="roomScreen">
+                    <img src="./assets/img/room/ico_play.png" alt="">
+                    <div class="toast hh_r">IONIQ 6의 <br>월드 프리미어 영상을 확인하세요.</div>
+                </button>
+                
+                <button onclick="location.href='./main.html';" class="room-wrap__obj room-wrap__ico" gtag-cate="메뉴이동" gtag-label="스트레스프리_메인액티비티" id="roomObj">
+                    <img src="./assets/img/room/ico_obj.png" alt="">
+                    <div class="toast hh_r">액티비티에 참여하고<br>픽셀큐브를 획득하세요.</div>
+                </button>
+                
+                <button onclick="location.href='../configurator/';" class="room-wrap__360 room-wrap__ico" gtag-cate="메뉴이동" gtag-label="스트레스프리_컨피규레이터" id="room360">
+                    <img src="./assets/img/room/ico_360.png" alt="">
+                    <div class="toast hh_r l3">VR/AR Configurator로 <br>IONIQ 6를 더욱 실감 나게 <br>체험해 보세요.</div>
+                </button>
+            </div>
+    </div>
+    
+    <!-- 미디어 영상 팝업-->
+    <div class="media-dialog">
+        <div class="pop-item-wrap resize-wrap">
+            <button type="button" class="pop-close"><img src="./assets/img/ico-close-black.png" /></button>
+            <!-- Swiper -->
+            <div id="media-slide-wrap" class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="media-item-wrap gdpr_youtube_box"><iframe width="560" height="315" src="https://www.youtube.com/embed/QDP2Otyb9EI" data-src="https://www.youtube.com/embed/QDP2Otyb9EI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                        <div class="mtit hh_m">IONIQ 6 | Digital World Premiere</div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="media-item-wrap gdpr_youtube_box"><iframe width="560" height="315" src="https://www.youtube.com/embed/JAuXTkJkFO4" data-src="https://www.youtube.com/embed/JAuXTkJkFO4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                        <div class="mtit hh_m">IONIQ 6 | Digital World Premiere Trailer</div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            <script>
+                var mediaSlide = new Swiper('#media-slide-wrap', {
+                    //loop: true,
+                    slidesPerView: '1',
+                    spaceBetween: 0,
+                    observer: true,
+                    observeParents: true,
+                    pagination: {
+                        el: "#media-slide-wrap .swiper-pagination",
+                        clickable: true
+                    },
+                });
+            </script>
+
+        </div>
+    </div>
+    
+	<!-- 튜토리얼 모달 -->
+    <div class="dialog_tutor">
+        <p>마우스로 화면을
+            <br/>드래그 해보세요.</p>
+    </div>
+    <script src="./assets/js/room.js?v=1"></script>
+    <script>
+		
+		$(function () {
+            $("body").on("click", ".room-wrap__screen", function () {
+                $(".media-dialog").addClass("on");
+
+                // Pause the sound when the popup is opened
+                $(".float_util .btn_sound_ctr").addClass("mute");
+                bgm.pause()
+            });
+            $("body").on("click", ".pop-close", function () {
+                 $(".media-dialog iframe").each((i, iframe) => {
+                    $(iframe).attr("src", $(iframe).attr('data-src'))
+                 })
+                $(".media-dialog").removeClass("on");
+            });
+        });
+		
+        $(document).ready(function() {
+            $('.dialog_tutor').addClass('show')
+        })
+
+        var bgm = document.getElementById('bgmSource');
+        $(".float_util .btn_sound_ctr").on("click", function(){
+            if ($(this).hasClass("mute")){
+                $(this).removeClass("mute");
+                bgm.play();
+
+            }else {
+                $(this).addClass("mute");
+                bgm.pause()();
+            }
+        });
+
+        // shwon 동영상 팝업 띄울때 
+        // document.getElementById('bgmSource').pause();
+        // $(".float_util .btn_sound_ctr").addClass("mute");
+    </script>
+    <script type="module">
+        import ResizeManager from "./assets/js/resize-manager.js"
+
+        const resize = new ResizeManager();
+    </script>
+</body>
+
+</html>
