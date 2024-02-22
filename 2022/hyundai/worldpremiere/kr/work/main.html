@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>IONIQ 6 Digital Studio</title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+      <meta charset="utf-8" />
+      <meta name="title" content="IONIQ 6 Digital Studio" />
+      <meta name="description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!" />
+      <meta name="keywords" content="IONIQ 6 Digital Studio" />
+
+      <meta property="og:type" content="website" />
+      <meta property="og:url"	content="https://ioniq6.hyundai.com/worldpremiere/" />
+      <meta property="og:title" content="IONIQ 6 Digital Studio" />
+      <meta property="og:description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!" />
+      <meta property="og:image" content="https://ioniq6.hyundai.com/worldpremiere/asset/img/share_img.jpg" />
+
+      <meta name="twitter:card" content="photo">
+      <meta name="twitter:url" content="https://ioniq6.hyundai.com/worldpremiere/">
+      <meta name="twitter:title" content="IONIQ 6 Digital Studio">
+      <meta name="twitter:description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!">
+      <meta name="twitter:image" content="https://ioniq6.hyundai.com/worldpremiere/asset/img/share_img.jpg">
+      <script src="./assets/js/browser-check.js?v=5"></script>
+    <script src="/worldpremiere/asset/js/jquery-3.6.0.min.js"></script>
+    <script src="/worldpremiere/asset/js/include.js"></script>
+
+    <link rel="stylesheet" href="/worldpremiere/asset/css/font/fonts.css">
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="./assets/css/room.css">
+    <link rel="stylesheet" href="assets/css/working_common.css?v=3" />
+
+    <link rel="stylesheet" href="./assets/css/marquee.css?v=2">
+
+    <style>
+        
+        .resize-wrap{
+        }
+        .resize-wrap.tr-or{
+            transform-origin: 0 0;
+        }
+        .resize-wrap.tr-or-b{
+            transform-origin: bottom;
+        }
+        .resize-wrap.tr-or-t{
+            transform-origin: top;
+        }
+        .resize-wrap.tr-or-b-r{
+            transform-origin: bottom right;
+        }
+        .resize-wrap.tr-or-b-l{
+            transform-origin: bottom left;
+        }
+        .itemWrap__item.active > div {
+            z-index: 1;
+            position: relative;
+        }
+        .itemWrap__item.active:after {
+          z-index: 0;
+          content: '';
+          display: block;
+          width: 100%;
+          height: 100%;
+          background-color: #ccc;
+          border-radius: 50%;
+          opacity: 0.1;
+          position: absolute;
+          left: 0;
+          top: 0;
+          -webkit-animation: lightAni 1.3s cubic-bezier(0.5, 1, 0.5, 1) infinite;
+                  animation: lightAni 1.3s cubic-bezier(0.5, 1, 0.5, 1) infinite;
+        }
+        @keyframes lightAni {
+          0% {
+            -webkit-transform: scale(0.2);
+                    transform: scale(0.2);
+            opacity: 0.5;
+          }
+          30% {
+            opacity: 0.8;
+          }
+          100% {
+            -webkit-transform: scale(1);
+                    transform: scale(1);
+            opacity: 0;
+          }
+        }
+        .itemWrap {
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+
+ <!--    <span style="position: fixed;width: 5px;height: 5px;top: 50%;left: 50%;background: red;z-index: 9999;border-radius: 100%;user-select: none;"></span>
+    <button id="getLatLon" style="position: fixed; right: 10px; top: 10px; z-index: 9999;user-select: none;">Get Lat-Lon</button>    -->
+    <div id="container" class=""></div>
+
+    <!-- loading -->
+    <article class="loading-wrap" style="z-index: 999;">
+        <div class="loading-wrap__progress">
+            <span class="loading-wrap__item"></span>
+        </div>
+        <p class="loading-wrap__txt hh_m">Loading</p>
+    </article>
+    <!-- common assets -->
+    <!-- <button class="btn-exit" id="btnExit"><img src="./assets/img/btn_exit.png" alt=""></button> -->
+
+    <div class="option-wrap" id="optionBtn" style="display: none;">
+        <button class="option-wrap__volume pause" id="toggleVolume"></button>
+        <button class="option-wrap__undo" id="btnExit" onclick="location.href='./';"></button>
+      </div>
+
+    <!-- work romm -->
+    <div class="working-wrap">
+
+        <!-- initial step -->
+        <div class="activity_wrap" id="start_activity" style="display: none;">
+            <div class="top">
+                <a href="./"><img src="./assets/img/room/btn_room.png" alt=""></a>
+            </div>
+            <div class="activityTxt-wrap resize-wrap">
+                <p class="t1 hh_m">Build My Work Room.</p>
+                <p class="t2 hh_m">IONIQ 6 실내 공간을 활용하여 나만의 작업실을 만들어보세요.</p>
+            </div>
+            <div class="marquee_wrap">
+                <div class="marquee" data-speed="1">
+                    <div class="marquee_row">
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item01.png" alt="item01">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item02.png" alt="item02">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item03.png" alt="item03">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item04.png" alt="item04">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item05.png" alt="item05">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item06.png" alt="item06">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item07.png" alt="item07">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item08.png" alt="item08">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item09.png" alt="item09">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item10.png" alt="item10">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item11.png" alt="item11">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item12.png" alt="item12">
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item01.png" alt="item01">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item02.png" alt="item02">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item03.png" alt="item03">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item04.png" alt="item04">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item05.png" alt="item05">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item06.png" alt="item06">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item07.png" alt="item07">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item08.png" alt="item08">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item09.png" alt="item09">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item10.png" alt="item10">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item11.png" alt="item11">
+                            </div>
+                        </div>
+                        <div class="marquee_item" data-clone="0">
+                            <div>
+                                <img src="./assets/img/marquee/img-marquee-item12.png" alt="item12">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<p class="btn-start resize-wrap"><a href="#a"><img src="./assets/img/room/btn_start.png" alt=""></a></p>-->
+            <p class="btn-start resize-wrap"><a href="#a">Start</a></p>
+
+        </div>
+
+
+        <!-- work info 360 -->
+        <article class="pop-layer dimmed" id="info1" style="display: none;">
+            <img src="./assets/img/icon_360.png" alt="" id="ico360">
+            <p class="pop-layer__t1 hh_m">360도로 돌려 <br>3가지의 포인트를 확인해 보세요.</p>
+        </article>
+
+        <!-- click points position sampling -->
+        <!-- <button class="click-point" id="clickBtn1" style="top:1000px;right:500px;"></button>
+      <button class="click-point" id="clickBtn2" style="bottom:100px;right:50%;"></button>
+      <button class="click-point" id="clickBtn3" style="bottom:500px;right:50%;"></button> -->
+
+        <!-- clickBtn1 ->> open -->
+        <div class="img-info dimmed" id="pop1" style="display: none;">
+            <div class="img-info__cont resize-wrap">
+                <div class="img-wrap">
+                    <img src="assets/img/pop_img01.png" alt="">
+                </div>
+                <p class="t1 hh_m">실내 수납공간</p>
+                <p class="t2 hh_r">
+                  글로브 박스, 콘솔 하단 수납공간 등 넓은 실내 수납공간에 노트, 태블릿 PC와 같은 <br>다양한 아이템을 보관할 수 있습니다.</p>
+                <button class="btn-closed" id="pop1Closed"></button>
+            </div>
+        </div>
+
+        <!-- clickBtn2 ->> open -->
+        <div class="img-info dimmed" id="pop2" style="display: none;">
+            <div class="img-info__cont resize-wrap">
+                <div class="img-wrap">
+                    <img src="assets/img/pop_img03.png" alt="">
+                </div>
+                <p class="t1 hh_m">브릿지 타입 센터 콘솔</p>
+                <p class="t2 hh_r">
+                  센터페시아에서 콘솔박스까지 이어지는 브릿지 타입 센터 콘솔로, <br>
+                  노트북 등 다양한 워크 아이템을 올려 놓고 편하게 작업할 수 있습니다.
+                </p>
+                <button class="btn-closed" id="pop3Closed"></button>
+            </div>
+        </div>
+
+        <!-- clickBtn3 ->> open -->
+        <div class="img-info dimmed" id="pop3" style="display: none;">
+            <div class="img-info__cont resize-wrap">
+                <div class="img-wrap">
+                    <img src="assets/img/pop_img02.png" alt="">
+                </div>
+                <p class="t1 hh_m">Vehicle-to-Load (V2L)</p>
+                <p class="t2 hh_r">
+                  2열 시트 하단의 실내 V2L을 사용하여 차량 내부에서 전자기기 사용이 가능합니다. <br>
+                  노트북, 태블릿 등 전자기기를 자유롭게 연결할 수 있습니다.</p>
+                <button class="btn-closed" id="pop2Closed"></button>
+            </div>
+        </div>
+
+        <!-- pop start -->
+        <div class="startPop dimmed" id="popStart" style="display: none;">
+            <p class="t1 hh_m resize-wrap tr-or-b">Build My Work Room.</p>
+            <p class="t2 hh_m resize-wrap tr-or-t">이제 나만의 작업실을 <br>직접 꾸며 보세요!</p>
+            <button class="btn-start resize-wrap" id="btnStart">Start</button>
+        </div>
+
+        <!-- step1 info -->
+        <div class="stepPop dimmed" id="step1Box" style="display: none;">
+            <div class="stepPop__cont resize-wrap">
+                <p class="t1 hh_m">Step 1</p>
+                <p class="t2 hh_m">
+                  IONIQ 6만의 특별한 <br>‘IONIQ 라이프스타일 아이템'을 활용해 보세요.
+                </p>
+                <p class="t3 hh_r">IONIQ 라이프스타일 아이템을 설치할 포인트를 선택해 보세요.</p>
+                <ul class="step_list">
+                    <li class="step_list__item">
+                        <img src="./assets/img/img_step_01.png" alt="">
+                    </li>
+                    <li class="step_list__item">
+                        <img src="./assets/img/img_step_02.png" alt="">
+                    </li>
+                    <li class="step_list__item">
+                        <img src="./assets/img/img_step_03.png" alt="">
+                    </li>
+                </ul>
+                <button class="btn-ok mm_r" id="btnStep2BoxOk">확인</button>
+                <p class="t4">* 지역에 따라 판매 여부 상이할 수 있습니다.</p>
+            </div>
+        </div>
+
+        <!-- step2 info -->
+        <div class="stepPop dimmed" id="step2Box" style="display: none;">
+            <div class="stepPop__cont resize-wrap">
+                <p class="t1 hh_m">Step 2</p>
+                <p class="t2 hh_m">
+                  다양한 Work Item을 활용해서 <br>나만의 스타일로 IONIQ 6 작업실을 꾸며보세요.</p>
+                <ul class="step_list2">
+                    <li class="step_list2__item">
+                        <img src="./assets/img/ico_step_01.png" alt="">
+                        <p class="hh_m">원하는 Work Item을 <br>선택하세요.</p>
+                    </li>
+                    <li class="step_list2__item">
+                        <img src="./assets/img/ico_step_02.png" alt="">
+                        <p class="hh_m">해당 아이템을 배치할 위치를 <br>확인하세요.</p>
+                    </li>
+                    <li class="step_list2__item">
+                        <img src="./assets/img/ico_step_03.png" alt="">
+                        <p class="hh_m">원하는 위치에 드래그하여 <br>설치해 보세요.</p>
+                    </li>
+                </ul>
+                <button class="btn-ok hh_m" id="btnStep2BoxOk">확인</button>
+            </div>
+        </div>
+
+        <!-- click setup points position sampling -->
+        <!-- <button class="click-point" id="setupBtn1" style="top:500px;right:50%;"></button>
+      <button class="click-point" id="setupBtn2" style="bottom:600px;right:50%;"></button>
+      <button class="click-point" id="setupBtn3" style="bottom:700px;right:50%;"></button> -->
+
+        <!-- setupBtn1 ->> open -->
+        <div class="setupPop dimmed" id="setupPop1" style="display: none;">
+            <div class="setupPop__cont  resize-wrap">
+                <img src="./assets/img/img_pop_01.png" alt="" width="70%">
+                <p class="t1 hh_m">스마트 테이블</p><!-- 220629 수정  -->
+                <p class="t2 hh_r">차량 내에서의 업무/ 휴식 등 다양한 라이프스타일을 지원할 수 있도록 <br>
+                V2L을 통해 무선 충전 기능과 65w USB-PD 포트를 지원합니다.</p>
+                <button class="btn-setup hh_m" id="setupPop1Play">설치하기</button>
+                <!-- <button class="btn-closed" id="setupPop1Closed"></button> -->
+            </div>
+        </div>
+
+        <!-- setupBtn2 ->> open -->
+        <div class="setupPop dimmed" id="setupPop2" style="display: none;">
+            <div class="setupPop__cont  resize-wrap">
+                <img src="./assets/img/img_pop_02.png" alt="">
+                <p class="t1 hh_m">무선 청소기 </p><!-- 220629 수정 -->
+                <p class="t2 hh_r">항상 위생적인 차량 실내 환경 유지를 위해 <br>
+                    V2L을 통한 충전 및 차량 내 수납이 가능합니다.</p>
+                <button class="btn-setup hh_m" id="setupPop2Play">설치하기</button>
+                <!-- <button class="btn-closed" id="setupPop2Closed"></button> -->
+            </div>
+        </div>
+
+        <!-- setupBtn3 ->> open -->
+        <div class="setupPop dimmed" id="setupPop3" style="display: none;">
+            <div class="setupPop__cont  resize-wrap">
+                <img src="./assets/img/img_pop_03.png" alt="">
+                <p class="t1 hh_m">파워 스트립(멀티탭)</p><!-- 220629 수정 -->
+                <p class="t2 hh_r">차량 내/외부로 최대 3.6kW의 소비 전력을 공급할 수 있는 <br>
+                V2L 기능을 확장시켜 다양한 전자기기 사용을 가능하게 지원합니다.</p>
+                <button class="btn-setup hh_m" id="setupPop3Play">설치하기</button>
+                <!-- <button class="btn-closed" id="setupPop3Closed"></button> -->
+            </div>
+        </div>
+
+        <!-- pop info working table setup -->
+        <div class="info-layer blur" id="setupBox" style="display: none;">
+            <p class="tit light">
+              IONIQ 6만의 <br>특별한
+              <b class="bold">커스터마이징 아이템</b>을 만나보세요.
+            </p>
+            <div class="info-layer__cont">
+                <img src="./assets/img/img_cus_img01.png" alt="">
+                <p class="t1 hst">IONIQ 멀티 워킹 테이블</p>
+                <button class="btn-ok" id="btnSetup">설치하기</button>
+                <button class="btn-closed" id="setupBoxClosed"></button>
+            </div>
+        </div>
+
+        <!-- work item -->
+        <div class="itemWrap" style="display: none;">
+            <div class="tit">
+                <p class="hh_m">Work Item</p>
+                <button class="itemWrap__toggle open"></button><!-- classList="open":"closed" -->
+            </div>
+            <div class="itemWrap__listWrap">
+                <ul class="itemWrap__list">
+                    <li class="itemWrap__item">
+                        <div>
+                            <div class="thumb"><img src="./assets/img/item_01.png" alt="" class="itemWrap__img" id="itemImg1" data-item="laptop"></div>
+                            <p class="itemWrap__txt hh_r">노트북</p>
+                        </div>
+                    </li>
+                    <li class="itemWrap__item">
+                        <div>
+                            <div class="thumb"><img src="./assets/img/item_02.png" alt="" class="itemWrap__img" id="itemImg2" data-item="headphone"></div>
+                            <p class="itemWrap__txt hh_r">헤드폰</p>
+                        </div>
+                    </li>
+                    <li class="itemWrap__item">
+                        <div>
+                            <div class="thumb"><img src="./assets/img/item_03.png" alt="" class="itemWrap__img" id="itemImg3" data-item="tablet"></div>
+                            <p class="itemWrap__txt hh_r">태블릿</p>
+                        </div>
+                    </li>
+                    <li class="itemWrap__item">
+                        <div>
+                            <div class="thumb"><img src="./assets/img/item_04.png" alt="" class="itemWrap__img" id="itemImg4" data-item="airCleaner"></div>
+                            <p class="itemWrap__txt hh_r">공기청정기</p>
+                        </div>
+                    </li>
+                    <li class="itemWrap__item">
+                        <div>
+                            <div class="thumb"><img src="./assets/img/item_05.png" alt="" class="itemWrap__img" id="itemImg5" data-item="tumbler"></div>
+                            <p class="itemWrap__txt hh_r">텀블러</p>
+                        </div>
+                    </li>
+                    <li class="itemWrap__item">
+                        <div>
+                            <div class="thumb"><img src="./assets/img/item_06.png" alt="" class="itemWrap__img" id="itemImg6" data-item="note"></div>
+                            <p class="itemWrap__txt hh_r">노트</p>
+                        </div>
+                    </li>
+                    <li class="itemWrap__item">
+                        <div>
+                            <div class="thumb"><img src="./assets/img/item_07.png" alt="" class="itemWrap__img" id="itemImg7" data-item="coffeePot"></div>
+                            <p class="itemWrap__txt hh_r">커피포트</p>
+                        </div>
+                    </li>
+                    <li class="itemWrap__item">
+                        <div>
+                            <div class="thumb"><img src="./assets/img/item_08.png" alt="" class="itemWrap__img" id="itemImg8" data-item="camera"></div>
+                            <p class="itemWrap__txt hh_r">카메라</p>
+                        </div>
+                    </li>
+                    <li class="itemWrap__item">
+                        <div>
+                            <div class="thumb"><img src="./assets/img/item_09.png" alt="" class="itemWrap__img" id="itemImg9" data-item="cushion"></div>
+                            <p class="itemWrap__txt hh_r">쿠션</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+
+            <button class="t1 hsr" id="itemWrap__btn" disabled>나만의 작업실 만들기 완성</button>
+        </div>
+        <!-- work item drag targets -->
+        <!-- <div class="target-point" id="target1" style="top:500px;left:20%;"></div>
+      <div class="target-point" id="target2" style="bottom:600px;left:20%;"></div>
+      <div class="target-point" id="target3" style="bottom:700px;left:20%;"></div> -->
+
+        <!-- popup finish -->
+        <article class="pop-layer blur" id="layerFinish" style="display: none;">
+            <p class="pop-layer__txt-finish"><img src="./assets/img/txt_finish.png" alt=""></p>
+            <p class="pop-msg hh_m">나만의 작업실이 완성되었습니다.</p>
+            <button class="pop-layer__btn-finish bold" id="btnFinish">체험 종료</button>
+        </article>
+
+        <!-- popup badge -->
+        <article class="pop-layer blur" id="layerPop1" style="display: none">
+            <div class="pop-layer__wrap">
+                <div class="on-success-button pop-layer__badge" id="badge" gtag-cate="참여완료" gtag-label="워크_큐브획득"></div>
+                <p class="pop-layer__tit hh_m">Work Room <br>체험이 종료되었습니다.</p>
+                <p class="pop-layer__txt hh_r">픽셀큐브를 클릭해 주세요.</p>
+            </div>
+        </article>
+
+        <!-- popup end -->
+        <article class="pop-layer blur" id="layerPop2" style="display: none;">
+            <div class="pop-layer__wrap">
+                <p class="pop-layer__tit"><img src="assets/img/txt.png" alt=""></p>
+                <p class="pop-layer__txt hh_r">IONIQ 6 디지털 스튜디오의 <br>다른 테마룸도 체험해 보세요.</p>
+                <!-- <button class="pop-layer__closed"></button> -->
+            </div>
+            <div class="pop-layer__btnWrap">
+                <button class="pop-layer__btn hh_r" id="layerBtnCancel" gtag-cate="메뉴이동" gtag-label="워크_다시하기" onclick="location.reload()">다시하기</button>
+                <button class="pop-layer__btn hh_r" id="layerBtnOk" gtag-cate="메뉴이동" gtag-label="워크_다른룸체험" onclick="location.href='/worldpremiere/kr/main.html';">다른 테마룸 체험하기</button>
+            </div>
+        </article>
+    </div>
+
+    <!-- setup pop 1 play -->
+    <div class="playSetup" id="setupPop1PlayWrap" style="display: none;">
+        <div class="movieBox resize-wrap">
+            <video src="./assets/video/step-2-1.mp4?v=1"></video>
+        </div>
+    </div>
+
+    <!-- setup pop 2 play -->
+    <div class="playSetup" id="setupPop2PlayWrap" style="display: none;">
+        <div class="movieBox resize-wrap">
+            <video src="./assets/video/step-2-2.mp4"></video>
+        </div>
+    </div>
+
+    <!-- setup pop 3 play -->
+    <div class="playSetup" id="setupPop3PlayWrap" style="display: none;">
+        <div class="movieBox resize-wrap">
+            <video src="./assets/video/step-2-3.mp4?v=1"></video>
+        </div>
+    </div>
+
+    <audio loop id="bgSoundTrack" style="display: none;">
+      <source src="./assets/audio/room_3_bg_soundtrack.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Import maps polyfill -->
+    <!-- Remove this when import maps will be widely supported -->
+    <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+
+    <script type="importmap">
+        {
+        "imports": {
+          "three": "./assets/three-js/three.module.js"
+        }
+      }
+    </script>
+
+    <script type="module" src="./assets/js/module.js?v=24"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+
+    <!-- <script src="./assets/js/room.js"></script> -->
+    <script>
+        let cubeIco = document.getElementById('badge');
+        cubeIco.addEventListener('click', function () {
+            this.classList.add('ok');
+        });
+        var swiper = new Swiper(".actibitySwiper", {
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            spaceBetween: 50,
+            loop: true,
+
+        });
+    </script>
+    <script src="./assets/js/marquee.js"></script>
+    <script type="module">
+        import ResizeManager from "./assets/js/resize-manager.js"
+
+        const resize = new ResizeManager();
+    </script>
+</body>
+
+</html>

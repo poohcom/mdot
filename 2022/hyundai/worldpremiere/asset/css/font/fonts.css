@@ -1,0 +1,64 @@
+/* SpoqaHanSans_R */
+@font-face {
+      font-family:'GC_80g';
+      font-style:normal;
+      src: url('HGGGothicssi80g.eot');
+      src: url('HGGGothicssi80g.eot?#iefix') format('embedded-opentype'),
+           url('HGGGothicssi80g.woff') format('woff'),
+           url('HGGGothicssi80g.ttf') format('truetype');
+}
+
+/* HyundaiSansHead */
+@font-face {
+  font-family: "hh_l";
+  font-style:normal;
+  src: url("HyundaiSansHeadKRLight.eot");
+  src: url("HyundaiSansHeadKRLight.eot?#iefix") format("embedded-opentype"),
+      url('HyundaiSansHeadKRLight.woff') format('woff'),
+      url('HyundaiSansHeadKRLight.ttf') format('truetype');
+}
+@font-face {
+  font-family: "hh_r";
+  font-style:normal;
+  src: url("HyundaiSansHeadKRRegular.eot");
+  src: url("HyundaiSansHeadKRRegular.eot?#iefix") format("embedded-opentype"),
+      url('HyundaiSansHeadKRRegular.woff') format('woff'),
+      url('HyundaiSansHeadKRRegular.ttf') format('truetype');
+}
+@font-face {
+  font-family: "hh_m";
+  font-style:normal;
+  src: url("HyundaiSansHeadKRMedium.eot");
+  src: url("HyundaiSansHeadKRMedium.eot?#iefix") format("embedded-opentype"),
+      url('HyundaiSansHeadKRMedium.woff') format('woff'),
+      url('HyundaiSansHeadKRMedium.ttf') format('truetype');
+}
+@font-face {
+  font-family: "hh_b";
+  font-style:normal;
+  src: url("HyundaiSansHeadKRBold.eot");
+  src: url("HyundaiSansHeadKRBold.eot?#iefix") format("embedded-opentype"),
+      url('HyundaiSansHeadKRBold.woff') format('woff'),
+      url('HyundaiSansHeadKRBold.ttf') format('truetype');
+}
+  
+/* HyundaiSansText */
+@font-face {
+  font-family: "ht_r";
+  font-style:normal;
+  src: url("HyundaiSansTextKRRegular.eot");
+  src: url("HyundaiSansTextKRRegular.eot?#iefix") format("embedded-opentype"),
+      url('HyundaiSansTextKRRegular.woff') format('woff'),
+      url('HyundaiSansTextKRRegular.ttf') format('truetype');
+}
+@font-face {
+  font-family: "ht_m";
+  font-style:normal;
+  src: url("HyundaiSansTextKRMedium.eot");
+  src: url("HyundaiSansTextKRMedium.eot?#iefix") format("embedded-opentype"),
+      url('HyundaiSansTextKRMedium.woff') format('woff'),
+      url('HyundaiSansTextKRMedium.ttf') format('truetype');
+}
+
+
+

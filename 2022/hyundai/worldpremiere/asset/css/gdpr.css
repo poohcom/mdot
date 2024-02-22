@@ -1,0 +1,155 @@
+@charset "utf-8";
+
+/* 팝업 */
+.popup-open {/* overflow:hidden; *//* padding-right:17px; */}
+.popup-open #popup_gdpr {overflow: hidden;/* overflow-y: hidden; */}
+.popup-open #dimLayer {visibility:visible;}
+#dimLayer {visibility:hidden; position:fixed; left:0; right:0; top:0; bottom:0; background:rgb(0,0,0);z-index: 100; opacity:0.8; overflow-x:hidden;/* overflow-y:scroll; */ padding-right:17px;}
+
+/*일반 popup*/
+#popup_gdpr {z-index: 10001;display:none;position:absolute;left:50%;top:10%;width: 785px;position: fixed;top: 0;left: 0;width: 100%;height: 100%;overflow: hidden;outline: 0;}
+
+/* 닫기 버튼 */
+#popup_gdpr .btn_close {position:absolute;right: 0;top: -64px;width:24px;height:24px;font-size:0; text-indent:-999px; top: 0;right: 0;}
+#popup_gdpr .btn_close::before,
+#popup_gdpr .btn_close::after {content:'';width: 12px;height:2px;display:block;position:absolute;top:calc(50% - 2px);left:calc(50% - 4px); background:#fff; background : #333;height: 3px;}
+#popup_gdpr .btn_close::before {transform : rotate(-45deg);}
+#popup_gdpr .btn_close::after {transform : rotate(45deg);}
+#popup_gdpr .btn_close {opacity:0.5;}
+#popup_gdpr .btn_close:hover {opacity:1;}
+
+
+/* 팝업 컨텐츠 영역 */
+#popup_gdpr .layer_cont {background:#fff;max-width: 1200px;width: 90%;height: auto;position:absolute;/* padding-bottom: 100px; */top: 200px;left: 50%;transform: translateX(-50%);}
+#popup_gdpr .layer_cont img {display:block;position:relative;width: 100%;}
+#popup_gdpr .layer_cont .popup_header {position:relative; width:100%; z-index:3;}
+#popup_gdpr .layer_cont .popup_body {position:relative;/* padding:30px; */}
+
+/* 애니메이션 */
+#popup_gdpr.on {animation: smallToBig 0.2s ease-in-out;}
+
+@keyframes smallToBig{
+    0% {transform:translateY(20px)}
+    100% {transform:translateY(0)}
+}
+
+
+@keyframes hvr-icon-pop {
+	50% {
+		transform: scale(1.1);
+	}
+}
+/* gdpr banner */
+.gdpr-banner {position: fixed; display: block; width: 100%; background: rgb(255, 255, 255); font-size: 14px; color: rgb(51, 51, 51); bottom: 0px; padding: 8px 5%; z-index: 2147000001; border-top: 1px solid rgb(0, 0, 0); text-align:center;}
+.gdpr-banner a {color:rgb(0, 174, 240);}
+.gdpr-banner .breeze-banner-title {display: block; font-size: 1.3em; font-weight: bold; text-align: center; margin: 8px 18px; color: rgb(51, 51, 51); font-family: Helvetica;}
+.gdpr-banner .breeze-banner-message {display: block;margin: 8px 0;color: rgb(51, 51, 51);width: 100%;font-family: Helvetica;line-height: 1.6;text-align: center; word-break:keep-all;}
+.gdpr-banner .breeze-banner-acceptbutton {display: inline-block; border: 0px; color: rgb(242, 242, 242); background: rgb(0, 44, 95); padding: 8px 22px; cursor: pointer; border-radius: 0px; font-weight: bold; font-family: Helvetica; margin: 6px 0; font-size: 1.1em;}
+.gdpr-banner .breeze-banner-optionbutton {margin: 6px 0 6px 8px; display: inline-block; padding: 8px 22px; background: transparent; color: rgb(51, 51, 51); cursor: pointer; border: 1px solid rgb(0, 44, 95); text-decoration: none; font-size: 1.1em; font-family: Helvetica;}
+.gdpr-banner .btn_banner_close {position: absolute;top: 15px;right: 5%;height: 16px;width: 16px;cursor: pointer;z-index: 100;border: 0px;padding: 0px;background: transparent;}
+
+
+
+
+/* gdpr */
+.breeze-switch {position: relative;display: inline-block;width: 40px;height: 23px; margin:2px;}
+.breeze-switch input {display: none;}
+.breeze-switch-slider {position: absolute;cursor: pointer;top: 0;left: 0;right: 0;bottom: 0;border-radius: 12px;background-color: #ccc;-webkit-transition: .4s;transition: .4s;}
+.breeze-switch-slider:before {position: absolute;content: "";height: 15px;width: 15px;left: 4px;bottom: 4px;border-radius: 9px;background-color: white;-webkit-transition: .4s;transition: .4s;}
+.slideron {background-color: #2196F3;}
+.slideron:before {-webkit-transform: translateX(17px);-ms-transform: translateX(17px);transform: translateX(17px);}
+.disabled { background-color: #ccc; }
+.disabled:before { background-color: #e4e4e4; }
+input:focus + .breeze-switch-slider {box-shadow: 0 0 1px #ccc;}
+
+
+.breeze-prefdiag-sidebar {
+    display: inline-block;
+    width: 200px;
+    height: 450px;
+    background: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-right: 1px solid rgb(211, 211, 211);
+    padding: 60px 30px;
+}
+
+.breeze-prefdiag-sidebarlink {
+    white-space: nowrap;
+    padding: 12px;
+    cursor: pointer;
+    display: block;
+    box-sizing: content-box;
+    font-size: 14px;
+    background: rgb(255, 255, 255);
+    color: rgb(34, 34, 34);
+}
+
+.breeze-prefdiag-breadcrumb {
+    color: rgb(0, 174, 240);
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn_close {
+    display: block;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    height: 12px;
+    width: 12px;
+    cursor: pointer;
+    z-index: 100;
+    border: 0px;
+    padding: 0px;
+    background: transparent;
+}
+
+/* banner */
+.gdpr-banner.hide {display:none!important;}
+
+/* popup dialog layout */
+.breeze-prefdialog-tabpanel {position: absolute;inset: 0px 0px 0px 201px;vertical-align: top;}
+.breeze-prefdiag-tabfooter {position: absolute; bottom: 0px; left: 0px; right: 0px; height: 62px; width: 100%; text-align: right; border-top: 1px solid rgb(211, 211, 211); padding: 4px 2px; background: rgb(255, 255, 255); display: block; overflow:hidden;}
+.breeze-prefdiag-declinebtn {border-radius: 0px; margin: 6px; padding: 8px 16px; color: rgb(51, 51, 51); background: rgb(255, 255, 255); cursor: pointer; border: 1px solid rgb(0, 0, 0); font-size: 16px; font-family: helvetica;}
+.breeze-prefdiag-acceptbtn {border-radius: 0px; display: inline-block; margin: 6px; padding: 8px 16px; color: rgb(242, 242, 242); background: rgb(0, 44, 95); cursor: pointer; border: 2px solid transparent; font-size: 16px; font-family: helvetica;}
+
+.content {position: absolute;inset: 0 0px 62px;}
+.content .content_body {width: 100%;overflow-y:scroll;padding: 0 30px 20px 30px;box-sizing: border-box;position: absolute;top: 30px;bottom: 0;}
+.content .content_body > *:first-child {margin-top: 30px;}
+.breeze-breadcrumb {color: rgb(0, 174, 240);text-decoration: none;font-size: 14px;line-height: 30px;padding: 0 30px;cursor: pointer;display: inline-block;}
+
+/* index */
+.breeze-prefdiag-title {display: block;text-align: left;margin: 30px auto 12px;font-size: 16px;font-weight: 600;}
+.breeze-prefdiag-message {display: block; margin: 4px auto; font-size: 14px; line-height: 1.6; color: rgb(34, 34, 34);}
+.breeze-subtitle {display: block; font-size: 14px; font-weight: 700; color: rgb(34, 34, 34); margin: 18px 0px 12px; line-height: 1.6; padding: 2px 4px;}
+
+/* toggle */
+.breeze-switch {float: right;}
+.breeze-categoryheader {color: rgb(34, 34, 34);font-size: 14px;line-height: 1.6;margin: 12px 2px 6px;padding: 4px 2px;background: rgb(238, 238, 238);}
+.breeze-categoryheader span {display: inline-block; font-size: 13px; font-weight: 600; text-align: left; margin: 4px 8px;}
+.breeze-categoryheader .breeze-prefdiag-link {display: inline-block; color: rgb(0, 174, 240); text-decoration: none; font-size: 13px; font-weight: 600; text-align: left; margin: 4px 8px;}
+
+/* 자세한 정보 */
+.content_body img {width:auto!important; height:60px; margin:0 auto;}
+.content_body h2 {font-weight:bold; margin:0 0 40px 0; font-size:1rem; text-align:center;}
+.content_body h3 {font-weight:bold; margin-top:60px;font-size: 1.2em;}
+.content_body h4 {font-weight:bold; margin:30px 0 6px;font-size: 1.1em;}
+.content_body a {color: rgb(0, 174, 240);}
+.content_body a.view_more {display:inline-block; margin:40px 0;}
+
+
+@media(max-width:720px) {
+    /*gdpr*/
+    .breeze-prefdiag-sidebar {display:block; position:static; width:100%; height:18vw; padding:2% 5%; border-bottom:1px solid #eee;}
+    .breeze-prefdialog-tabpanel {position:static; inset:0; }
+    .content {position:static; font-size:12px}
+    .content .content_body {position:static; height:40vh; padding: 0 5% 2%;}
+    #popup_gdpr .btn_close {top:2%; right:1%;}
+    .breeze-prefdiag-tabfooter {position:static}
+
+    .breeze-breadcrumb {position:absolute;top: 8vw; left:5%; padding-left:0;}
+    .content .content_body > *:first-child {margin-top:20%;}
+    .content .content_body img {max-width:100%; height:auto;}
+
+}

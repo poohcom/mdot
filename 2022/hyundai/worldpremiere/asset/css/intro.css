@@ -1,0 +1,30 @@
+@charset "utf-8";
+#iq6_header .nav_area { display:none } 
+
+#iq6_wrap .sound_control { right:50px; } 
+#iq6_wrap .sound_control .baloon { position: relative; display: inline-block; height:28px; line-height: 27px; color:#fff; font-size:16px; padding:0 10px; vertical-align: middle; border-radius: 3px; background:rgba(0,0,0,0.15); transition:opacity 1s ease } 
+#iq6_wrap .sound_control.on .baloon { opacity:0; } 
+
+#iq6_wrap .sound_control .baloon::after { content:''; position:absolute; right:-5px; top:50%; display:block; border-left:5px solid rgba(0,0,0,0.15); border-top:4px solid transparent; border-bottom:4px solid transparent; margin-top:-4px; } 
+#iq6_wrap { overflow: hidden; position: relative; width:100%; height:100%; } 
+#iq6_wrap .iq6_container { width:100%; height:100%; } 
+#iq6_wrap .iq6_container .iq6_intro { position:relative; width:100%; height: 100vh; min-height:740px; } 
+#iq6_wrap .iq6_container .iq6_intro video { position:absolute; left:50%; top: 50%; width:100%; min-width: 1920px; transform: translate(-50%, -50%); } 
+#iq6_wrap .iq6_container .iq6_intro .btn_skip { position: absolute; left: 50%; bottom:10vh; width: 160px; height: 50px; line-height: 49px; color: #fff; font-family: 'hh_r'; font-size: 18px; text-align: center; letter-spacing:0.02em; margin-left: -80px; background:#002c5f } 
+#iq6_wrap .iq6_container .iq6_intro .btn_skip span:nth-child(1) { display:block } 
+#iq6_wrap .iq6_container .iq6_intro .btn_skip span:nth-child(2) { display:none; } 
+
+#iq6_wrap .iq6_container .iq6_intro .btn_skip.on span:nth-child(1) { display:none } 
+#iq6_wrap .iq6_container .iq6_intro .btn_skip.on span:nth-child(2) { display:block } 
+
+#iq6_footer .footer_box {display: flex;}
+
+#popup_skip .popup_box .popup_content { width: 1020px; } 
+#popup_skip .popup_box .popup_content .thumb { display: flex; font-size: 0; } 
+#popup_skip .popup_box .popup_content .btn_close::before,
+#popup_skip .popup_box .popup_content .btn_close::after { width:37px; margin-left:-18px; background:#000 } 
+#popup_skip .popup_box .popup_content .text_area { position: absolute; left: 88px; top: 55px; font-family: 'hh_m'; font-size: 29px; } 
+#popup_skip .popup_box .popup_content .text_area .btn_driving { display: block; width: 200px; height: 52px; color: #fff; font-family: 'hh_r'; font-size: 20px; line-height: 50px; text-align: center; background: #002c5f; margin-top: 27px; } 
+#popup_skip .popup_box .popup_content li img { position:relative; width: 100%; transition:transform 0.3s ease; } 
+#popup_skip .popup_box .popup_content li:hover img { z-index:10; transform: scale(1.62); box-shadow:0px 5px 10px 10px rgba(0,0,0,0.1) } 
+

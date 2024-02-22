@@ -1,0 +1,227 @@
+@charset "utf-8";
+#iq6_wrap .iq6_socializing { cursor: none !important; } 
+#iq6_wrap .iq6_socializing a:hover { cursor: none !important; } 
+#iq6_wrap .iq6_socializing { display: flex; width:100%; height:100vh; background: url('/worldpremiere/asset/img/socializing/bg_sosializing.jpg') center center no-repeat; background-size:cover; align-items: center; } 
+#iq6_wrap .iq6_socializing .socializing_area {display: flex;align-items: center;max-width: 1700px;width: 100%;margin: 100px auto 0;padding: 0 50px;justify-content: space-between;} 
+#iq6_wrap .iq6_socializing .socializing_area .title { position:relative; color:#fff; } 
+#iq6_wrap .iq6_socializing .socializing_area .title h2 {font-family: 'hh_m';font-size: 75px;line-height: 82px;} 
+#iq6_wrap .iq6_socializing .socializing_area .title h2 span { display:block; font-family: 'hh_l'; font-size:58px } 
+#iq6_wrap .iq6_socializing .socializing_area .title .sub_title { position:relative;margin-top: 250px;} 
+#iq6_wrap .iq6_socializing .socializing_area .title .sub_title .tit {font-family: 'hh_m'; font-size:24px;line-height: 34px;} 
+#iq6_wrap .iq6_socializing .socializing_area .title .sub_title .txt {font-family: 'hh_r'; font-size:18px; line-height:28px;margin-top: 16px;} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area {display: flex;width: 1165px;justify-content: flex-end;margin-right:40px; } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li {position: relative;width: 184px;height: 665px;margin-left: 13px;background: rgba(255,255,255,0.6);} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li a { z-index:10; position:absolute; left:0; top:0; display:block; width:100%; height:100%; font-size:0; } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:hover { background:#fff } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:first-child { margin-left:0; } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li img {width: 100%;opacity: 0.5;} 
+
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list {display:none; position:absolute; left:47px; right:40px; bottom:210px; display:flex;flex-wrap: wrap;flex-direction: row-reverse;/* height:406px; */transform: rotate(180deg);} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list li { width:16.66%; height:14px; text-align:right;margin-bottom:3px;} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list li span { display:inline-block; width:13px; height:14px;background: #888;opacity: 0.15;}
+
+/* 큐브그래프 */
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list li.on span {opacity:1;}
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .cube_list li.on span {background: #ca8169;} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .cube_list li.on span {border-left: 2px solid #d7aa9c;border-top: 2px solid #d3a996;}
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .cube_list li.on span {background: #b883d3;} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .cube_list li.on span {border-left: 2px solid #c8a5d0;border-top: 2px solid #c292d3;}
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .cube_list li.on span {background: #84d4ce;} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .cube_list li.on span {border-left: 2px solid #94d3d4;border-top: 2px solid #94d3d4;}
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .cube_list li.on span {background: #56c294;} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .cube_list li.on span {border-left: 2px solid #6cc4a4;border-top: 2px solid #6cc4a4;}
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .cube_list li.on span {background: #81c258;} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .cube_list li.on span {border-left: 2px solid #98cd82;border-top: 2px solid #98cd82;}
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .cube_list li.on span {background: #3dc9ad;} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .cube_list li.on span {border-left: 2px solid #56d3c0;border-top: 2px solid #56d3c0;}
+
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li .count { position: absolute; right: 170px; bottom: 210px; color: #002c5f; font-family: 'hh_b'; font-size: 24px; transform: rotate(90deg); transform-origin: bottom right; }  
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li .tit {
+    position: absolute;
+    left: 0;
+    bottom: 18px;
+    width: 100%;
+    color: #002c5f;
+    font-family: 'hh_b';
+    font-size: 16px;
+    text-align: center;
+}
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li .hover_motion {position: absolute;bottom: 57px;left: 17px;text-align: center; width:150px; height:120px;margin: 0 auto; align-items: center; background-position: 0 0; background-repeat: no-repeat;} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_001.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_002.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_003.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_004.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_005.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_006.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:hover .hover_motion { animation: hoverMotion 1s infinite steps(25); } 
+@keyframes hoverMotion {from { background-position:0 0 } 
+to { background-position:-3750px 0 } 
+ }
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li .click_motion {display:none; position:absolute; left:12px; bottom:210px; width:160px; height:300px;margin: 0 auto;align-items: center;background-position: 0 0;background-repeat: no-repeat;} 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_001.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_002.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_003.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_004.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_005.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_006.png'); } 
+#iq6_wrap .iq6_socializing .socializing_area .graph_area > li .click_motion.on { display:block; animation: clickMotion 2.5s steps(55); } 
+@keyframes clickMotion {from { background-position:0 0 } 
+to { background-position:-8800px 0 } 
+ }
+#iq6_wrap .iq6_socializing .pointer { z-index:1; position:fixed; } 
+#iq6_wrap .iq6_socializing .pointer span { display:block; width:131px; height:131px; border-radius:100%; background:#002c5f; transition:transform 0.2s ease; transform:scale(0.1); } 
+#iq6_wrap .iq6_socializing .pointer.on span { background: url('/worldpremiere/asset/img/socializing/pointer_share.png') no-repeat; transform:scale(1); background-size:100% auto;} 
+
+#popup_share .popup_content {padding:55px 50px}
+#popup_share .popup_content .tit {font-family: 'hh_m'; font-size:24px; line-height:33px; text-align: center;}
+
+#popup_share .popup_content .share_img {margin-top:24px}
+#popup_share .popup_content .btn_area {display:flex; margin-top:19px;margin-left: -12px;}
+#popup_share .popup_content .btn_area li {position:relative; width:33.3%;margin-left: 12px;}
+#popup_share .popup_content .btn_area li:first-child:after {content:''; position:absolute; right:0; top:50%;display: none; width:1px; height:24px; margin-top:-12px; background:#fff}
+#popup_share .popup_content .btn_area li a {display: flex; align-items: center; justify-content: center; width:100%; height:64px; color:#fff; font-family: 'hh_r'; font-size: 18px; background:#002c5f}
+#popup_share .popup_content .btn_area li:last-child a {background: #676766;}
+
+
+@media all and (max-width: 1700px) and (min-width:1200px) {
+    #iq6_wrap .iq6_socializing {display: flex; width:100%; height:100vh;background: url('/worldpremiere/asset/img/socializing/bg_sosializing.jpg') center center no-repeat; background-size:cover;align-items: center;} 
+    #iq6_wrap .iq6_socializing .socializing_area { display: flex; align-items: center; max-width: 100vw; width: 100%; margin: 0 auto; padding: 0 2.941vw; justify-content: space-between; } 
+    #iq6_wrap .iq6_socializing .socializing_area .title { position:relative; color:#fff; } 
+    #iq6_wrap .iq6_socializing .socializing_area .title h2 {font-family: 'hh_m'; font-size:4.706vw;line-height: 4.706vw;} 
+    #iq6_wrap .iq6_socializing .socializing_area .title h2 span { display:block; font-family: 'hh_l'; font-size:3.412vw } 
+    #iq6_wrap .iq6_socializing .socializing_area .title .sub_title { position:relative;margin-top: 13vw;} 
+    #iq6_wrap .iq6_socializing .socializing_area .title .sub_title .tit {font-family: 'hh_m'; font-size:1.412vw} 
+    #iq6_wrap .iq6_socializing .socializing_area .title .sub_title .txt { font-family: 'ht_r'; font-size:1.059vw; line-height:1.647vw; margin-top:1.471vw } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area {display: flex;width: 68.529vw;justify-content: flex-end;margin-right:2.353vw; } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li {position: relative;width: 10.824vw;height: 39.118vw;margin-left: 0.765vw;background: rgba(255,255,255,0.6);} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li a { z-index:10; position:absolute; left:0; top:0; display:block; width:100%; height:100%; font-size:0; } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:hover { background:#fff } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:first-child { margin-left:0; } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li img {width: 100%;opacity: 0.5;} 
+
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list {display:none; position:absolute; left:2.765vw; right:2.353vw; bottom:12.353vw; display:flex;flex-wrap: wrap;flex-direction: row-reverse;/* height:23.882vw; */transform: rotate(180deg);} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list li { width:16.66%; height:0.824vw; text-align:right;margin-bottom:0.176vw;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list li span { display:inline-block; width:0.765vw; height:0.824vw;background: #888;opacity: 0.15;}
+
+    /* 큐브그래프 */
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list li.on span {opacity:1;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .cube_list li.on span {background: #ca8169;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .cube_list li.on span {border-left: 0.118vw solid #d7aa9c;border-top: 0.118vw solid #d3a996;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .cube_list li.on span {background: #b883d3;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .cube_list li.on span {border-left: 0.118vw solid #c8a5d0;border-top: 0.118vw solid #c292d3;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .cube_list li.on span {background: #84d4ce;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .cube_list li.on span {border-left: 0.118vw solid #94d3d4;border-top: 0.118vw solid #94d3d4;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .cube_list li.on span {background: #56c294;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .cube_list li.on span {border-left: 0.118vw solid #6cc4a4;border-top: 0.118vw solid #6cc4a4;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .cube_list li.on span {background: #81c258;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .cube_list li.on span {border-left: 0.118vw solid #98cd82;border-top: 0.118vw solid #98cd82;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .cube_list li.on span {background: #3dc9ad;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .cube_list li.on span {border-left: 0.118vw solid #56d3c0;border-top: 0.118vw solid #56d3c0;}
+
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .count { position: absolute; right: 10vw; bottom: 12.353vw; color: #002c5f; font-family: 'hh_b'; font-size: 1.412vw; transform: rotate(90deg); transform-origin: bottom right; }  
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .tit {
+        position: absolute;
+        left: 0;
+        bottom: 1.059vw;
+        width: 100%;
+        color: #002c5f;
+        font-family: 'hh_b';
+        font-size: 0.941vw;
+        text-align: center;
+    }
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .hover_motion {position: absolute;bottom: 3.353vw;left: 1vw;text-align: center; width:8.824vw; height:7.059vw;margin: 0 auto; background-position: 0 0; background-repeat: no-repeat; background-size:220.588vw auto} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_001.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_002.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_003.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_004.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_005.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_006.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:hover .hover_motion { animation: hoverMotion 1s infinite steps(25); } 
+    @keyframes hoverMotion {from { background-position:0 0 } 
+    to { background-position:-220.588vw 0 } 
+    }
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .click_motion {/* display:none; */ position:absolute; left:0.706vw; bottom:12.353vw; width:9.412vw; height:17.647vw;margin: 0 auto;background-position: 0 0;background-repeat: no-repeat;background-size: 517.567vw auto;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_001.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_002.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_003.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_004.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_005.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_006.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .click_motion.on { display:block; animation: clickMotion 2.5s steps(55); } 
+    @keyframes clickMotion {from { background-position:0 0 } 
+    to { background-position:-517.567vw 0 } 
+    }
+    #iq6_wrap .iq6_socializing .pointer { z-index:1; position:fixed; } 
+    #iq6_wrap .iq6_socializing .pointer span { display:block; width:7.706vw; height:7.706vw; border-radius:100%; background:#002c5f; transition:transform 0.2s ease; transform:scale(0.1); } 
+    #iq6_wrap .iq6_socializing .pointer.on span { background: url('/worldpremiere/asset/img/socializing/pointer_share.png') no-repeat; transform:scale(1); background-size:100% auto;} 
+}
+
+
+@media all and (max-width:1200px) {
+    #iq6_wrap .iq6_socializing {  width:100%; height:100vh; background: url('/worldpremiere/asset/img/socializing/bg_sosializing.jpg') center center no-repeat;  align-items: center; } 
+    #iq6_wrap .iq6_socializing .socializing_area {  align-items: center; max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 35px;} 
+    #iq6_wrap .iq6_socializing .socializing_area .title { min-width:310px; } 
+    #iq6_wrap .iq6_socializing .socializing_area .title h2 {  font-size:56px; line-height: 56px; } 
+    #iq6_wrap .iq6_socializing .socializing_area .title h2 span {   font-size:41px } 
+    #iq6_wrap .iq6_socializing .socializing_area .title .sub_title {  padding-top:25px; margin-top: 131px; background:url('/worldpremiere/asset/img/healing/icon_sub_title.png') 0 0 no-repeat } 
+    #iq6_wrap .iq6_socializing .socializing_area .title .sub_title .tit {  font-size:17px } 
+    #iq6_wrap .iq6_socializing .socializing_area .title .sub_title .txt {  font-size:13px; line-height:20px; margin-top:18px } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area {width: 822px;justify-margin-right:28px; } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li {width: 130px;height: 469px;margin-left: 9px;background: rgba(255,255,255,0.6);} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li a {   left:0; top:0;  width:100%; height:100%; font-size:0; } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:hover { background:#fff } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:first-child { margin-left:0; } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li img {width: 100%;opacity: 0.5;} 
+
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list {  left:33px; right:28px; bottom:148px; flex-wrap: wrap;flex-direction: row-reverse;/* height:287px; */transform: rotate(180deg);} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list li { width:16.66%; height:10px; margin-bottom:2px;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list li span {  width:9px; height:10px;background: #888;opacity: 0.15;}
+
+    /* 큐브그래프 */
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .cube_list li.on span {opacity:1;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .cube_list li.on span {background: #ca8169;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .cube_list li.on span {border-left: 1px solid #d7aa9c;border-top: 1px solid #d3a996;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .cube_list li.on span {background: #b883d3;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .cube_list li.on span {border-left: 1px solid #c8a5d0;border-top: 1px solid #c292d3;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .cube_list li.on span {background: #84d4ce;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .cube_list li.on span {border-left: 1px solid #94d3d4;border-top: 1px solid #94d3d4;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .cube_list li.on span {background: #56c294;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .cube_list li.on span {border-left: 1px solid #6cc4a4;border-top: 1px solid #6cc4a4;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .cube_list li.on span {background: #81c258;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .cube_list li.on span {border-left: 1px solid #98cd82;border-top: 1px solid #98cd82;}
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .cube_list li.on span {background: #3dc9ad;} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .cube_list li.on span {border-left: 1px solid #56d3c0;border-top: 1px solid #56d3c0;}
+
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .count {  right: 120px; bottom: 148px;   font-size: 17px; transform: rotate(90deg); transform-origin: bottom right; }  
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .tit {
+        left: 0;
+        bottom: 13px;
+        width: 100%;
+        font-size: 11px;
+    }
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .hover_motion {bottom: 40px;left: 12px; width:106px; height:85px;margin: 0 auto; background-size:2647px auto} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_001.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_002.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_003.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_004.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_005.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .hover_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_hover_006.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:hover .hover_motion { animation: hoverMotion 1s infinite steps(25); } 
+    @keyframes hoverMotion {from { background-position:0 0 } 
+    to { background-position:-2647px 0 } 
+    }
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .click_motion {   left:8px; bottom:148px; width:113px; height:212px; margin: 0 auto; background-size: 6211.764px auto } 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(1) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_001.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(2) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_002.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(3) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_003.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(4) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_004.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(5) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_005.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li:nth-child(6) .click_motion { background-image: url('/worldpremiere/asset/img/socializing/cube_click_006.png');} 
+    #iq6_wrap .iq6_socializing .socializing_area .graph_area > li .click_motion.on {  animation: clickMotion 2.5s steps(55); } 
+    @keyframes clickMotion {from { background-position:0 0 } 
+    to { background-position:-6211.764px 0 } 
+    }
+    #iq6_wrap .iq6_socializing .pointer {   } 
+    #iq6_wrap .iq6_socializing .pointer span {  width:92px; height:92px; border-radius:100%; background:#002c5f; transition:transform 0.2s ease; transform:scale(0.1); } 
+    #iq6_wrap .iq6_socializing .pointer.on span { background: url('/worldpremiere/asset/img/socializing/pointer_share.png') no-repeat; transform:scale(1); background-size:100% auto} 
+}

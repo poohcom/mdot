@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+#iq6_wrap .iq6_hmd{display: flex; width:100%; height:100vh;background: url('/worldpremiere/asset/img/hmd/bg_hmd.jpg') center center no-repeat; background-size:cover;align-items: center;justify-content: center;padding-top: 100px;} 
+#iq6_wrap .iq6_hmd .hmd_area .title { position:relative; color:#fff; text-align:center; } 
+#iq6_wrap .iq6_hmd .hmd_area .title h2 { font-family: 'hh_m'; font-size:75px;} 
+#iq6_wrap .iq6_hmd .hmd_area .title .sub {font-family: 'hh_m'; font-size:24px;line-height: 34px;margin-top:8px} 
+#iq6_wrap .iq6_hmd .hmd_area .title .txt { font-size:15px; margin-top:8px} 
+#iq6_wrap .iq6_hmd .hmd_area .content_box {width: 1200px;margin-top:38px; background:#fff}
+#iq6_wrap .iq6_hmd .hmd_area .content_box .info_area {display: flex;padding: 40px 59px 35px;justify-content: space-around;}
+#iq6_wrap .iq6_hmd .hmd_area .content_box .info_area dl {position:relative; width: 100%;}
+#iq6_wrap .iq6_hmd .hmd_area .content_box .info_area dl dt {position:absolute; left:0; top:0; display: inline-block;color:#002c5f; font-family:'ht_m'; font-size:19px; padding-right:45px;}
+#iq6_wrap .iq6_hmd .hmd_area .content_box .info_area dl dt:after {content:''; position: absolute; right:25px; top:9px; display: block; width:5px; height:5px; background-color: #002c5f;}
+#iq6_wrap .iq6_hmd .hmd_area .content_box .info_area dl dd {position:relative; color:#000;font-size: 18px;line-height: 26px;}
+#iq6_wrap .iq6_hmd .hmd_area .content_box .info_area dl dd .txt {color:#444; font-size: 15px;}
+
+#iq6_wrap .iq6_hmd .hmd_area .content_box .info_area dl:first-child {flex-shrink: 1.2; padding-left:148px}
+#iq6_wrap .iq6_hmd .hmd_area .content_box .info_area dl:last-child {padding-left:112px}
+#iq6_wrap .iq6_hmd .hmd_area .content_box .info_area dl:last-child dd {padding-left:82px;line-height: 23px;margin-bottom: 8px;padding-top: 3px;}
+#iq6_wrap .iq6_hmd .hmd_area .content_box .info_area dl:last-child dd .step {position:absolute; left:0; top:0; display:inline-block; color:#002c5f; font-size:15px;line-height: 25px;padding: 0 12px;margin-right:12px;vertical-align: middle; border:1px solid #002c5f;}
+#iq6_wrap .iq6_hmd .hmd_area .content_box .btn_area a {display: block;width: 100%; height:66px; color:#fff;font-family: 'hh_r'; font-size:21px;text-align: center;line-height: 65px; background:#002c5f} 
+
+#iq6_footer .footer_box {display: flex;}
+
+
+

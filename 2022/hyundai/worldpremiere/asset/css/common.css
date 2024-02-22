@@ -1,0 +1,73 @@
+@charset "utf-8";
+#iq6_wrap .sound_control {z-index: 10000; position:fixed; top:36px;right: 530px;} 
+#iq6_wrap .sound_control .btn_sound { width:26px; height:20px; font-size: 0; vertical-align: middle; margin-left: 13px; background:url('/worldpremiere/asset/img/layout/icon_sound.png') no-repeat } 
+#iq6_wrap .sound_control.on .btn_sound { background:url('/worldpremiere/asset/img/layout/icon_sound_on.png') no-repeat } 
+#iq6_wrap .sound_control audio {position:fixed; top:-9999px; width:0; height:0; opacity:0}
+
+/* layer_popup */
+.layer_popup {z-index: 10000; display:none; overflow:auto;position: fixed; left:0; top:0; width:100%; height:100%;background: rgba(0,0,0,0.6);-webkit-backdrop-filter: blur(15px);backdrop-filter: blur(15px);} 
+.layer_popup .popup_box { display:flex; align-items: center; justify-content: center; width:100%; height:100%; } 
+.layer_popup .popup_content { position:relative; background: #fff; } 
+.layer_popup .popup_content .btn_close { position:absolute; right:0; top:0; width: 80px; height: 80px; font-size:0; } 
+.layer_popup .popup_content .btn_close:before,
+.layer_popup .popup_content .btn_close:after { content:''; display:block; position:absolute; left:50%; top:50%; width:25px; height:2px; margin:-1px 0 0 -12.5px; background:#002c5f; transition:transform 0.2s ease-in-out } 
+.layer_popup .popup_content .btn_close:before { transform: rotate(45deg); } 
+.layer_popup .popup_content .btn_close:after { transform: rotate(-45deg); } 
+
+.layer_popup .popup_content .btn_close:hover:before,
+.layer_popup .popup_content .btn_close:hover:after { transform: rotate(0deg); } 
+
+/* popup_end */
+#popup_end .popup_content { width:580px; height:383px; text-align:center; padding:60px 55px } 
+#popup_end .popup_content .btn_cube { display:block; width:151px; height:136px; font-size:0; margin:0 auto; background-size:100% auto; background-repeat: no-repeat;} 
+
+#popup_end .popup_content.socializing .btn_cube { background-image: url('/worldpremiere/asset/img/common/popup_socializing_cube.png');} 
+#popup_end .popup_content.socializing .btn_cube.on { background-image: url('/worldpremiere/asset/img/common/popup_socializing_cube_on.gif');} 
+#popup_end .popup_content.healing .btn_cube { background-image: url('/worldpremiere/asset/img/common/popup_healing_cube.png');} 
+#popup_end .popup_content.healing .btn_cube.on { background-image: url('/worldpremiere/asset/img/common/popup_healing_cube_on.gif');} 
+
+#popup_end .popup_content .info_txt { display:none; margin-top:24px } 
+#popup_end .popup_content .info_txt dt { font-family: 'hh_m'; font-size:24px; line-height: 33px; } 
+#popup_end .popup_content .info_txt dd { font-size:18px; margin-top:16px } 
+
+#popup_end .popup_content.socializing .info_txt.socializing { display:block } 
+#popup_end .popup_content.healing .info_txt.healing { display:block } 
+
+/* popup_finish*/
+#popup_finish .popup_content { width:580px; height:383px; text-align: center; background:url('/worldpremiere/asset/img/common/bg_popup_finish.jpg') 0 0 no-repeat } 
+#popup_finish .popup_content .tit {color: #000;font-family: 'hh_m'; font-size:52px;line-height: 60px; padding-top:69px} 
+#popup_finish .popup_content .sub { font-family: 'ht_r'; font-size:18px; line-height: 28px; padding-top:23px } 
+#popup_finish .popup_content .btn_area { position:absolute; right:0; bottom:0; display:flex; width:100% } 
+#popup_finish .popup_content .btn_area a { display:flex; align-items: center; justify-content: center; width:50%; height:64px; color:#fff; font-family: 'hh_r'; font-size:18px; background:#002c5f } 
+#popup_finish .popup_content .btn_area a:last-child { background:#007fa8 } 
+
+/* popup_cube_state */
+#popup_cube_state .popup_content { width:1160px; min-width:1160px; height:526px; text-align:center; padding:80px 50px; background:url('/worldpremiere/asset/img/common/bg_popup_cube_state.jpg') 100% 0 no-repeat } 
+#popup_cube_state .popup_content .tit {color: #000;font-family: 'hh_b'; font-size:44px} 
+#popup_cube_state .popup_content .sub { font-size:20px; margin-top:20px } 
+#popup_cube_state .popup_content .txt { color:#888; font-size:15px; line-height:24px; margin-top:5px } 
+#popup_cube_state .popup_content .cube_check_list { display:flex; justify-content: center; margin-top:50px; flex-wrap: nowrap; justify-content: center; } 
+#popup_cube_state .popup_content .cube_check_list li { width:16.66%; font-size:17px; padding-top:148px; background-repeat: no-repeat; background-position: center top; } 
+#popup_cube_state .popup_content .cube_check_list li:nth-child(1) { background-image:url('/worldpremiere/asset/img/common/popup_driving_cube.png'); } 
+#popup_cube_state .popup_content .cube_check_list li:nth-child(2) { background-image:url('/worldpremiere/asset/img/common/popup_stressfree_cube.png'); } 
+#popup_cube_state .popup_content .cube_check_list li:nth-child(3) { background-image:url('/worldpremiere/asset/img/common/popup_work_cube.png'); } 
+#popup_cube_state .popup_content .cube_check_list li:nth-child(4) { background-image:url('/worldpremiere/asset/img/common/popup_socializing_cube.png'); } 
+#popup_cube_state .popup_content .cube_check_list li:nth-child(5) { background-image:url('/worldpremiere/asset/img/common/popup_healing_cube.png'); } 
+#popup_cube_state .popup_content .cube_check_list li:nth-child(6) { background-image:url('/worldpremiere/asset/img/common/popup_entertainment_cube.png'); } 
+
+#popup_cube_state .popup_content .cube_check_list li.on:nth-child(1) { background-image:url('/worldpremiere/asset/img/common/popup_driving_cube_on.png'); } 
+#popup_cube_state .popup_content .cube_check_list li.on:nth-child(2) { background-image:url('/worldpremiere/asset/img/common/popup_stressfree_cube_on.png'); } 
+#popup_cube_state .popup_content .cube_check_list li.on:nth-child(3) { background-image:url('/worldpremiere/asset/img/common/popup_work_cube_on.png'); } 
+#popup_cube_state .popup_content .cube_check_list li.on:nth-child(4) { background-image:url('/worldpremiere/asset/img/common/popup_socializing_cube_on.png'); } 
+#popup_cube_state .popup_content .cube_check_list li.on:nth-child(5) { background-image:url('/worldpremiere/asset/img/common/popup_healing_cube_on.png'); } 
+#popup_cube_state .popup_content .cube_check_list li.on:nth-child(6) { background-image:url('/worldpremiere/asset/img/common/popup_entertainment_cube_on.png'); } 
+
+
+/* popup_support */
+#popup_support .popup_box .popup_content { text-align: center; padding: 75px 105px; } 
+#popup_support .popup_box .popup_content .title { font-family: 'hh_m'; font-size: 28px; line-height: 38px; } 
+#popup_support .popup_box .popup_content .sub { color: #444; font-size: 17px; line-height: 27px; margin-top: 15px; } 
+#popup_support .popup_box .popup_content .sub span { color:#007fa8 } 
+#popup_support .popup_box .popup_content .btn_close {width:60px; height:60px}
+#popup_support .popup_box .popup_content .btn_close::before,
+#popup_support .popup_box .popup_content .btn_close::after {width:34px; margin-left:-17px; background:#000}
