@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>IONIQ 6 Digital Studio</title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+      <meta charset="utf-8" />
+      <meta name="title" content="IONIQ 6 Digital Studio" />
+      <meta name="description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!" />
+      <meta name="keywords" content="IONIQ 6 Digital Studio" />
+
+      <meta property="og:type" content="website" />
+      <meta property="og:url"	content="https://ioniq6.hyundai.com/worldpremiere/" />
+      <meta property="og:title" content="IONIQ 6 Digital Studio" />
+      <meta property="og:description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!" />
+      <meta property="og:image" content="https://ioniq6.hyundai.com/worldpremiere/asset/img/share_img.jpg" />
+
+      <meta name="twitter:card" content="photo">
+      <meta name="twitter:url" content="https://ioniq6.hyundai.com/worldpremiere/">
+      <meta name="twitter:title" content="IONIQ 6 Digital Studio">
+      <meta name="twitter:description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!">
+      <meta name="twitter:image" content="https://ioniq6.hyundai.com/worldpremiere/asset/img/share_img.jpg">
+      <script src="./assets/js/browser-check.js?v=5"></script>
+    <!--[S] GLOBAL IMPORT-->
+    <script src="../../../worldpremiere/asset/js/jquery-3.6.0.min.js"></script>
+    <script src="../../../worldpremiere/asset/js/include.js"></script>
+    
+    <link rel="icon" type="image/svg+xml" href="./assets/img/favicon.svg" />
+    <link rel="stylesheet" href="/worldpremiere/asset/css/font/fonts.css">
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"> -->
+    <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="./assets/css/configuratore_common.css?1" />
+
+    <style>
+	     body {
+              touch-action: none;
+         }
+
+
+        .resize-wrap.tr-or{
+            transform-origin: 0 0;
+        }
+        .resize-wrap.tr-or-b{
+            transform-origin: bottom;
+        }
+        .resize-wrap.tr-or-t{
+            transform-origin: top;
+        }
+        .resize-wrap.tr-or-b-r{
+            transform-origin: bottom right;
+        }
+        .resize-wrap.tr-or-b-l{
+            transform-origin: bottom left;
+        }
+        .configuratore-wrap .interior-color {
+            bottom: 65px;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="module" src="./assets/data/js/configInKR.js" ></script>
+    <div class="configuratore-wrap" id="configurator" style="display: ;">
+        <div id="container"></div>
+		<div class="float_util">
+				<button type="button" class="btn_sound_ctr mute"><span class="blind">사운드 ON/OFF</span></button>
+				<audio loop id="bgmSource">
+					<source src="./assets/audio/1-8_bgm.mp3" type="audio/mpeg">
+				</audio>
+			</div>
+       
+        <!-- click points -->
+        <button class="btn_click" id="click_01" style="display: none;left: 200px;top:500px;"></button>
+        <button class="btn_click_s" id="click_s01" style="display: none;left: 300px;top:500px;"></button>
+        
+        
+        <div class="configuratore-wrap__bg">
+        </div>
+
+        <div class="configuratore-wrap__contents" id="basicBtn" style="display: none1;">
+            <div class="btn-wrap resize-wrap">
+                <button class="btn-exterior medium" id="btnExterior">Exterior</button>
+                <button class="btn-interior medium active" id="bntInterior">Interior</button>
+            </div>
+            <div class="etc-wrap in resize-wrap tr-or-b" id="basicBtn2" >
+                <button class="etc-wrap__hmd in btn" id="btnHmd" onclick="location.href = '/worldpremiere/kr/hmd.html'">HMD</button>
+                <button class="etc-wrap__ar in btn" id="btnAR">AR</button>
+                <button class="etc-wrap__color in btn" id="btnColor">
+                    <i class="selectColor in inc1" id="setColor"></i><!-- inc1 inc7 클래스별 색상 -->
+                    Color
+                </button>
+
+                <!-- interior color -->
+                <ul class="interior-color active ly" id="interiorColor" style="display: none;">
+                    <li id="inColor1" class="interior-color__c1 on"></li>
+                    <li id="inColor2" class="interior-color__c2"></li>
+                    <li id="inColor3" class="interior-color__c3"></li>
+                    <li id="inColor4" class="interior-color__c4"></li>
+                    <li id="inColor5" class="interior-color__c5"></li>
+                    <li id="inColor6" class="interior-color__c6"></li>
+                    <li id="inColor7" class="interior-color__c7"></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- title info text -->
+
+        <p class="tit-info-txt in medium resize-wrap" id="txtIn1" style="display: none;">다양한 내장 컬러 조합을 경험해 보세요.</p>
+        <p class="tit-info-txt in medium resize-wrap" id="txtIn2" style="display: none;">화살표를 클릭하여 다양한 모드를 경험해보세요.</p>
+        <p class="tit-info-txt in medium resize-wrap" id="txtIn3" style="display: none;">소리를 켜서 주행 사운드를 들어보세요.</p>
+        <p class="tit-info-txt in medium resize-wrap" id="txtIn4" style="display: none;"></p>
+        <p class="tit-info-txt in medium resize-wrap" id="txtIn5" style="display: none;">버튼을 클릭하여 모드를 바꿔보세요.</p>
+        <p class="tit-info-txt in medium resize-wrap" id="txtIn6" style="display: none;">360도로 돌려보며 실내 조명을 감상해 보세요.</p>
+
+        <!-- dual color-->
+        <ul class="dual-color" id="dualColor" style="display: none;">
+            <li id="dualColor1"><img src="./assets/img/ico_color01.png" alt="" ></li>
+            <li id="dualColor2"><img src="./assets/img/ico_color02.png" alt="" ></li>
+            <li id="dualColor3"><img src="./assets/img/ico_color03.png" alt=""></li>
+            <li id="dualColor4" ><img src="./assets/img/ico_color04.png" alt=""></li>
+            <li id="dualColor5"><img src="./assets/img/ico_color05.png" alt=""></li>
+            <li id="dualColor6" ><img src="./assets/img/ico_color06.png" alt=""></li>
+        </ul>
+
+        <!-- text info-->
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt1" style="display:none;">
+            <p class="t1 medium">반응형 픽셀 라이트</p>
+            <p class="t2">반응형 픽셀 라이트 점등을 통해 운전자와 차량 간 교감을 제공합니다.</p>
+            <p class="t3">* 웰컴과 굿바이, 주행가능상태, 후진 기어, 배터리충전상태, 드라이브 모드 전환, 음성인식 상태 표시가 가능합니다.</p>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt2" style="display:none;">
+            <p class="t1 medium">반응형 픽셀 라이트 – 웰컴</p>
+            <p class="t2">차량에 들어서면 웰컴 시퀀스가 점등되며 운전자를 반겨줍니다.</p>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt3" style="display:none;">
+            <p class="t1 medium">반응형 픽셀 라이트 – 충전잔량</p>
+            <p class="t2">충전 잔량을 표시합니다.</p>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt4" style="display:none;">
+            <p class="t1 medium">반응형 픽셀 라이트 – 음성 인식</p>
+            <p class="t2">사용자 음성을 인식하고 반응합니다.</p>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt5" style="display:none;">
+            <p class="t1 medium">전기차 액티브 사운드 디자인 (e-ASD)</p>
+            <p class="t2">현대자동차만의 주행 사운드로 운전의 즐거움을 제공합니다.<br> 버튼을 클릭하여 IONIQ 6의 전기차 주행 사운드를 느껴보세요.</p>
+            <p class="t3"><span class="f24">*</span>  IONIQ 6의 전기차 액티브 사운드 디자인은 강/중/약으로 조절 가능합니다.</p>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt6" style="display:none;">
+            <p class="t1 medium">속도 연동 실내조명</p>
+            <p class="t2">차량의 속도에 따라 조명의 밝기가 변하면서 주행의 다이나믹함을 제공합니다.<br>
+차량의 속도가  30~100km/h로 변함에 따라 실내 조명 컬러의 밝기가 변화합니다.</p>
+       		<p class="t3"><span class="f24">*</span> 사용자가 설정한 조명 컬러로 작동합니다.</p>
+       		<button class="btnClosed" id="txt6d"></button>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt7" style="display:none;">
+            <p class="t1 medium">듀얼 컬러 앰비언트 무드램프</p>
+            <p class="t2">상/하단 컬러 조합을 통해 운전자에게 심리적 도움을 주는 감성 조명을 제공합니다.<br>
+원하는 컬러(상/하단 각 64가지)로 커스터마이징하여 적용 가능합니다.</p>
+            <button class="btnClosed" id="txt7d" ></button>
+        </div>
+        
+        <!-- dual color text -->
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt8-1" style="display:none;">
+            <p class="t1 medium">컨센트레이션</p>
+            <p class="t2 hh_r">활동적 정신상태와 경각심을 일깨워 집중력을 향상시키는 효과를 제공합니다. </p>
+            <button class="btnClosed" id="txt8-1d"></button>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt8-2" style="display:none;">
+            <p class="t1 medium">힐링 포레스트</p>
+            <p class="t2 hh_r">휴식을 위한 안정감과 조화의 효과를 제공합니다. </p>
+            <button class="btnClosed" id="txt8-2d"></button>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt8-3" style="display:none;">
+            <p class="t1 medium">원더풀 데이</p>
+            <p class="t2 hh_r">활동적 정신 상태를 유도하여 활력을 증가시키는 효과를 제공합니다. </p>
+            <button class="btnClosed" id="txt8-3d"></button>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt8-4" style="display:none;">
+            <p class="t1 medium">마인드 케어</p>
+            <p class="t2 hh_r">불안감을 해소해 주고, 스트레스를 감소시키는 효과를 제공합니다. </p>
+            <button class="btnClosed" id="txt8-4d"></button>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt8-5" style="display:none;">
+            <p class="t1 medium">메디테이션</p>
+            <p class="t2 hh_r">고도의 인지, 명료함을 통하여 명상의 느낌을 높이는 효과를 제공합니다. </p>
+            <button class="btnClosed" id="txt8-5d" ></button>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt8-6" style="display:none;">
+            <p class="t1 medium">크리에이티브 모먼트</p>
+            <p class="t2 hh_r">창조적 영감을 끌어올리는 효과를 제공합니다. </p>
+            <button class="btnClosed" id="txt8-6d"></button>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt9" style="display:none;">
+            <p class="t1 medium">반응형 LED 라이트</p>
+            <p class="t2 hh_r">램프 패턴 변경을 통해 운전자와 차량 간 교감 감성을 제공합니다. <br>64가지 색상 중 원하는 색으로 적용 가능합니다.</p>
+            <button class="btnClosed" id="txt9d"></button>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt10" style="display:none;">
+            <p class="t1 medium">반응형 LED 라이트 - 웰컴</p>
+            <p class="t2 hh_r">차량에 들어서면 웰컴 시퀀스가 점등되며 운전자를 반겨줍니다.</p>
+            <button class="btnClosed" id="txt10d" ></button>
+        </div>
+
+        <div class="text-info in active ly resize-wrap tr-or-b tr-x-50" id="txt11" style="display:none;">
+            <p class="t1 medium">반응형 LED 라이트 - 음성인식</p>
+            <p class="t2 hh_r">고객 및 차량 AI 의 음성 크기에 따라 램프 패턴이 달라집니다.</p>
+            <button class="btnClosed" id="txt11d"></button>
+        </div>
+
+        <!-- img info -->
+        <div class="img-info ly" id="imgInfo0" style="display:none;">
+			<div class="img-info__dimmed" id="imgInfo0d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/in_img01.png" alt="">
+                </div>
+                <p class="t1 medium">마인드풀 코쿤 &amp; 여유로운 공간성</p>
+                <p class="t2">아늑한 돔형의 실내 공간은 나만의 아지트가 되어 줄 것입니다.<br>넉넉한 레그룸과 헤드룸으로 편안한 공간을 제공합니다.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo1" style="display:none;">
+			<div class="img-info__dimmed" id="imgInfo1d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50" >
+                <div class="img-wrap">
+                    <img src="./assets/img/in_img02_new.png" alt="">
+                </div>
+                <p class="t1 medium">DSM (디지털 사이드 미러) 일체형 대시보드</p>
+                <p class="t2">광학 사이드 미러 대신 카메라를 장착하여 <br>차량 내부 디스플레이를 통해 후측방을 확인할 수 있습니다. <br>
+                기존 광학 미러 대비 선명하고 넓은 시야를 제공하여 안전성을 향상시켰습니다.</p>
+                <p class="t3"><span class="f24">*</span> 특정 사양의 적용 여부는 판매 국가에 따라 달라질 수 있습니다. </p>
+            </div>
+        </div>
+		<!-- 22-06-29 해당팝업은 video3으로 변경 되었으며 하단에 작업해 놨습니다 
+        <div class="img-info ly" id="imgInfo2" style="display:none;">
+			<div class="img-info__dimmed" id="imgInfo2d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="movie-wrap">
+                    <iframe src="" frameborder="0"></iframe>
+                    <img src="./assets/img/in_img03.png" alt="">
+                </div>
+                <p class="t1 medium">고속도로 주행 보조 2 (HDA 2)</p>
+                <p class="t2">고속도로 및 자동차 전용도로 주행 시 앞차와의 거리를 유지하며 <br>
+                운전자가 설정한 속도로 곡선로에서도 차로 중앙을 유지하며 주행하고 <br>
+                차로변경을 도와주는 주행 편의 기능입니다.</p>
+            </div>
+        </div>
+         -->
+		
+		<!-- 22-06-29 해당팝업은 video4으로 변경 되었으며 하단에 작업해 놨습니다 
+        <div class="img-info ly" id="imgInfo3" style="display:none;">
+			<div class="img-info__dimmed" id="imgInfo3d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="movie-wrap">
+                    <img src="./assets/img/in_img04.png" alt="">
+                     <iframe src="" frameborder="0"></iframe>
+                </div>
+                <p class="t1 medium">원격 스마트 주차 보조 2 (RSPA 2)</p>
+                <p class="t2">차량 외부에서 원격으로 주차 및 출차를 할 수 있도록 도와주는 주차 편의 기능입니다. <br>
+                평행/직각 주차는 물론 사선 주차까지 보조합니다.</p>
+            </div>
+        </div>
+         -->
+
+        <div class="img-info ly" id="imgInfo4" style="display:none;">
+			<div class="img-info__dimmed" id="imgInfo4d"></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/in_img05.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/in_img06.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <p class="t1 medium">컬럼 타입 전자식 변속 레버</p>
+                <p class="t2">컬럼 로터리 타입 전자식 변속 다이얼로 조작 방향과 구동 방향을 일치시켜 <br>
+                    직관적으로 조작 가능합니다.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo4-2" style="display:none;">
+			<div class="img-info__dimmed" id="imgInfo4-2d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo5" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo5d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50 info">
+                <div class="img-wrap">
+                    <img src="./assets/img/charge.png" alt="">
+                </div>
+                <p class="t1 medium" style="margin-top:40px">1회 충전 주행가능거리 : 524km</p>
+                <p class="t2" style="margin:15px 0 22px;">1회 충전 시 524km까지 주행이 가능하여 장거리 주행에도 부담이 없습니다.</p>
+                <p class="t3"><span class="f24">*</span>  산업부 인증 수치 기준, 77.4kWh 배터리, 2WD, 18인치 휠 기준.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo5-1" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo5-1d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50 info">
+                <div class="img-wrap">
+                    <img src="./assets/img/mydrive-1.png" alt="">
+                </div>
+                <p class="t1 medium">My Drive Mode</p>
+                <p class="t2">차량 성능을 자유롭게 조절하여 운전자가 원하는 주행감성을 제공합니다. <br>
+                스티어링, 출력, 가속 민감도, 구동방식을 자신의 주행 스타일에 맞게 조정할 수 <br>
+                있습니다.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo5-2" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo5-2d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50 info">
+                <div class="img-wrap">
+                    <img src="./assets/img/mydrive-2.png" alt="">
+                </div>
+                <p class="t1 medium">My Drive Mode</p>
+                <p class="t2">차량 성능을 자유롭게 조절하여 운전자가 원하는 주행감성을 제공합니다. <br>
+                    스티어링, 출력, 가속 민감도, 구동방식을 자신의 주행 스타일에 맞게 조정할 수 <br>
+                    있습니다.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo5-3" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo5-3d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50 info">
+                <div class="img-wrap">
+                    <img src="./assets/img/mydrive-3.png" alt="">
+                </div>
+                <p class="t1 medium">My Drive Mode</p>
+                <p class="t2">차량 성능을 자유롭게 조절하여 운전자가 원하는 주행감성을 제공합니다. <br>
+                    스티어링, 출력, 가속 민감도, 구동방식을 자신의 주행 스타일에 맞게 조정할 수 <br>
+                    있습니다.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo5-4" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo5-4d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50 info">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/ev-1.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/ev-2.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/ev-3.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/ev-4.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <p class="t1 medium mt26">EV 성능 튠업</p>
+                <p class="t2 mt16">차량 성능을 자유롭게 조절하여 운전자가 원하는 주행감성을 제공합니다. <br>
+                    스티어링, 출력, 가속 민감도, 구동방식을 자신의 주행 스타일에 맞게 조정할 수<br>
+                    있습니다.
+                </p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo6" style="display:none;">
+            <div class="img-info__dimmed" id="imgInfo6d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50 info">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/sound-meno_1.png" alt="">
+                        </div>
+                        <p class="t1 medium mt35">음성 메모</p>
+                        <p class="t2">차 안에서 음성을 녹음하고, 휴대폰에서 녹음된 음성 또는 <br>텍스트로 변환된 파일을 확인할 수 있는 기능입니다.</p>
+                        <p class="t3"><span class="f24">*</span> 특정 사양의 적용 여부는 판매 국가에 따라 달라질 수 있습니다.</p>
+
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/sound-meno_2.png" alt="">
+                        </div>
+                        <p class="t1 medium mt35">음성 메모</p>
+                        <p class="t2">차 안에서 음성을 녹음하고, 휴대폰에서 녹음된 음성 또는 <br>텍스트로 변환된 파일을 확인할 수 있는 기능입니다.</p>
+                        <p class="t3"><span class="f24">*</span> 특정 사양의 적용 여부는 판매 국가에 따라 달라질 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="img-info ly" id="imgInfo6-2" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo6-2d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50 info">
+                <div class="img-wrap">
+                    <img src="./assets/img/sound-meno22.png" alt="">
+                </div>
+                <p class="t1 medium mt35">음성 메모</p>
+                <p class="t2">차 안에서 음성을 녹음하고, 휴대폰에서 녹음된 음성 또는 <br>텍스트로 변환된 파일을 확인할 수 있는 기능입니다.</p>
+                <p class="t3"><span class="f24">*</span> 특정 사양의 적용 여부는 판매 국가에 따라 달라질 수 있습니다. </p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo7" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo7d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50 info">
+                <div class="img-wrap">
+                    <img src="./assets/img/update-1.png" alt="">
+                </div>
+                <p class="t1 medium mt35">무선 소프트웨어 업데이트 (OTA Software Update)</p>
+                <p class="t2" style="margin:25px 0;">소프트웨어를 무선으로 업데이트하여 서비스센터 방문 없이도 <br>
+차량을 항상 최신의 상태로 유지/관리합니다.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo8" style="display:none;">
+            <div class="img-info__dimmed" id="imgInfo8d"></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/usb.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/usb22.png" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/usb3.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <p class="t1 medium">USB 포트</p>
+                <p class="t2">충전용 C타입 포트 4개, 데이터 전송용 A타입 포트 1개를 제공합니다.<br>다양한 스마트 기기를 편리하게 충전 및 활용할 수 있습니다.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo10" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo10d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/bridge1.png" alt="">
+                </div>
+                <p class="t1 medium">브릿지 타입 센터 콘솔</p>
+                <p class="t2">센터페시아에서 콘솔박스까지 이어지는 브릿지 타입 센터 콘솔로, <br>조작부를 공간의 중앙에 집중시켜 조작이 편리합니다.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo11" style="display:none;">
+            <div class="img-info__dimmed" id="imgInfo11d"></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/life_1.png" alt="">
+                            <p>멀티테이블</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/life_2.png" alt="">
+                            <p>청소기</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img src="./assets/img/life_3.png" alt="">
+                            <p>멀티탭</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="t1 medium">IONIQ 라이프스타일 아이템</p>
+                <p class="t2">IONIQ 라인업만의 장점인 실내 V2L을 활용하여 <br>
+                새로운 전기차 라이프스타일을 지원하는 IONIQ 전용 아이템입니다. <br>
+                차량 내에 장착하여 편리하게 사용 가능합니다.</p>
+                <p class="t3"><span class="f24">*</span> 지역에 따라 판매 여부 상이할 수 있습니다.</p>
+            </div>
+        </div>
+		
+		<!-- 22-06-29 해당팝업은 video5으로 변경 되었으며 하단에 작업해 놨습니다
+        <div class="img-info ly" id="imgInfo14" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo14d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/seat.png" alt="">
+                </div>
+                <p class="t1 medium">릴랙션 컴포트 시트 (1열)</p>
+                <p class="t2" style="margin-bottom:20px;">원터치 전환 버튼을 이용하여 휴식을 위한 최적화 시트 포지션을 지원합니다.</p>
+            </div>
+        </div>
+        -->
+        
+        <div class="img-info ly" id="imgInfo15" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo15d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/seat2.png" alt="">
+                </div>
+                <p class="t1 medium">릴랙션 컴포트 시트 (1열)</p>
+                <p class="t2" style="margin-bottom:20px;">원터치 전환 버튼을 이용하여 휴식을 위한 최적화 시트 포지션을 지원합니다.</p>
+            </div>
+        </div>
+        <div class="img-info ly" id="imgInfo15-3" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo15-3d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/seat3.png" alt="">
+                </div>
+                <p class="t1 medium">릴랙션 컴포트 시트 (1열)</p>
+                <p class="t2" style="margin-bottom:20px;">원터치 전환 버튼을 이용하여 휴식을 위한 최적화 시트 포지션을 지원합니다.</p>
+            </div>
+        </div>
+        <div class="img-info ly" id="imgInfo15-4" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo15-4d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/seat4.png" alt="">
+                </div>
+                <p class="t1 medium">릴랙션 컴포트 시트 (1열)</p>
+                <p class="t2" style="margin-bottom:20px;">원터치 전환 버튼을 이용하여 휴식을 위한 최적화 시트 포지션을 지원합니다.</p>
+            </div>
+        </div>
+        <div class="img-info ly" id="imgInfo15-5" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo15-5d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/seat5.png" alt="">
+                </div>
+                <p class="t1 medium">릴랙션 컴포트 시트 (1열)</p>
+                <p class="t2" style="margin-bottom:20px;">원터치 전환 버튼을 이용하여 휴식을 위한 최적화 시트 포지션을 지원합니다.</p>
+            </div>
+        </div>
+        <div class="img-info ly" id="imgInfo15-6" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo15-6d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/seat6.png" alt="">
+                </div>
+                <p class="t1 medium">릴랙션 컴포트 시트 (1열)</p>
+                <p class="t2" style="margin-bottom:20px;">원터치 전환 버튼을 이용하여 휴식을 위한 최적화 시트 포지션을 지원합니다.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo16" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo16d"  ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/green_1.png" alt="">
+                </div>
+                <p class="t1 medium">친환경 소재</p>
+                <p class="t2">친환경 공법 가죽, 바이오 페인트, 폐어망 재활용 카페트 등<br>
+친환경 소재를 적용하여 환경에 긍정적인 영향을 주고, <br>
+시대의 건강한 정신을 공유합니다. </p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo17" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo17d" ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/v2l.png" alt="">
+                </div>
+                <p class="t1 medium">Vehicle-to-Load (V2L) </p> 
+                <p class="t2 hh_r">차량 내/외에서 일반적인 전력(220V) 사용이 가능합니다.<br>
+                    2열 시트 하단의 실내 V2L로 차량 내부에서 전자기기 사용이 가능하며<br>
+파워 스트립 (멀티탭)을 연결해 1열에서도 자유롭게 이용할 수 있습니다.</p>
+           		<p class="t3 lh8"><span class="f24">*</span> 실내/외 V2L 기능은 충전잔량 20~100%일 때만 사용 가능합니다. <br>사용하는 전자기기에 따라 최대 제공 소비전력은 차이가 있을 수 있습니다.</p>
+            </div>
+        </div>
+
+        <div class="img-info ly" id="imgInfo18" style="display:none;">
+		<div class="img-info__dimmed" id="imgInfo18d" ></div>
+            <div class="img-info__cont resize-wrap tr-xy-50">
+                <div class="img-wrap">
+                    <img src="./assets/img/leg_1.png" alt=""><!-- 사진 교체 예정 -->
+                </div>
+                <p class="t1 medium">여유 있는 공간성</p>
+                <p class="t2" style="margin-bottom: 20px;">레그룸과 헤드룸이 넓어 편안한 자세로 게임을 즐기거나 영화를 시청할 수 있습니다.</p>
+            </div>
+        </div>
+
+        <!-- slider -->
+        <div class="slider-wrap resize-wrap tr-xy-50" id="slider-wrap" style="display:none;">
+
+            <input type="text" id="amount" class="slider-txt hh_m" disabled>
+            <p class="t1 hh_m">km/h</p>
+            <div id="slider-vertical" class="slider-box"></div>
+            <p class="t2">속도계를 조절하여 조명의 밝기를 <br>변화시켜 보세요.</p>
+            <i class="spot i30"></i>
+            <i class="spot i70"></i>
+            <i class="spot i100"></i>
+        </div>
+    </div>
+
+
+    <div class="popup_video popup_video1" style="display: none;"id="popup_video1" >
+        <div class="popup_content resize-wrap">
+            <div class="swiper pop_swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="../configurator/assets/img/popup/picture1.png" width="100%"/>
+                        <p class="tit medium">인터랙티브 픽셀 라이트</p>
+                        <p class="add">인터랙티브 픽셀 라이트 점등을 통해 운전자와 차량 간 교감을 제공합니다.<br>
+웰컴과 굿바이, 주행 가능 상태(Ready), 후진 기어, 배터리 충전 상태, <br>
+드라이브 모드 전환, 음성인식 상태를 표시합니다.
+                        </p>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="video_wrap">
+                            <video id="video1" src="../configurator/assets/img/popup/video2.mp4" loop></video>
+                        </div>
+                        <p class="tit medium">인터랙티브 픽셀 라이트 – 웰컴</p>
+                        <p class="add">
+                            차량에 들어서면 웰컴 시퀀스가 점등되며 운전자를 반겨줍니다.
+                        </p>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="video_wrap">
+                            <video id="video2" src="../configurator/assets/img/popup/video1.mp4" loop></video>
+                        </div>
+                        <p class="tit medium">인터랙티브 픽셀 라이트 – 배터리 충전 상태</p>
+                        <p class="add">
+                            배터리 충전 상태를 표시합니다.
+                        </p>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="video_wrap">
+                            <video id="video3" src="../configurator/assets/img/popup/video3.mp4" loop></video>
+                        </div>
+                        <p class="tit medium">인터랙티브 픽셀 라이트 – 음성인식</p>
+                        <p class="add">
+                            사용자 음성을 인식하고 반응합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup_video popup_video2" style="display: none;" id="popup_video2" >
+        <div class="popup_content resize-wrap">
+            <div class="swiper pop_swiper2">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="../configurator/assets/img/popup/picture1_2.png" width="100%"/>
+                        <p class="tit medium">인터랙티브 LED 라이트</p>
+                        <p class="add">
+                            램프 패턴 변경을 통해 운전자와 차량 간 교감 감성을 제공합니다. <br>
+                            64가지 색상 중 원하는 색으로 적용 가능합니다.
+                        </p>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="video_wrap">
+                            <video id="video1_2" src="../configurator/assets/img/popup/video1_2.mp4" loop></video>
+                        </div>
+                        <p class="tit medium">인터랙티브 LED 라이트  - 웰컴</p>
+                        <p class="add">
+                            차량에 들어서면 웰컴 시퀀스가 점등되며 운전자를 반겨줍니다.
+                        </p>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="video_wrap">
+                            <video id="video2_2" src="../configurator/assets/img/popup/video2_2.mp4" loop></video>
+                        </div>
+                        <p class="tit medium">인터랙티브 LED 라이트  - 음성인식</p>
+                        <p class="add">
+                            고객 및 차량 AI의 음성 크기에 따라 램프 패턴이 달라집니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 220629 고속도로 주행 보조 2 (HDA 2) 작업 -->
+    <div class="popup_video popup_video3" style="display:none ;" id="popup_video3">
+        <div class="popup_content resize-wrap">
+            <div class="swiper pop_swiper3">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="video_wrap">
+                            <video id="video1_3" src="../configurator/assets/img/popup/video1_3.mp4" loop muted autoplay></video>
+                        </div>
+                        <p class="tit medium">고속도로 주행 보조 2 (HDA 2)</p>
+                        <p class="add">
+                            고속도로 및 자동차 전용도로 주행 시 앞차와의 거리를 유지하며<br/>
+                            운전자가 설정한 속도로 곡선로에서도 차로 중앙을 유지하며 주행하고<br/>
+                            차로변경을 도와주는 주행 편의 기능입니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 220629 원격 스마트 주차 보조 2 (RSPA 2) 작업 -->
+    <div class="popup_video popup_video4" style="display:none ;" id="popup_video4" >
+        <div class="popup_content resize-wrap">
+            <div class="swiper pop_swiper4">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="video_wrap">
+                            <video id="video1_4" src="../configurator/assets/img/popup/video1_4.mp4" loop muted autoplay></video>
+                        </div>
+                        <p class="tit medium">원격 스마트 주차 보조 2 (RSPA 2)</p>
+                        <p class="add">
+                           차량 외부에서 원격으로 주차 및 출차를 도와주는 주차 편의 기능입니다. <br>평행/직각 주차는 물론 사선 주차까지 보조합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 220629 릴랙션 컴포트 시트 (1열) 작업 -->
+    <div class="popup_video popup_video5" style="display:none ;" id="popup_video5" >
+        <div class="popup_content resize-wrap">
+            <div class="swiper pop_swiper5">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="video_wrap">
+                            <video id="video1_5" src="../configurator/assets/img/popup/video1_5.mp4" loop muted autoplay></video>
+                        </div>
+                        <p class="tit medium">릴랙션 컴포트 시트 (1열)</p>
+                        <p class="add">
+                           원터치 전환 버튼으로 휴식을 위한 최적화 시트 포지션을 지원합니다.
+                        </p>
+                        <p class="caution"><span class="f24">*</span> 특정 사양의 적용 여부는 판매 국가에 따라 달라질 수 있습니다. </p>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="layer_popup wide_ver" id="introPop" style="display: none;">
+		<div class="popup_box resize-wrap">
+			<div class="popup_content">
+				<span class="btn_close"></span>
+				<p class="tit medium">IONIQ 6를 AR로 만나보세요.</p>
+				<p class="add">아래 QR코드를 카메라로 스캔해 주세요.</p>
+				<div class="img_wrap">
+					<img  src="../configurator/assets/img/ar_kr.jpg" width="141"/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- loading -->
+    <article class="loading-wrap" id="loadingWrap" style="z-index:5;">
+        <div class="loading-wrap__progress">
+            <span class="loading-wrap__item" id="loading1"></span>
+            <span class="loading-wrap__item" id="loading2"></span>
+            <span class="loading-wrap__item" id="loading3"></span>
+            <span class="loading-wrap__item" id="loading4"></span>
+        </div>
+        <p class="loading-wrap__txt hh_m">Loading</p>
+    </article>
+    
+    
+    <script src="./assets/js/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script>
+		
+		$("#introPop .btn_close").on("click", function(){
+                togglePopup('#introPop');
+            })
+			
+			$("#btnAR").on("click", function(){
+                togglePopup('#introPop');
+            })
+			
+         $(document).ready(function(){
+            var popSwiper = new Swiper('.pop_swiper', {
+                slidesPerView: 1,
+                loop:false,
+                spaceBetween: 0,
+                pagination: {
+                    el: ".pop_swiper .swiper-pagination",
+                    clickable: true,
+                },
+                observer: true,
+                observeParents: true,
+            });
+
+            var popSwiper2 = new Swiper('.pop_swiper2', {
+                slidesPerView: 1,
+                loop:false,
+                spaceBetween: 0,
+                pagination: {
+                    el: ".pop_swiper2 .swiper-pagination",
+                    clickable: true,
+                },
+                observer: true,
+                observeParents: true,
+            });
+            
+
+            popSwiper.on("slideChangeTransitionEnd",function(e){
+                if (document.getElementById('video'+e.activeIndex)){
+                    document.getElementById('video'+e.activeIndex).play();
+                }
+            })
+
+            popSwiper2.on("slideChangeTransitionEnd",function(e){
+                if (document.getElementById('video'+e.activeIndex+'_2')){
+                    document.getElementById('video'+e.activeIndex+'_2').play();
+                }
+            })
+            
+            
+            // shwon say : 컨트롤은 이쪽으로해주세요 
+            //togglePopup('.popup_video1');
+            //togglePopup('.popup_video2');
+            
+        })
+    </script>
+    <script>
+    
+
+        const swiper = new Swiper('#imgInfo4 .img-info__cont', {
+            // Optional parameters
+            // If we need pagination
+            slidesPerView: 1,
+            effect: "fade",
+            crossFade: true,
+            fadeEffect: {
+                crossFade: true
+            },
+            speed: 2000,
+            loop:true,
+            autoplay: {
+                // delay: 2500,
+                delay: 1500,
+                disableOnInteraction: false,
+            },
+            observer: true,
+            observeParents: true,
+            spaceBetween: 50,                
+        });
+
+        // 
+        const swiper2 = new Swiper('#imgInfo11 .img-info__cont', {
+                // Optional parameters
+                // If we need pagination
+                slidesPerView: 1,
+                effect: "fade",
+                loop:true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                observer: true,
+                observeParents: true,
+                spaceBetween: 50,                
+        });
+        // 
+        const swiper3 = new Swiper('#imgInfo8 .img-info__cont', {
+                // Optional parameters
+                // If we need pagination
+                slidesPerView: 1,
+                effect: "fade",
+                loop:true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                observer: true,
+                observeParents: true,
+                spaceBetween: 50,                
+        });
+
+        const swiper4 = new Swiper('#imgInfo6 .img-info__cont', {
+        // Optional parameters
+            // If we need pagination
+            slidesPerView: 1,
+            effect: "fade",
+            loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            observer: true,
+            observeParents: true,
+            spaceBetween: 50,
+        });
+
+        const swiper5 = new Swiper('#imgInfo5-4 .img-info__cont', {
+                // Optional parameters
+                // If we need pagination
+                slidesPerView: 1,
+                effect: "fade",
+                loop: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                observer: true,
+                observeParents: true,
+                spaceBetween: 50,
+            });
+        // 
+
+        function swipeToCustomSlide(swiperItem, pos) {
+            if (swiperItem.activeIndex !== pos) {
+                swiperItem.slideTo(pos, 0, false);
+            }
+        }
+
+        function swipeToFirstSlide(swiperItem) {
+            swipeToCustomSlide(swiperItem, 0);
+        }
+
+        document.body.addEventListener('imgInfo4_firstslide', function (e) {
+            swipeToCustomSlide(swiper, 1);
+        }, false);
+
+
+        document.body.addEventListener('imgInfo11_firstslide', function (e) {
+            swipeToCustomSlide(swiper2, 1);
+        }, false);
+
+        document.body.addEventListener('imgInfo8_firstslide', function (e) {
+            swipeToCustomSlide(swiper3, 1);
+        }, false);
+
+        $(function () {
+            $("#slider-vertical").slider({
+                range: "min",
+                min: 0,
+                max: 100,
+                value: 30,
+                slide: function (event, ui) {
+                    $("#amount").val(ui.value);
+                }
+            });
+            $("#amount").val($("#slider-vertical").slider("value"));
+        });
+		
+		
+		document.body.addEventListener("InitSlider", function (e) {
+		
+		$(function () {
+            $("#slider-vertical").slider({
+                range: "min",
+                min: 0,
+                max: 100,
+                value: 30,
+                slide: function (event, ui) {
+                    $("#amount").val(ui.value);
+                }
+            });
+            $("#amount").val($("#slider-vertical").slider("value"));
+        });
+		
+        }, false);
+		
+		var bgm = document.getElementById('bgmSource');
+			$(".float_util .btn_sound_ctr").on("click", function(){
+				if ($(this).hasClass("mute")){
+					$(this).removeClass("mute");
+					bgm.play();
+
+				}else {
+					$(this).addClass("mute");
+					bgm.pause()();
+				}
+			});
+
+        
+    </script>
+    <script type="module">
+        import ResizeManager from "./assets/js/resize-manager.js"
+
+        const resize = new ResizeManager();
+    </script>
+</body>
+
+</html>

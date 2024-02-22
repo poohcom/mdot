@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>IONIQ 6 Digital Studio</title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+      <meta charset="utf-8" />
+      <meta name="title" content="IONIQ 6 Digital Studio" />
+      <meta name="description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!" />
+      <meta name="keywords" content="IONIQ 6 Digital Studio" />
+
+      <meta property="og:type" content="website" />
+      <meta property="og:url"	content="https://ioniq6.hyundai.com/worldpremiere/" />
+      <meta property="og:title" content="IONIQ 6 Digital Studio" />
+      <meta property="og:description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!" />
+      <meta property="og:image" content="https://ioniq6.hyundai.com/worldpremiere/asset/img/share_img.jpg" />
+
+      <meta name="twitter:card" content="photo">
+      <meta name="twitter:url" content="https://ioniq6.hyundai.com/worldpremiere/">
+      <meta name="twitter:title" content="IONIQ 6 Digital Studio">
+      <meta name="twitter:description" content="IONIQ 6가 준비한 6개의 테마 공간에서 당신의 잠재력을 깨워보세요!">
+      <meta name="twitter:image" content="https://ioniq6.hyundai.com/worldpremiere/asset/img/share_img.jpg">
+      <script src="./assets/js/browser-check.js?v=5"></script>
+    <!--[S] GLOBAL IMPORT-->
+    <script src="../../../worldpremiere/asset/js/jquery-3.6.0.min.js"></script>
+    <script src="../../../worldpremiere/asset/js/include.js"></script>
+    
+    <!--[E] GLOBAL IMPORT-->
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/configuratore_common.css?1" />
+
+    <style>
+        
+
+        .resize-wrap.tr-or{
+            transform-origin: 0 0;
+        }
+        .resize-wrap.tr-or-b{
+            transform-origin: bottom;
+        }
+        .resize-wrap.tr-or-t{
+            transform-origin: top;
+        }
+        .resize-wrap.tr-or-b-r{
+            transform-origin: bottom right;
+        }
+        .resize-wrap.tr-or-b-l{
+            transform-origin: bottom left;
+        }
+
+        .configuratore-wrap .exterior-color{
+            bottom:  65px;
+        }
+        .configuratore-wrap .wheel-list {
+            width: auto;
+            transform: translateX(-50%);
+            left: 50%;
+        }
+    </style>
+</head>
+    <body>
+        <script type="x-shader/x-vertex" id="vertexshader">
+
+            varying vec2 vUv;
+    
+            void main() {
+    
+                vUv = uv;
+    
+                gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+    
+            }
+
+        </script>
+    
+        <script type="x-shader/x-fragment" id="fragmentshader">
+    
+            uniform sampler2D baseTexture;
+            uniform sampler2D bloomTexture;
+    
+            varying vec2 vUv;
+    
+            void main() {
+    
+                gl_FragColor = ( texture2D( baseTexture, vUv ) + vec4( 1.0 ) * texture2D( bloomTexture, vUv ) );
+    
+            }
+    
+        </script>
+        <script type="module" src="./assets/data/js/configKR.js" ></script>
+
+
+        <!-- loading -->
+        <article class="loading-wrap" id="loadingWrap" style="z-index:5;">
+            <div class="loading-wrap__progress">
+                <span class="loading-wrap__item" id="loading1"></span>
+                <span class="loading-wrap__item" id="loading2"></span>
+                <span class="loading-wrap__item" id="loading3"></span>
+                <span class="loading-wrap__item" id="loading4"></span>
+            </div>
+            <p class="loading-wrap__txt hh_m">Loading</p>
+        </article>
+
+        <div class="configuratore-wrap" id="configuratore" style="display: ;">
+            <div id="container"></div>
+            <div class="float_util">
+				<button type="button" class="btn_sound_ctr mute"><span class="blind">사운드 ON/OFF</span></button>
+				<audio loop id="bgmSource">
+					<source src="./assets/audio/1-8_bgm.mp3" type="audio/mpeg">
+				</audio>
+			</div>
+
+            <!-- click points -->
+            <button class="btn_click_s" id="click_s01" style="display: none;left: 200px;top:500px;"></button>
+
+            <div class="configuratore-wrap__bg"></div>
+
+            <div class="configuratore-wrap__contents" id="basicBtn" style="display: none1;">
+                <div class="btn-wrap resize-wrap">
+                    <button class="btn-exterior medium active" id="btnExterior">Exterior</button>
+                    <button class="btn-interior medium" id="bntInterior">Interior</button>
+                </div>
+                <div class="etc-wrap resize-wrap tr-or-b" id="etc-wrap">
+                    <button class="etc-wrap__lampon btn" id="btnLampOn"  style="display: none;">Lamp</button>
+                    <button class="etc-wrap__lampoff btn" id="btnLampOff">Lamp</button>
+                    <button class="etc-wrap__camera btn" id="btnCamera">Camera</button>
+                    <button class="etc-wrap__hmd btn" id="btnHmd" onclick="location.href = '/worldpremiere/kr/hmd.html'">HMD</button>
+                    <button class="etc-wrap__ar btn" id="btnAR">AR</button>
+                    <button class="etc-wrap__color btn" id="btnColor">
+                        <i class="selectColor c1" id="setColor"></i><!-- c1 c12 클래스별 색상 -->
+                        Color
+                    </button>
+
+                    <!-- exterior color -->
+                    <ul class="exterior-color active ly" id="exteriorColor" style="display: none;">
+                        <li id="exColor1" class="exterior-color__c1"></li>
+                        <li id="exColor2" class="exterior-color__c2"></li>
+                        <li id="exColor3" class="exterior-color__c3"></li>
+                        <li id="exColor4" class="exterior-color__c4"></li>
+                        <li id="exColor5" class="exterior-color__c5"></li>
+                        <li id="exColor6" class="exterior-color__c6"></li>
+                        <li id="exColor7" class="exterior-color__c7"></li>
+                        <li id="exColor8" class="exterior-color__c8"></li>
+                        <li id="exColor9" class="exterior-color__c9 on"></li>
+                        <li id="exColor10" class="exterior-color__c10"></li>
+                        <li id="exColor11" class="exterior-color__c11"></li>
+                        <li id="exColor12" class="exterior-color__c12"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- camera focus -->
+            <div class="camera-wrap" id="cameraFocus" style="display: none;">
+                <button class="camera-wrap__btn" id="btnFocus"></button>
+                <i class="lt"></i>
+                <i class="rt"></i>
+                <i class="lb"></i>
+                <i class="rb"></i>
+                <button class="camera-wrap__btnClosed resize-wrap tr-or-b-l" id="cameraFocusClosed"></button>
+            </div>
+
+            <!-- camera sns -->
+            <div class="camera-sns" id="camera-sns" style="display: none;">
+                <div class="camera-sns__cont">
+                    <button class="camera-sns__closed" id="btnSnsClosed"></button>
+                    <div class="camera-sns__photo" >
+                        <image id="screenshot"/>
+                    </div>
+                    <div class="camera-sns__btn">
+                        <button class="camera-sns__facebook" id="btnFacebook"><img src="assets/img/ico_facebook.png" alt="" width="12" height="25"></button>
+                        <button class="camera-sns__twitter" id="btnTwitter"><img src="assets/img/ico_twitter.png" alt="" width="33" height="24"></button>
+                        <button class="camera-sns__download" id="btnDownload"><img src="assets/img/ico_download.png" alt="" width="25" height="25"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- title info text -->
+            <p class="tit-info-txt light" id="txt1" style="display: none;">12가지 컬러의 다채로운 IONIQ 6를 만나보세요.</p>
+
+            <!-- wheel list -->
+            <ul class="wheel-list active resize-wrap tr-x-50 tr-or-b" id="wheelList" style="display: none;">
+                <li class="wheel-list__item" id="wheelItem1">
+                    <div class="wheel-list__box"><img src="assets/img/ico_wheel_18.webp" alt=""></div>
+                    <span class="medium">18인치 휠</span>
+                </li>
+                <li class="wheel-list__item active" id="wheelItem2">
+                    <div class="wheel-list__box"><img src="assets/img/ico_wheel_20.webp" alt=""></div>
+                    <span class="medium">20인치 휠</span>
+                </li>
+            </ul>
+
+            <!-- text info-->
+            <div class="text-info active ly resize-wrap tr-or-b tr-x-50" id="txt2" style="display:none;">
+                <p class="t1 medium">파라메트릭 픽셀 라이트 - 헤드램프</p>
+                <p class="t2">IONIQ 브랜드 시그니처인 픽셀 램프를 활용하여 미래지향적인 <br>아이코닉 룩을 완성하였습니다. </p>
+                <p class="t3"><span class="f24">*</span> 현재 헤드램프는 야간 점등 이미지입니다.</p>
+            </div>
+
+            <div class="text-info ly resize-wrap tr-or-b tr-x-50" id="txt3" style="display:none;">
+                <p class="t1 medium">파라메트릭 픽셀 라이트 - 리어램프</p>
+                <p class="t2">IONIQ 브랜드 시그니처인 픽셀 램프를 활용하여 미래지향적인 <br>아이코닉 룩을 완성하였습니다. </p>
+                <p class="t3"><span class="f24">*</span> 현재 리어램프는 스탑 램프 점등 이미지입니다.</p>
+            </div>
+
+            <div class="text-info ly resize-wrap tr-or-b tr-x-50" id="txt4" style="display:none;">
+                <p class="t1 medium">20인치 휠</p>
+                <p class="t2">타사 대비 큰 20인치 휠 적용을 통해 디자인을 개선하였습니다.</p>
+            </div>
+
+            <!-- img info -->
+            <div class="img-info ly" id="imgInfo1" style="display:none;">
+                <div class="img-info__dimmed" id="imgInfo1_1"></></div>
+                <div class="img-info__cont resize-wrap tr-xy-50">
+                    <div class="img-wrap">
+                        <img src="assets/img/img01.png" alt="">
+                    </div>
+                    <p class="t1 medium">새로운 현대 엠블럼</p>
+                    <p class="t2">새 시대에 걸맞은 브랜드 시각 언어에 대한 고민을 통해 <br>새로운 현대 엠블럼이 탄생했습니다.</p>
+                </div>
+            </div>
+
+            <div class="img-info ly" id="imgInfo2" style="display:none;">
+                <div class="img-info__dimmed" id="imgInfo2_1"></div>
+                <div class="img-info__cont resize-wrap tr-xy-50">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="img-wrap">
+                                <img src="assets/img/img02.png" alt="">
+                            </div>
+                            <p class="t1 medium">투명소재 – 파라메트릭 픽셀 보조제동등</p>
+                            <p class="t2">
+                                파라메트릭 픽셀 라이트와 투명소재가 만나<br>
+                                마치 다른 차원의 공간이 연결된 듯한 깊이감을 구현합니다.
+                            </p>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="img-wrap">
+                                <img src="assets/img/img02-2.png" alt="">
+                            </div>
+                            <p class="t1 medium">투명소재 - 디지털 사이드 미러 (DSM)</p>
+                            <p class="t2">
+                                투명소재를 사용하여 장식 없이 내부에 숨어 있는 부품이 가진 <br>
+기능적 아름다움을 솔직하게 드러냈습니다. 
+                            </p>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="img-wrap">
+                                <img src="assets/img/img02-3.png" alt="">
+                            </div>
+                            <p class="t1 medium">투명소재 - 샤크 안테나</p>
+                            <p class="t2">
+                                투명소재를 사용하여 장식 없이 내부에 숨어 있는 부품이 가진<br>
+                                기능적 아름다움을 솔직하게 드러냈습니다. 
+                            </p>
+                        </div>
+                        <div class="swiper-slide last_page">
+                            <div class="img-wrap">
+                                <img src="assets/img/img02-4.png" alt="" class="img1 twinkle" width="660px">
+                                <img src="assets/img/img02-5.png" alt="" class="img2" width="660px">
+                            </div>
+                            <p class="t1 medium">투명소재 – 도어 포켓, 콘솔 하단 포켓, 대시보드 가니쉬</p>
+                            <p class="t2">
+                                투명소재를 사용하여 장식 없이 내부에 숨어 있는 부품이 가진<br>
+                                기능적 아름다움을 솔직하게 드러냈습니다. 
+                            </p>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>       
+                </div>
+            </div>
+
+
+            <div class="img-info ly" id="imgInfo3" style="display:none;">
+                <div class="img-info__dimmed" id="imgInfo3_1"></></div>
+                <div class="img-info__cont resize-wrap tr-xy-50">
+                    <div class="img-wrap">
+                        <img src="assets/img/img03.png" alt="">
+                    </div>
+                    <p class="t1 medium">디지털 사이드 미러 (DSM)</p>
+                    <p class="t2">
+                        광학 사이드 미러 대신 카메라를 장착하여 <br>
+                        차량 내부 OLED 모니터를 통해 후측방을 확인할 수 있습니다. <br>
+                        기존 광학 사이드 미러 대비 선명하고 넓은 시야각을 제공하여 안전성을 향상시킵니다.
+                    </p>
+                    <p class="t3"><span class="f24">*</span> 특정 사양의 적용 여부는 판매 국가에 따라 달라질 수 있습니다. </p>
+                </div>
+            </div>
+
+            <div class="img-info ly" id="imgInfo4" style="display: none;">
+                <div class="img-info__dimmed" id="imgInfo4_1"></div>
+                <div class="img-info__cont resize-wrap tr-xy-50">
+                    <div class="swiper-wrapper" style="margin-bottom: 20px;">
+                        <div class="swiper-slide">
+                            <div class="img-wrap">
+                                <img src="assets/img/img04.png" alt="">
+                            </div>
+                            <p class="t1 medium">400V/800V 멀티 급속 충전 시스템</p>
+                            <p class="t2">400V/800V 멀티 급속 충전 시스템을 적용해 다양한 충전 인프라를 사용할 수 있으며,<br> 18분 이내에 배터리 용량의 10%에서 80%까지 충전 가능합니다.</p>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="img-wrap">
+                                <img src="assets/img/img04-2.png" alt="">
+                            </div>
+                            <p class="t1 medium">Vehicle-to-Load (V2L)
+                            <p class="t2">차량 내/외에서 일반적인 전력(220V) 사용이 가능합니다.
+                                <span><span class="f24">*</span> 실내/외 V2L 기능은 충전잔량 20~100%일 때만 사용 가능합니다. <br>
+사용하는 전자기기에 따라 최대 제공 소비전력은 차이가 있을 수 있습니다.</span>
+                            </p>
+                        </div>                        
+                    </div>    
+                    <div class="swiper-pagination"></div>                
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layer_popup wide_ver" id="introPop" style="display: none;">
+            <div class="popup_box resize-wrap">
+                <div class="popup_content">
+                    <span class="btn_close"></span>
+                    <p class="tit medium">IONIQ 6를 AR로 만나보세요.</p>
+                    <p class="add">아래 QR코드를 카메라로 스캔해 주세요.</p>
+                    <div class="img_wrap">
+                        <img  src="../configurator/assets/img/ar_kr.jpg" width="141"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="assets/js/swiper-bundle.min.js"></script>
+        <script>
+            
+            // shwon 원하시는 타이밍에 아래 함수를 호출해주시면됩니다.
+            // togglePopup('#introPop');
+            
+            $("#introPop .btn_close").on("click", function(){
+                togglePopup('#introPop');
+            })
+			
+			$("#btnAR").on("click", function(){
+                togglePopup('#introPop');
+            })
+
+
+            let btnColor = document.getElementById('btnColor');
+            let colorList = document.getElementById('exteriorColor');
+            btnColor.addEventListener('click',function(){
+                colorList.classList.add('active');
+            });
+
+            const swiper = new Swiper('#imgInfo4 .img-info__cont', {
+                observer: true,
+                observeParents: true,
+                spaceBetween: 50,
+                pagination: {
+                    el: '#imgInfo4 .swiper-pagination',
+                    clickable: true,
+                },
+            });
+
+            const swiper2 = new Swiper('#imgInfo2 .img-info__cont', {
+                slidesPerView: 1,
+                pagination: {
+                    el: '#imgInfo2 .swiper-pagination',
+                    clickable: true,
+                },
+                observer: true,
+                observeParents: true,
+                spaceBetween: 50,                
+            });
+
+            function swipeToFirstSlide(swiperItem) {
+                if (swiperItem.activeIndex !== 0) {
+                    // console.log("Move to First slide");
+                    swiperItem.slideTo(0);
+                    swiperItem.update();
+                }
+            }
+
+            document.body.addEventListener('imgInfo4_firstslide', function (e) { 
+                swipeToFirstSlide(swiper);
+             }, false);
+
+             document.body.addEventListener('imgInfo2_firstslide', function (e) { 
+                swipeToFirstSlide(swiper2);
+             }, false);
+			
+			var bgm = document.getElementById('bgmSource');
+			$(".float_util .btn_sound_ctr").on("click", function(){
+				if ($(this).hasClass("mute")){
+					$(this).removeClass("mute");
+					bgm.play();
+
+				}else {
+					$(this).addClass("mute");
+					bgm.pause()();
+				}
+			});
+
+            
+        </script>
+
+
+        <script type="module">
+            import ResizeManager from "./assets/js/resize-manager.js"
+
+            const resize = new ResizeManager();
+        </script>
+    </body>
+</html>
