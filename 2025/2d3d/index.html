@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D to 3D Floor Plan</title>
+	
+	<script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.174/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.174/examples/jsm/"
+			
+          }
+        }
+    </script>
+	<script type="module">
+      import * as THREE from 'three';
+      import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+	  import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+	  
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+
+      // 조명 추가
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambientLight);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      directionalLight.position.set(5, 10, 5);
+      scene.add(directionalLight);
+
+      // 평면도 이미지 텍스처로 바닥에 적용 (크기 조정)
+      const image = new Image();
+      image.src = 'floorplan.png'; // 2D 평면도 이미지
+      image.onload = function() {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = image.width;
+          canvas.height = image.height;
+          ctx.drawImage(image, 0, 0);
+          const floorTexture = new THREE.TextureLoader().load('floorplan.png');
+          const floorGeometry = new THREE.PlaneGeometry(image.width / 10, image.height / 10);
+          const floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture, side: THREE.DoubleSide });
+          const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+          floor.rotation.x = -Math.PI / 2;
+          floor.position.set(0, -1, 0);
+          scene.add(floor);
+
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imageData.data;
+          const walls = [];
+			const geometries = [];
+			const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x888888 });
+          // 밝기값 기준으로 벽을 추가하는 로직
+          for (let y = 0; y < canvas.height-3; y++) {
+              for (let x = 0; x < canvas.width-3; x++) {
+                  var index0 = (y * canvas.width + x) * 4;
+				  var index1 =index0+ canvas.width * 4;
+				  var index2 =index1+ canvas.width * 4;
+				  var index3 =index2+ canvas.width * 4;
+                  const brightness00 = (data[index0] + data[index0 + 1] + data[index0 + 2]) / 3; if (brightness00>32) continue;
+				  
+				  const brightness10 = (data[index0+4] + data[index0 + 5] + data[index0 + 6]) / 3; if (brightness10>32) continue;
+				  const brightness20 = (data[index0+8] + data[index0 + 1+8] + data[index0 + 10]) / 3; if (brightness20>32) continue;
+				  const brightness30 = (data[index0+12] + data[index0 + 1+12] + data[index0 + 14]) / 3; if (brightness30>32) continue;
+                  
+				  
+				  const brightness01 = (data[index1] + data[index1 + 1] + data[index1 + 2]) / 3; if (brightness01>32) continue;
+				  const brightness11 = (data[index1+4] + data[index1 + 5] + data[index1 + 6]) / 3; if (brightness11>32) continue;
+				  const brightness21 = (data[index1+8] + data[index1 + 1+8] + data[index1 + 10]) / 3; if (brightness21>32) continue;
+				  const brightness31 = (data[index1+12] + data[index1 + 1+12] + data[index1 + 14]) / 3; if (brightness31>32) continue;
+				  
+				  
+				  const brightness02 = (data[index2] + data[index2 + 1] + data[index2 + 2]) / 3; if (brightness02>32) continue;
+				  const brightness12 = (data[index2+4] + data[index2 + 5] + data[index2 + 6]) / 3; if (brightness12>32) continue;
+				  const brightness22 = (data[index2+8] + data[index2 + 9] + data[index2 + 10]) / 3; if (brightness22>32) continue;
+				  const brightness32 = (data[index2+12] + data[index2 + 13] + data[index2 + 14]) / 3; if (brightness32>32) continue;
+				  
+				  
+				  const brightness03 = (data[index3] + data[index3 + 1] + data[index3 + 2]) / 3; if (brightness03>32) continue;
+				  const brightness13 = (data[index3+4] + data[index3 + 5] + data[index3 + 6]) / 3; if (brightness13>32) continue;
+				  const brightness23 = (data[index3+8] + data[index3 + 9] + data[index3 + 10]) / 3; if (brightness23>32) continue;
+				  const brightness33 = (data[index3+12] + data[index3 + 13] + data[index3 + 14]) / 3; if (brightness33>32) continue;
+				  
+				  
+                  // 밝기가 일정 기준 이하인 경우 벽으로 처리
+                  const wallGeometry = new THREE.BoxGeometry(0.5, 3, 0.5);
+                              const wallMesh = new THREE.Mesh(wallGeometry);
+                              wallMesh.position.set(x / 10 - image.width / 20, 1.5, y / 10 - image.height / 20);
+                              wallMesh.updateMatrix();
+                              geometries.push(wallMesh.geometry.clone().applyMatrix4(wallMesh.matrix));
+              }
+          }
+		  
+		  const mergedGeometry = mergeGeometries(geometries);
+          const mergedWallMesh = new THREE.Mesh(mergedGeometry, wallMaterial);
+          scene.add(mergedWallMesh);
+
+          // 가로와 세로 4픽셀 이상 벽을 형성
+		  
+		  camera.position.set(0, 10, 15);
+			camera.lookAt(0, 0, 0);
+
+      function animate() {
+          requestAnimationFrame(animate);
+          controls.update();
+          renderer.render(scene, camera);
+      }
+
+      animate();
+	  
+          
+      };
+	  
+  </script>
+</head>
+<body>
+</body>
+</html>
